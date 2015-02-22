@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/data">
+        <file>t_lt_gray_metall.png</file>
+    </qresource>
+</RCC>

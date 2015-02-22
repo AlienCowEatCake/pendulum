@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/data">
+        <file>t_red.png</file>
+    </qresource>
+</RCC>

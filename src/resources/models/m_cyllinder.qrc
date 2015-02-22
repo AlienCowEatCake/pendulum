@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/data">
+        <file>m_cyllinder.ms3d</file>
+    </qresource>
+</RCC>

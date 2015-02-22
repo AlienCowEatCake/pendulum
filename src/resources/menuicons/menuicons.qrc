@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/menuicons">
+        <file>about.png</file>
+        <file>energy.png</file>
+        <file>people.png</file>
+        <file>position.png</file>
+        <file>speed.png</file>
+        <file>license.png</file>
+        <file>manual.png</file>
+        <file>qt.png</file>
+    </qresource>
+</RCC>

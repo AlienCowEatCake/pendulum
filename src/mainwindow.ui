@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>540</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Пружинный маятник в среде с сопротивлением</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="./resources/mres.qrc">:/mres/ball.ico</iconset>
+  </property>
+  <property name="locale">
+   <locale language="Russian" country="RussianFederation"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="Cscene3D" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="locale">
+    <locale language="Russian" country="RussianFederation"/>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Графики</string>
+    </property>
+    <property name="locale">
+     <locale language="Russian" country="RussianFederation"/>
+    </property>
+    <addaction name="action"/>
+    <addaction name="action_2"/>
+    <addaction name="action_3"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Справка</string>
+    </property>
+    <property name="locale">
+     <locale language="Russian" country="RussianFederation"/>
+    </property>
+    <addaction name="action_4"/>
+    <addaction name="action_6"/>
+    <addaction name="action_7"/>
+    <addaction name="action_5"/>
+    <addaction name="action_about_qt"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>230</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <property name="locale">
+     <locale language="Russian" country="RussianFederation"/>
+    </property>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>7</x>
+       <y>0</y>
+       <width>216</width>
+       <height>281</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Исходные данные</string>
+     </property>
+     <property name="locale">
+      <locale language="Russian" country="RussianFederation"/>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>220</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Масса груза [кг]</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>10</number>
+      </property>
+      <property name="maximum">
+       <number>500</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>40</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.01</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>220</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Начальное смещение [м]</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>0</number>
+      </property>
+      <property name="maximum">
+       <number>160</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>90</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>100</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>120</y>
+        <width>220</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Коэфф. жёсткости [H/м]</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>25</number>
+      </property>
+      <property name="maximum">
+       <number>250</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>140</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>50</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>220</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Коэфф. сопротивления [кг/с]</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>190</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>0</number>
+      </property>
+      <property name="maximum">
+       <number>240</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>190</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>100</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcdNumber">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>240</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>220</y>
+        <width>220</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Время [c]</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>7</x>
+       <y>290</y>
+       <width>216</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Панель управления</string>
+     </property>
+     <property name="locale">
+      <locale language="Russian" country="RussianFederation"/>
+     </property>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>220</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Скорость эксперимента [%]</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>10</number>
+      </property>
+      <property name="maximum">
+       <number>200</number>
+      </property>
+      <property name="singleStep">
+       <number>5</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>40</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>100</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>171</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>10</number>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="value">
+       <number>50</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>85</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>качество</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>110</y>
+        <width>85</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>скорость</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>220</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Графика</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>91</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Старт</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>140</y>
+        <width>91</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Сброс</string>
+      </property>
+      <property name="locale">
+       <locale language="Russian" country="RussianFederation"/>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <action name="action">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/speed.png</iconset>
+   </property>
+   <property name="text">
+    <string>Скорость</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/position.png</iconset>
+   </property>
+   <property name="text">
+    <string>Смещение</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/energy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Энергия</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/about.png</iconset>
+   </property>
+   <property name="text">
+    <string>О программе</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/people.png</iconset>
+   </property>
+   <property name="text">
+    <string>Разработчики</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/manual.png</iconset>
+   </property>
+   <property name="text">
+    <string>Руководство пользователя</string>
+   </property>
+  </action>
+  <action name="action_7">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/license.png</iconset>
+   </property>
+   <property name="text">
+    <string>Лицензия</string>
+   </property>
+  </action>
+  <action name="action_about_qt">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/qt.png</iconset>
+   </property>
+   <property name="text">
+    <string>О Qt</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Cscene3D</class>
+   <extends>QWidget</extends>
+   <header>cscene3d.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>centralWidget</tabstop>
+  <tabstop>horizontalSlider</tabstop>
+  <tabstop>horizontalSlider_2</tabstop>
+  <tabstop>horizontalSlider_3</tabstop>
+  <tabstop>horizontalSlider_4</tabstop>
+  <tabstop>horizontalSlider_5</tabstop>
+  <tabstop>horizontalSlider_6</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
+ </tabstops>
+ <resources>
+  <include location="./resources/mres.qrc"/>
+  <include location="./resources/menuicons/menuicons.qrc"/>
+ </resources>
+ <connections/>
+</ui>
