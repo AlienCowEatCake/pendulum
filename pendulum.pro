@@ -8,6 +8,8 @@
 
 # Использовать высокополигональные модели
 #CONFIG += use_hipoly
+# Использовать софтварный растеризатор
+CONFIG += use_swrast
 
 # ==============================================================================
 
@@ -23,6 +25,7 @@ QT += core gui opengl
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     DEFINES += HAVE_QT5
+    !use_swrast {
     contains(QT_CONFIG, dynamicgl) {
         win32-g++* {
             QMAKE_LIBS += -lopengl32
@@ -35,6 +38,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
             error("This program requires Qt to be configured with -opengl desktop (recommended) or -opengl dynamic")
         }
     }
+    } #!use_swrast
 }
 
 win32:lessThan(QT_VERSION, 4.5.0) {
@@ -129,6 +133,17 @@ else {
                src/resources/models/lowpoly/t_red.qrc \
                src/resources/models/lowpoly/t_wood.qrc \
                src/resources/models/lowpoly/t_yellow.qrc
+}
+
+use_swrast {
+    QT -= opengl
+    DEFINES += USE_SWRAST
+    SOURCES += \
+        src/swrast/swrast_widget.cpp
+    HEADERS += \
+        src/swrast/swrast_common.h \
+        src/swrast/swrast_geometry.h \
+        src/swrast/swrast_widget.h
 }
 
 # === Сборочные директории =====================================================

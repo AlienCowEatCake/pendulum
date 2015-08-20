@@ -25,10 +25,12 @@
 
 int main(int argc, char *argv[])
 {
+#if !defined USE_SWRAST
     QGLFormat fmt;
     fmt.setSampleBuffers(true);
     fmt.setSamples(16); // 2, 4, 8, 16
     QGLFormat::setDefaultFormat(fmt);
+#endif
 
     QApplication app(argc, argv);
 #if defined USE_FORCE_GL

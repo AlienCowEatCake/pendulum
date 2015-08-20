@@ -39,7 +39,7 @@ GLfloat light_ambient[] = {0.3f, 0.3f, 0.3f, 0.0f};     //фоновый све�
 GLfloat light_diffuse[] = {0.5f, 0.5f, 0.5f, 0.0f};     //значение диффузного света
 GLfloat light_position[] = {0.5f, 0.0f, 0.5f, 0.0f};    //позиция источника света
 
-Cscene3D::Cscene3D(QWidget* parent) : QGLWidget(parent)
+Cscene3D::Cscene3D(QWidget* parent) : BaseWidget(parent)
 {
     xRot = -85.0f;
     yRot = 0.0f;
@@ -106,6 +106,7 @@ void Cscene3D::resizeGL(int nWidth, int nHeight)
 }
 
 /*основная функция рисования*/
+#if !defined USE_SWRAST
 void Cscene3D::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -136,6 +137,13 @@ void Cscene3D::paintGL()
     spring_end.draw();
     strng.draw();
 }
+#else
+void Cscene3D::paintGL()
+{
+    // TODO
+    tripod.draw();
+}
+#endif
 
 void Cscene3D::mousePressEvent(QMouseEvent* pe)
 {

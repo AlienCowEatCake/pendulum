@@ -24,15 +24,22 @@
 #define CSCENE3D_H
 
 /* класс 3D сцены в главном окне*/
+#if !defined USE_SWRAST
 #include <QGLWidget>
-#include "cmodel.h"
 #include <QtOpenGL>
+typedef QGLWidget BaseWidget;
+#else
+#include "swrast/swrast_common.h"
+#include "swrast/swrast_widget.h"
+typedef SWRastWidget BaseWidget;
+#endif
+#include "cmodel.h"
 
 #if !defined(GL_MULTISAMPLE)
 #define GL_MULTISAMPLE  0x809D
 #endif
 
-class Cscene3D : public QGLWidget
+class Cscene3D : public BaseWidget
 {
     Q_OBJECT
 

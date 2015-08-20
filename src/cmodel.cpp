@@ -22,6 +22,7 @@
 
 #include "cmodel.h"
 
+#if !defined USE_SWRAST
 GLuint LoadGLTextures(const char* name)
 {
     QImage texti;
@@ -35,6 +36,14 @@ GLuint LoadGLTextures(const char* name)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     return texPntr[0];
 }
+#else
+GLuint LoadGLTextures(const char* name)
+{
+    Q_UNUSED(name);
+    // TODO
+    return 0;
+}
+#endif
 
 //конструктор модели
 Cmodel::Cmodel()
