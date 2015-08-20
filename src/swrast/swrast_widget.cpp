@@ -1,4 +1,3 @@
-#if defined USE_SWRAST
 #include "swrast_widget.h"
 
 // Пока контекст глобальный и может быть только один, увы
@@ -56,7 +55,7 @@ void SWRastWidget::updateGL()
     painter.begin(device);
     painter.setViewport(currViewport);
     painter.fillRect(currViewport, background);
-    painter.setTransform(projection);
+    //painter.setTransform(projection);
     paintGL();
     painter.end();
     repaint();
@@ -80,6 +79,40 @@ void SWRastWidget::resizeEvent(QResizeEvent * event)
 {
     resizeGL(event->size().width(), event->size().height());
     updateGL();
+}
+
+void SWRastWidget::set_viewport(int x, int y, int w, int h)
+{
+    viewport = matrix::identity();
+    viewport[0][3] = x + w / 2.0f;
+    viewport[1][3] = y + h / 2.0f;
+    viewport[2][3] = 1.0f;
+    viewport[0][0] = w / 2.0f;
+    viewport[1][1] = h / 2.0f;
+    viewport[2][2] = 0.0f;
+}
+
+void SWRastWidget::set_projection(float coeff)
+{
+    projection = matrix::identity();
+    projection[3][2] = coeff;
+}
+
+void SWRastWidget::lookat(vec3f eye, vec3f center, vec3f up)
+{
+    vec3f z = (eye - center).normalize();
+    vec3f x = cross(up, z).normalize();
+    vec3f y = cross(z, x).normalize();
+    matrix minv(matrix::identity());
+    matrix tr(matrix::identity());
+    for(size_type i = 0; i < 3; i++)
+    {
+        minv[0][i] = x[i];
+        minv[1][i] = y[i];
+        minv[2][i] = z[i];
+        tr[i][3] = -center[i];
+    }
+    modelview = minv * tr;
 }
 
 // =================================================================================================
@@ -243,7 +276,7 @@ void glLoadIdentity()
     switch(sw_context->currMatrixMode)
     {
     case GL_PROJECTION:
-        sw_context->projection = QTransform();
+        //sw_context->projection = QTransform();
         break;
     }
 }
@@ -261,8 +294,8 @@ void glOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdou
     qreal ver_scale = (qreal)(top - bottom);
     qreal hor_translate = -(qreal)(left - right) * 0.5f;
     qreal ver_translate = -(qreal)(bottom - top) * 0.5f;
-    sw_context->projection.scale(sw_context->width() / hor_scale, sw_context->height() / ver_scale);
-    sw_context->projection.translate(hor_translate, ver_translate);
+    //sw_context->projection.scale(sw_context->width() / hor_scale, sw_context->height() / ver_scale);
+    //sw_context->projection.translate(hor_translate, ver_translate);
 }
 
 void glViewport(GLint x, GLint y, GLsizei width, GLsizei height)
@@ -289,5 +322,3 @@ void glDisable(GLenum cap)
         sw_context->lights[index].is_enabled = false;
     }
 }
-
-#endif // defined USE_SWRAST

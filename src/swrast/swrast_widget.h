@@ -1,6 +1,23 @@
 #ifndef SWRAST_WIDGET_H
 #define SWRAST_WIDGET_H
-#if defined USE_SWRAST
+
+/*
+ *  :: По поводу написания растеризатора есть следующий цикл статей на хабре ::
+ *
+ * Статья 1: алгоритм Брезенхэма ( http://habrahabr.ru/post/248153/ )
+ * Статья 2: растеризация треугольника + отсечение задних граней ( http://habrahabr.ru/post/248159/ )
+ * Статья 3: Удаление невидимых поверхностей: z-буфер ( http://habrahabr.ru/post/248179/ )
+ * Статья 4: Необходимая геометрия: фестиваль матриц
+ *       4а: Построение перспективного искажения ( http://habrahabr.ru/post/248611/ )
+ *       4б: двигаем камеру и что из этого следует ( http://habrahabr.ru/post/248723/ )
+ *       4в: новый растеризатор и коррекция перспективных искажений ( http://habrahabr.ru/post/249467/ )
+ * Статья 5: Пишем шейдеры под нашу библиотеку ( http://habrahabr.ru/post/248963/ )
+ * Статья 6: Чуть больше, чем просто шейдер: просчёт теней ( http://habrahabr.ru/post/249139/ )
+ *
+ * Статья 3.1: Настала пора рефакторинга ( http://habrahabr.ru/post/248909/ )
+ * Статья 3.14: Красивый класс матриц ( http://habrahabr.ru/post/249101/ )
+ * как работает новый растеризатор
+ */
 
 #include <QWidget>
 #include <QPoint>
@@ -11,6 +28,7 @@
 #include <QTransform>
 #include <QResizeEvent>
 #include "swrast_common.h"
+#include "swrast_geometry.h"
 
 // Одного источника пока хватит за глаза
 #define SW_LIGHT_MAX 1
@@ -92,10 +110,19 @@ protected:
     QVector<point2df> texcoord; // Вектор из координат в текстуре
     GLenum currMatrixMode;      // Текущий glMatrixMode
     QRect currViewport;         // Текущий glViewport
-    QTransform projection;      // GL_PROJECTION
+    //QTransform projection;      // GL_PROJECTION
     GLdouble ortho_left, ortho_right, ortho_bottom, ortho_top, ortho_near, ortho_far;   // Параметры glOrtho
     light lights[SW_LIGHT_MAX]; // Источники света
     light material;             // Материал (ну да, он как свет)
+
+    void set_viewport(int x, int y, int w, int h);
+    void set_projection(float coeff);
+    void lookat(vec3f eye, vec3f center, vec3f up);
+    void triangle(mat_t<4, 3, float> & pts, float * zbuffer);
+
+    matrix modelview;
+    matrix viewport;
+    matrix projection;
 
 private:
     friend void glLightfv(GLenum light, GLenum pname, const GLfloat * params);
@@ -137,5 +164,4 @@ inline void glShadeModel(GLenum) {}
 inline void glEnableClientState(GLenum) {}
 inline GLboolean glIsEnabled(GLenum) {return GL_TRUE;}
 
-#endif // defined USE_SWRAST
 #endif // SWRAST_WIDGET_H
