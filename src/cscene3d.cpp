@@ -106,7 +106,6 @@ void Cscene3D::resizeGL(int nWidth, int nHeight)
 }
 
 /*основная функция рисования*/
-#if !defined USE_SWRAST
 void Cscene3D::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -137,13 +136,6 @@ void Cscene3D::paintGL()
     spring_end.draw();
     strng.draw();
 }
-#else
-void Cscene3D::paintGL()
-{
-    // TODO
-    tripod.draw();
-}
-#endif
 
 void Cscene3D::mousePressEvent(QMouseEvent* pe)
 {

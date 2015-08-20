@@ -25,7 +25,9 @@ QT += core gui opengl
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     DEFINES += HAVE_QT5
-    !use_swrast {
+    use_swrast {
+        error("Config option use_swrast is incompatible with Qt 5 and above")
+    }
     contains(QT_CONFIG, dynamicgl) {
         win32-g++* {
             QMAKE_LIBS += -lopengl32
@@ -38,7 +40,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
             error("This program requires Qt to be configured with -opengl desktop (recommended) or -opengl dynamic")
         }
     }
-    } #!use_swrast
 }
 
 win32:lessThan(QT_VERSION, 4.5.0) {

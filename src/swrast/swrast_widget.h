@@ -30,8 +30,7 @@
 #include "swrast_common.h"
 #include "swrast_geometry.h"
 
-// Одного источника пока хватит за глаза
-#define SW_LIGHT_MAX 1
+#define SW_LIGHT_MAX 8
 
 // Класс виджет с софтварным растеризатором
 class SWRastWidget : public QWidget
@@ -39,33 +38,6 @@ class SWRastWidget : public QWidget
     Q_OBJECT
 
 public:
-    // Трехмерная точка (нормали, вершины)
-    template<typename T> struct point3d
-    {
-        T x, y, z;
-        point3d(T x = (T)0, T y = (T)0, T z = (T)0)
-        {
-            this->x = x;
-            this->y = y;
-            this->z = z;
-        }
-    };
-    typedef point3d<float> point3df;
-    typedef point3d<int> point3di;
-
-    // Двумерная точка (текстуры)
-    template<typename T> struct point2d
-    {
-        T x, y;
-        point2d(T x = (T)0, T y = (T)0)
-        {
-            this->x = x;
-            this->y = y;
-        }
-    };
-    typedef point2d<float> point2df;
-    typedef point2d<int> point2di;
-
     // Источник света
     struct light
     {
@@ -94,74 +66,82 @@ protected:
     void paintEvent(QPaintEvent *);
     // Изменение размеров окна
     void resizeEvent(QResizeEvent * event);
-    // Рисуем линию
-    template<typename QPointX>
-    void line(const QPointX & p1, const QPointX & p2, const QColor & color);
+    // Работа с барицентрическими координатами
+    vec3f barycentric(vec2f a, vec2f b, vec2f c, vec2f p);
     // Рисуем треугольник
-    template<typename QPointX>
-    void triangle(const QPointX p[3], const QColor & color);
+    void triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & texs, mat_t<3, 3, float> & norms, mat_t<3, 3, float> light_intensity);
+
+    light lights[SW_LIGHT_MAX]; // Источники света
+    light material;             // Материал (ну да, он как свет)
 
     bool is_initialized;        // Инициализировано ли?
     QImage buffer;              // Буфер изображения
     QPainter painter;           // На чем рисуем в данный момент
     QBrush background;          // Фоновый цвет
-    QVector<point3df> vertex;   // Вектор из вершин
-    QVector<point3df> normal;   // Вектор из нормалей
-    QVector<point2df> texcoord; // Вектор из координат в текстуре
+
+    QVector<vec3f> vertex;      // Вектор из вершин
+    QVector<vec3f> normal;      // Вектор из нормалей
+    QVector<vec2f> texcoord;    // Вектор из координат в текстуре
+
     GLenum currMatrixMode;      // Текущий glMatrixMode
-    QRect currViewport;         // Текущий glViewport
-    //QTransform projection;      // GL_PROJECTION
-    GLdouble ortho_left, ortho_right, ortho_bottom, ortho_top, ortho_near, ortho_far;   // Параметры glOrtho
-    light lights[SW_LIGHT_MAX]; // Источники света
-    light material;             // Материал (ну да, он как свет)
+    matrix sw_modelview;        // Текущий GL_MODELVIEW
+    matrix sw_viewport;         // Текущий glViewport
+    matrix sw_projection;       // Текущий GL_PROJECTION
 
-    void set_viewport(int x, int y, int w, int h);
-    void set_projection(float coeff);
-    void lookat(vec3f eye, vec3f center, vec3f up);
-    void triangle(mat_t<4, 3, float> & pts, float * zbuffer);
+    QVector<float> zbuffer;     // z-буфер
 
-    matrix modelview;
-    matrix viewport;
-    matrix projection;
-
-private:
-    friend void glLightfv(GLenum light, GLenum pname, const GLfloat * params);
-    friend void glMaterialf(GLenum face, GLenum pname, GLfloat param);
-    friend void glMaterialfv(GLenum face, GLenum pname, const GLfloat * params);
-    friend void glBindTexture(GLenum target, GLuint texture);
-    friend void glNormal3fv(const GLfloat * v);
-    friend void glTexCoord2f(GLfloat s, GLfloat t);
-    friend void glVertex3fv(const GLfloat * v);
-    friend void glBegin(GLenum mode);
-    friend void glEnd();
-    friend void glMatrixMode(GLenum mode);
-    friend void glLoadIdentity();
-    friend void glOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble near_val, GLdouble far_val);
-    friend void glViewport(GLint x, GLint y, GLsizei width, GLsizei height);
-    friend void glEnable(GLenum cap);
-    friend void glDisable(GLenum cap);
+public:
+    // Аналоги OpenGL функций
+    void glLightfv(GLenum light, GLenum pname, const GLfloat * params);
+    void glMaterialf(GLenum face, GLenum pname, GLfloat param);
+    void glMaterialfv(GLenum face, GLenum pname, const GLfloat * params);
+    void glBindTexture(GLenum target, GLuint texture);
+    void glNormal3fv(const GLfloat * v);
+    void glTexCoord2f(GLfloat s, GLfloat t);
+    void glVertex3fv(const GLfloat * v);
+    void glBegin(GLenum mode);
+    void glEnd();
+    void glMatrixMode(GLenum mode);
+    void glLoadIdentity();
+    void glOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble near_val, GLdouble far_val);
+    void glViewport(GLint x, GLint y, GLsizei width, GLsizei height);
+    void glEnable(GLenum cap);
+    void glDisable(GLenum cap);
+    void glScalef(GLfloat x, GLfloat y, GLfloat z);
+    void glTranslatef(GLfloat x, GLfloat y, GLfloat z);
+    void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
+    void gluLookAt(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ, GLdouble centerX, GLdouble centerY, GLdouble centerZ, GLdouble upX, GLdouble upY, GLdouble upZ);
+    void gluLookAt(vec3f eye, vec3f center, vec3f up);
 };
 
-// Аналоги OpenGL функций
-void glLightfv(GLenum light, GLenum pname, const GLfloat * params);
-void glMaterialf(GLenum face, GLenum pname, GLfloat param);
-void glMaterialfv(GLenum face, GLenum pname, const GLfloat * params);
-void glBindTexture(GLenum target, GLuint texture);
-void glNormal3fv(const GLfloat * v);
-void glTexCoord2f(GLfloat s, GLfloat t);
-void glVertex3fv(const GLfloat * v);
-void glBegin(GLenum mode);
-void glEnd();
-void glMatrixMode(GLenum mode);
-void glLoadIdentity();
-void glOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble near_val, GLdouble far_val);
-void glViewport(GLint x, GLint y, GLsizei width, GLsizei height);
-void glEnable(GLenum cap);
-void glDisable(GLenum cap);
+// Контекст глобальный и может быть только один, увы
+extern SWRastWidget * sw_context;
+
+// Перенаправим вызовы OpenGL функций в наш контекст
+inline void glLightfv(GLenum light, GLenum pname, const GLfloat * params)   {sw_context->glLightfv(light, pname, params);}
+inline void glMaterialf(GLenum face, GLenum pname, GLfloat param)           {sw_context->glMaterialf(face, pname, param);}
+inline void glMaterialfv(GLenum face, GLenum pname, const GLfloat * params) {sw_context->glMaterialfv(face, pname, params);}
+inline void glBindTexture(GLenum target, GLuint texture)                    {sw_context->glBindTexture(target, texture);}
+inline void glNormal3fv(const GLfloat * v)                                  {sw_context->glNormal3fv(v);}
+inline void glTexCoord2f(GLfloat s, GLfloat t)                              {sw_context->glTexCoord2f(s, t);}
+inline void glVertex3fv(const GLfloat * v)                                  {sw_context->glVertex3fv(v);}
+inline void glBegin(GLenum mode)                                            {sw_context->glBegin(mode);}
+inline void glEnd()                                                         {sw_context->glEnd();}
+inline void glMatrixMode(GLenum mode)                                       {sw_context->glMatrixMode(mode);}
+inline void glLoadIdentity()                                                {sw_context->glLoadIdentity();}
+inline void glViewport(GLint x, GLint y, GLsizei width, GLsizei height)     {sw_context->glViewport(x, y, width, height);}
+inline void glEnable(GLenum cap)                                            {sw_context->glEnable(cap);}
+inline void glDisable(GLenum cap)                                           {sw_context->glDisable(cap);}
+inline void glScalef(GLfloat x, GLfloat y, GLfloat z)                       {sw_context->glScalef(x, y, z);}
+inline void glTranslatef(GLfloat x, GLfloat y, GLfloat z)                   {sw_context->glTranslatef(x, y, z);}
+inline void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)       {sw_context->glRotatef(angle, x, y, z);}
+inline void glOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble near_val, GLdouble far_val)
+                                                                            {sw_context->glOrtho(left, right, bottom, top, near_val, far_val);}
 
 // Заглушки
 inline void glShadeModel(GLenum) {}
 inline void glEnableClientState(GLenum) {}
 inline GLboolean glIsEnabled(GLenum) {return GL_TRUE;}
+inline void glClear(GLbitfield) {}
 
 #endif // SWRAST_WIDGET_H
