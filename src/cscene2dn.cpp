@@ -44,11 +44,11 @@ Cscene2dn::Cscene2dn(QWidget* parent) : QWidget(parent)
 // Подгонка минимальных/максимальных значений и числа линий, для нормальной рисовки сетки
 void Cscene2dn::adjustAxis(float & min, float & max, int & numTicks)
 {
-    const double axis_epsilon = 1.0 / 10000.0;
+    const float axis_epsilon = 1.0f / 10000.0f;
     if(max - min < axis_epsilon)
     {
-        min -= 2.0 * axis_epsilon;
-        max += 2.0 * axis_epsilon;
+        min -= 2.0f * axis_epsilon;
+        max += 2.0f * axis_epsilon;
     }
 
     const int MinTicks = 6;
