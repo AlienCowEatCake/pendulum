@@ -94,11 +94,11 @@ protected:
 
     static QVector<QImage> textures;    // Хранилище наших текстур
     GLuint current_texture;             // Текущая текстура
+    bool textures_enabled;              // Включены ли текстуры
 
 public:
     // Аналоги OpenGL функций
     void glLightfv(GLenum light, GLenum pname, const GLfloat * params);
-    void glMaterialf(GLenum face, GLenum pname, GLfloat param);
     void glMaterialfv(GLenum face, GLenum pname, const GLfloat * params);
     void glBindTexture(GLenum target, GLuint texture);
     void glGenTextures(GLsizei n, GLuint * textures);
@@ -126,7 +126,6 @@ extern SWRastWidget * sw_context;
 
 // Перенаправим вызовы OpenGL функций в наш контекст
 inline void glLightfv(GLenum light, GLenum pname, const GLfloat * params)   {sw_context->glLightfv(light, pname, params);}
-inline void glMaterialf(GLenum face, GLenum pname, GLfloat param)           {sw_context->glMaterialf(face, pname, param);}
 inline void glMaterialfv(GLenum face, GLenum pname, const GLfloat * params) {sw_context->glMaterialfv(face, pname, params);}
 inline void glBindTexture(GLenum target, GLuint texture)                    {sw_context->glBindTexture(target, texture);}
 inline void glGenTextures(GLsizei n, GLuint * textures)                     {sw_context->glGenTextures(n, textures);}
@@ -154,5 +153,6 @@ inline void glEnableClientState(GLenum) {}
 inline GLboolean glIsEnabled(GLenum) {return GL_TRUE;}
 inline void glClear(GLbitfield) {}
 inline void glTexParameteri(GLenum, GLenum, GLint) {}
+inline void glMaterialf(GLenum, GLenum, GLfloat) {}
 
 #endif // SWRAST_WIDGET_H

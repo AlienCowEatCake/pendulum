@@ -34,54 +34,6 @@ public:
         assert(i < D);
         return values[i];
     }
-    inline T & x()
-    {
-        assert(D > 0);
-        return values[0];
-    }
-    inline const T & x() const
-    {
-        assert(D > 0);
-        return values[0];
-    }
-    inline const T & x(T val) const
-    {
-        assert(D > 0);
-        values[0] = val;
-        return values[0];
-    }
-    inline T & y()
-    {
-        assert(D > 1);
-        return values[1];
-    }
-    inline const T & y() const
-    {
-        assert(D > 1);
-        return values[1];
-    }
-    inline const T & y(T val) const
-    {
-        assert(D > 1);
-        values[1] = val;
-        return values[1];
-    }
-    inline T & z()
-    {
-        assert(D > 2);
-        return values[2];
-    }
-    inline const T & z() const
-    {
-        assert(D > 2);
-        return values[2];
-    }
-    inline const T & z(T val) const
-    {
-        assert(D > 2);
-        values[2] = val;
-        return values[2];
-    }
     fp_type norm() const
     {
         fp_type result = static_cast<fp_type>(0);
