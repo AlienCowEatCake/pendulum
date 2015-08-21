@@ -1,6 +1,12 @@
 #ifndef SWRAST_COMMON_H
 #define SWRAST_COMMON_H
-#if defined USE_SWRAST
+
+// В Qt 5 файл gl.h уже включен в какой-то из заголовочных файлов, включенных в QtWidgets,
+// поэтому если он у нас уже включен, то это можно определить по какой-нибудь константе.
+// Для определенности пусть это будет GL_TRUE. Такой способ определения может привести к
+// печальным последствиям, если системная реализация OpenGL несовместима по константам с
+// Mesa 3D, однако более безболезненного решения пока не обнаружено.
+#if !defined GL_TRUE
 
 // Типы данных и константы OpenGL (взято из Mesa 7.8.2)
 
@@ -626,6 +632,5 @@ typedef double          GLclampd;   /* double precision float in [0,1] */
 #define GL_ALL_CLIENT_ATTRIB_BITS           0xFFFFFFFF
 #define GL_CLIENT_ALL_ATTRIB_BITS           0xFFFFFFFF
 
-#endif // defined USE_SWRAST
+#endif // !defined GL_TRUE
 #endif // SWRAST_COMMON_H
-
