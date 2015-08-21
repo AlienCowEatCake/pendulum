@@ -21,6 +21,9 @@ SWRastWidget::SWRastWidget(QWidget * parent) : QWidget(parent)
     sw_projection = matrix::identity();
 
     current_texture = 0;
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 // Задание фонового цвета
@@ -114,6 +117,7 @@ void SWRastWidget::glLightfv(GLenum light, GLenum pname, const GLfloat * params)
     case GL_POSITION:
         for(size_t i = 0; i < 4; i++)
             lights[index].position[i] = params[i];
+        lights[index].position = sw_modelview * lights[index].position;
         break;
     }
 }
@@ -264,6 +268,10 @@ void SWRastWidget::triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & tex
             //vec3f n = (B * model->normal(uv)).normalize();
             //vec3f n = cross(vertex[i+1] - vertex[i], vertex[i+2] - vertex[i+1]).normalize();
 
+//            vec3f nnn = norms.col(0) + norms.col(1) + norms.col(2);
+//            vec3f n = (B * nnn).normalize();
+//            float diff = std::max(0.0f, n * vec3f(lights[1].position[0], lights[1].position[0], lights[1].position[0]).normalize());
+//            color = QColor(255 * diff * lights[1].diffuse[0], 255 * diff * lights[1].diffuse[1], 255 * diff * lights[1].diffuse[2]);
 
             vec3f intensity = light_intensity * bc_clip;
 //            color = QColor(255 * intensity[0], 255 * intensity[1], 255 * intensity[2]);
@@ -343,6 +351,10 @@ void SWRastWidget::glEnd()
         mat_t<3, 3, float> norms;
         mat_t<3, 3, float> light_intensity;
 
+        // Немного черной магии
+        const float ambient_correct = 1.633986928f;
+        const float diffuse_correct = 0.7f;
+
         for(size_t k = 0; k < 3; k++)
         {
             vec3f norm_vert = proj<3>((sw_projection * sw_modelview).inverse().transpose()/*.transpose().inverse()*/ * embed<4>(normal[i + k], 0.0f));
@@ -353,7 +365,7 @@ void SWRastWidget::glEnd()
             verts.set_col(k, coord_vert);
 
             vec3f coord_vert_3 = proj<3>(coord_vert);
-            norm_vert.normalize();
+            //norm_vert.normalize();
 
             vec3f intensity_ambient;
             vec3f intensity_diffuse;
@@ -366,11 +378,9 @@ void SWRastWidget::glEnd()
                 if(lights[j].is_enabled)
                 {
                     // Найдем вектор от источника к вершине треугольника
-                    vec3f v3 = (vec3f(lights[j].position[0],
-                                      lights[j].position[1],
-                                      lights[j].position[2]) - /*vertex[i + j]*/coord_vert_3).normalize();
+                    vec3f v3 = (proj<3>(sw_projection * lights[j].position)/* - *//*vertex[i + j]*//*coord_vert_3*/).normalize();
                     // И скалярно умножим на нормаль
-                    intensity = /*-*/(v3 * /*normal[i + j]*/norm_vert);/* / 3.0f*/;
+                    intensity = /*-*/(v3 * /*normal[i + j]*/norm_vert)/* / 3.0f*/;
                     if(intensity < 0) intensity = 0.0f;
                     //intensity *= 2.0f;
                     // Диффузный свет
@@ -390,9 +400,9 @@ void SWRastWidget::glEnd()
                 }
             }
             // Теперь все смешиваем
-            float r = intensity_diffuse[0] * material.diffuse[0] + intensity_ambient[0] * material.ambient[0];
-            float g = intensity_diffuse[1] * material.diffuse[1] + intensity_ambient[1] * material.ambient[1];
-            float b = intensity_diffuse[2] * material.diffuse[2] + intensity_ambient[2] * material.ambient[2];
+            float r = intensity_diffuse[0] * material.diffuse[0] * diffuse_correct + intensity_ambient[0] * material.ambient[0] * ambient_correct;
+            float g = intensity_diffuse[1] * material.diffuse[1] * diffuse_correct + intensity_ambient[1] * material.ambient[1] * ambient_correct;
+            float b = intensity_diffuse[2] * material.diffuse[2] * diffuse_correct + intensity_ambient[2] * material.ambient[2] * ambient_correct;
             if(r > 1.0f) r = 1.0f;
             if(g > 1.0f) g = 1.0f;
             if(b > 1.0f) b = 1.0f;
@@ -491,6 +501,7 @@ void SWRastWidget::glScalef(GLfloat x, GLfloat y, GLfloat z)
         break;
     case GL_MODELVIEW:
         sw_modelview = sw_modelview * m;
+        break;
     }
 }
 
@@ -508,6 +519,7 @@ void SWRastWidget::glTranslatef(GLfloat x, GLfloat y, GLfloat z)
         break;
     case GL_MODELVIEW:
         sw_modelview = sw_modelview * m;
+        break;
     }
 }
 
@@ -541,5 +553,6 @@ void SWRastWidget::glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
         break;
     case GL_MODELVIEW:
         sw_modelview = sw_modelview * m;
+        break;
     }
 }

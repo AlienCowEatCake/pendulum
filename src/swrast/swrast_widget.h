@@ -42,7 +42,7 @@ public:
     struct light
     {
         GLboolean is_enabled;
-        GLfloat position[4];
+        vec4f position;
         GLfloat ambient[4];
         GLfloat diffuse[4];
     };
