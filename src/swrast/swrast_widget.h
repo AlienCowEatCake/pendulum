@@ -29,7 +29,7 @@
 #include "swrast_common.h"
 #include "swrast_geometry.h"
 
-#define SW_LIGHT_MAX 8
+#define SW_LIGHT_MAX 2
 
 // Класс виджет с софтварным растеризатором
 class SWRastWidget : public QWidget
