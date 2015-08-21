@@ -58,6 +58,8 @@ public:
     virtual void resizeGL(int nWidth, int nHeight) = 0;
     virtual void paintGL() = 0;
 
+    static QImage convertToGLFormat(const QImage & img);
+
 public slots:
     void updateGL();
 
@@ -90,12 +92,17 @@ protected:
 
     QVector<float> zbuffer;     // z-буфер
 
+    static QVector<QImage> textures;    // Хранилище наших текстур
+    GLuint current_texture;             // Текущая текстура
+
 public:
     // Аналоги OpenGL функций
     void glLightfv(GLenum light, GLenum pname, const GLfloat * params);
     void glMaterialf(GLenum face, GLenum pname, GLfloat param);
     void glMaterialfv(GLenum face, GLenum pname, const GLfloat * params);
     void glBindTexture(GLenum target, GLuint texture);
+    void glGenTextures(GLsizei n, GLuint * textures);
+    void glTexImage2D(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid * data);
     void glNormal3fv(const GLfloat * v);
     void glTexCoord2f(GLfloat s, GLfloat t);
     void glVertex3fv(const GLfloat * v);
@@ -122,6 +129,9 @@ inline void glLightfv(GLenum light, GLenum pname, const GLfloat * params)   {sw_
 inline void glMaterialf(GLenum face, GLenum pname, GLfloat param)           {sw_context->glMaterialf(face, pname, param);}
 inline void glMaterialfv(GLenum face, GLenum pname, const GLfloat * params) {sw_context->glMaterialfv(face, pname, params);}
 inline void glBindTexture(GLenum target, GLuint texture)                    {sw_context->glBindTexture(target, texture);}
+inline void glGenTextures(GLsizei n, GLuint * textures)                     {sw_context->glGenTextures(n, textures);}
+inline void glTexImage2D(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid * data)
+                                                                            {sw_context->glTexImage2D(target, level, internalFormat, width, height, border, format, type, data);}
 inline void glNormal3fv(const GLfloat * v)                                  {sw_context->glNormal3fv(v);}
 inline void glTexCoord2f(GLfloat s, GLfloat t)                              {sw_context->glTexCoord2f(s, t);}
 inline void glVertex3fv(const GLfloat * v)                                  {sw_context->glVertex3fv(v);}
@@ -143,5 +153,6 @@ inline void glShadeModel(GLenum) {}
 inline void glEnableClientState(GLenum) {}
 inline GLboolean glIsEnabled(GLenum) {return GL_TRUE;}
 inline void glClear(GLbitfield) {}
+inline void glTexParameteri(GLenum, GLenum, GLint) {}
 
 #endif // SWRAST_WIDGET_H

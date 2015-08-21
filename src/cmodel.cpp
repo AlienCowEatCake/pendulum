@@ -22,13 +22,12 @@
 
 #include "cmodel.h"
 
-#if !defined USE_SWRAST
 GLuint LoadGLTextures(const char* name)
 {
     QImage texti;
     GLuint texPntr[1];
     texti.load(name);
-    texti = QGLWidget::convertToGLFormat(texti);
+    texti = BaseWidget::convertToGLFormat(texti);
     glGenTextures(1, &texPntr[0]);
     glBindTexture(GL_TEXTURE_2D, texPntr[0]);
     glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)texti.width(), (GLsizei)texti.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texti.bits());
@@ -36,14 +35,6 @@ GLuint LoadGLTextures(const char* name)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     return texPntr[0];
 }
-#else
-GLuint LoadGLTextures(const char* name)
-{
-    Q_UNUSED(name);
-    // TODO
-    return 0;
-}
-#endif
 
 //конструктор модели
 Cmodel::Cmodel()

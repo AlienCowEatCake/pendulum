@@ -1,5 +1,8 @@
 #include "swrast_widget.h"
 #include <limits>
+#include <QDebug>
+
+QVector<QImage> SWRastWidget::textures;
 
 // Контекст глобальный и может быть только один, увы
 SWRastWidget * sw_context;
@@ -16,6 +19,8 @@ SWRastWidget::SWRastWidget(QWidget * parent) : QWidget(parent)
     sw_modelview = matrix::identity();
     sw_viewport = matrix::identity();
     sw_projection = matrix::identity();
+
+    current_texture = 0;
 }
 
 // Задание фонового цвета
@@ -136,10 +141,36 @@ void SWRastWidget::glMaterialfv(GLenum face, GLenum pname, const GLfloat * param
     }
 }
 
+QImage SWRastWidget::convertToGLFormat(const QImage & img)
+{
+    return img.convertToFormat(QImage::Format_RGB888);
+}
+
 void SWRastWidget::glBindTexture(GLenum target, GLuint texture)
 {
     Q_UNUSED(target);
-    Q_UNUSED(texture);
+    current_texture = texture - 1;
+}
+
+void SWRastWidget::glGenTextures(GLsizei n, GLuint * textures)
+{
+    for(int i = 0; i < n; i++)
+    {
+        SWRastWidget::textures.push_back(QImage());
+        textures[i] = SWRastWidget::textures.size();
+    }
+}
+
+void SWRastWidget::glTexImage2D(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid * data)
+{
+    Q_UNUSED(target);
+    Q_UNUSED(level);
+    Q_UNUSED(internalFormat);
+    Q_UNUSED(border);
+    Q_UNUSED(format);
+    Q_UNUSED(type);
+    textures[current_texture] = QImage((int)width, (int)height, QImage::Format_RGB888);
+    memcpy(textures[current_texture].bits(), data, width * height * 3);
 }
 
 void SWRastWidget::glNormal3fv(const GLfloat * v)
@@ -233,8 +264,13 @@ void SWRastWidget::triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & tex
             //vec3f n = (B * model->normal(uv)).normalize();
             //vec3f n = cross(vertex[i+1] - vertex[i], vertex[i+2] - vertex[i+1]).normalize();
 
+
             vec3f intensity = light_intensity * bc_clip;
-            color = QColor(255 * intensity[0], 255 * intensity[1], 255 * intensity[2]);
+//            color = QColor(255 * intensity[0], 255 * intensity[1], 255 * intensity[2]);
+            int tex_x = uv[0] * (textures[current_texture].width() - 1);
+            int tex_y = textures[current_texture].height() - 1 - uv[1] * (textures[current_texture].height() - 1);
+            QRgb rgb = textures[current_texture].pixel(tex_x, tex_y);
+            color = QColor(qRed(rgb) * intensity[0], qGreen(rgb) * intensity[0], qBlue(rgb) * intensity[0]);
 
             zbuffer[p[0] + p[1] * width()] = frag_depth;
             painter.setPen(QPen(color));
@@ -309,10 +345,15 @@ void SWRastWidget::glEnd()
 
         for(size_t k = 0; k < 3; k++)
         {
+            vec3f norm_vert = proj<3>((sw_projection * sw_modelview).inverse().transpose()/*.transpose().inverse()*/ * embed<4>(normal[i + k], 0.0f));
+            vec4f coord_vert = sw_projection * sw_modelview * embed<4>(vertex[i + k]);
+
             texs.set_col(k, texcoord[i + k]);
-            norms.set_col(k, proj<3>((sw_projection * sw_modelview).inverse().transpose()/*.transpose().inverse()*/ * embed<4>(normal[i + k], 0.0f)));
-            vec4f v = sw_projection * sw_modelview * embed<4>(vertex[i + k]);
-            verts.set_col(k, v);
+            norms.set_col(k, norm_vert);
+            verts.set_col(k, coord_vert);
+
+            vec3f coord_vert_3 = proj<3>(coord_vert);
+            norm_vert.normalize();
 
             vec3f intensity_ambient;
             vec3f intensity_diffuse;
@@ -327,10 +368,11 @@ void SWRastWidget::glEnd()
                     // Найдем вектор от источника к вершине треугольника
                     vec3f v3 = (vec3f(lights[j].position[0],
                                       lights[j].position[1],
-                                      lights[j].position[2]) - vertex[i + j]).normalize();
+                                      lights[j].position[2]) - /*vertex[i + j]*/coord_vert_3).normalize();
                     // И скалярно умножим на нормаль
-                    intensity = -(v3 * normal[i + j]);// / 3.0f;
+                    intensity = /*-*/(v3 * /*normal[i + j]*/norm_vert);/* / 3.0f*/;
                     if(intensity < 0) intensity = 0.0f;
+                    //intensity *= 2.0f;
                     // Диффузный свет
                     float r = lights[j].diffuse[0] * intensity;
                     float g = lights[j].diffuse[1] * intensity;
