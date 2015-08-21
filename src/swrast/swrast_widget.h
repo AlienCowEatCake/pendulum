@@ -25,7 +25,6 @@
 #include <QPaintDevice>
 #include <QColor>
 #include <QVector>
-#include <QTransform>
 #include <QResizeEvent>
 #include "swrast_common.h"
 #include "swrast_geometry.h"

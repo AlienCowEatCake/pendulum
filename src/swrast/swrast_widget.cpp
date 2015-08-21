@@ -231,9 +231,9 @@ void SWRastWidget::triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & tex
     }
     vec2i p;
     QColor color;
-    for(p[0] = bboxmin[0]; p[0] <= bboxmax[0]; p[0]++)
+    for(p[0] = (int)bboxmin[0]; p[0] <= (int)bboxmax[0]; p[0]++)
     {
-        for(p[1] = bboxmin[1]; p[1] <= bboxmax[1]; p[1]++)
+        for(p[1] = (int)bboxmin[1]; p[1] <= (int)bboxmax[1]; p[1]++)
         {
             vec3f bc_screen = barycentric(pts2[0], pts2[1], pts2[2], p);
             vec3f bc_clip = vec3f(bc_screen[0] / pts[0][3], bc_screen[1] / pts[1][3], bc_screen[2] / pts[2][3]);
@@ -262,14 +262,14 @@ void SWRastWidget::triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & tex
                 B.set_col(1, bv.normalize());
                 B.set_col(2, bn);
 
-                int tex_x = uv[0] * (textures[current_texture].width() - 1);
-                int tex_y = textures[current_texture].height() - 1 - uv[1] * (textures[current_texture].height() - 1);
+                int tex_x = (int)(uv[0] * (textures[current_texture].width() - 1));
+                int tex_y = textures[current_texture].height() - 1 - (int)(uv[1] * (textures[current_texture].height() - 1));
                 QRgb rgb = textures[current_texture].pixel(tex_x, tex_y);
-                color = QColor(qRed(rgb) * intensity[0], qGreen(rgb) * intensity[0], qBlue(rgb) * intensity[0]);
+                color = QColor((int)(qRed(rgb) * intensity[0]), (int)(qGreen(rgb) * intensity[0]), (int)(qBlue(rgb) * intensity[0]));
             }
             else
             {
-                color = QColor(255 * intensity[0], 255 * intensity[1], 255 * intensity[2]);
+                color = QColor((int)(255 * intensity[0]), (int)(255 * intensity[1]), (int)(255 * intensity[2]));
             }
 
             zbuffer[p[0] + p[1] * width()] = frag_depth;

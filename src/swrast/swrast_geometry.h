@@ -145,7 +145,7 @@ public:
         values[0] = x;
         values[1] = y;
     }
-    vec_t(const vec_t<2, float> & other)
+    vec_t(const vec_t<2, float> & other) : vec_base<2, float>(other)
     {
         for(size_type i = 0; i < 2; i++)
             values[i] = other.values[i];
@@ -167,7 +167,7 @@ public:
         values[0] = x;
         values[1] = y;
     }
-    vec_t(const vec_t<2, int> & other)
+    vec_t(const vec_t<2, int> & other) : vec_base<2, int>(other)
     {
         for(size_type i = 0; i < 2; i++)
             values[i] = other.values[i];
@@ -189,7 +189,7 @@ public:
         values[1] = y;
         values[2] = z;
     }
-    vec_t(const vec_t<3, float> & other)
+    vec_t(const vec_t<3, float> & other) : vec_base<3, float>(other)
     {
         for(size_type i = 0; i < 3; i++)
             values[i] = other.values[i];
@@ -219,7 +219,7 @@ public:
         values[1] = y;
         values[2] = z;
     }
-    vec_t(const vec_t<3, int> & other)
+    vec_t(const vec_t<3, int> & other) : vec_base<3, int>(other)
     {
         for(size_type i = 0; i < 3; i++)
             values[i] = other.values[i];
