@@ -297,10 +297,10 @@ void SWRastWidget::glEnd()
         // Обойдем все вершины треугольника и упакуем данные в матрицы выше
         for(size_t k = 0; k < 3; k++)
         {
-            vec3f norm_vert = proj<3>((sw_projection * sw_modelview).inverse().transpose() * embed<4>(normal[i + k], 0.0f));
-            vec4f coord_vert = sw_projection * sw_modelview * embed<4>(vertex[i + k]);
+            vec3f norm_vert = proj<3>((sw_projection * sw_modelview).inverse().transpose() * embed<4>(normal[(int)(i + k)], 0.0f));
+            vec4f coord_vert = sw_projection * sw_modelview * embed<4>(vertex[(int)(i + k)]);
 
-            texs.set_col(k, texcoord[i + k]);
+            texs.set_col(k, texcoord[(int)(i + k)]);
             norms.set_col(k, norm_vert);
             verts.set_col(k, coord_vert);
 
