@@ -150,6 +150,7 @@ CONFIG += warn_on
     QMAKE_CXXFLAGS_RELEASE *= -O3
     QMAKE_CXXFLAGS_RELEASE *= -ffast-math
     QMAKE_CXXFLAGS_RELEASE *= -fno-math-errno
+    QMAKE_CXXFLAGS_RELEASE *= -DNDEBUG
 }
 
 *msvc* {
