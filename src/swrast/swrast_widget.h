@@ -67,10 +67,8 @@ protected:
     void paintEvent(QPaintEvent *);
     // Изменение размеров окна
     void resizeEvent(QResizeEvent * event);
-    // Работа с барицентрическими координатами
-    vec3f barycentric(vec2f a, vec2f b, vec2f c, vec2f p);
     // Рисуем треугольник
-    void triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & texs, mat_t<3, 3, float> & norms, mat_t<3, 3, float> light_intensity);
+    void triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & texs, mat_t<3, 3, float> light_intensity);
 
     light lights[SW_LIGHT_MAX]; // Источники света
     light material;             // Материал (ну да, он как свет)

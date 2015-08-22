@@ -46,13 +46,12 @@ void SWRastWidget::updateGL()
         buffer = QImage(width(), height(), QImage::Format_RGB888);
     }
     // А теперь отрисуем
-    QPaintDevice * device = & buffer;
-    painter.begin(device);
-    painter.setViewport(0, 0, width(), height());
+    painter.begin(& buffer);
+    painter.setViewport(0, 0, buffer.width(), buffer.height());
     // Сперва нужно залить фон
-    painter.fillRect(0, 0, width(), height(), background);
+    painter.fillRect(0, 0, buffer.width(), buffer.height(), background);
     // И инициализировать z-буфер
-    zbuffer.resize(static_cast<int>(width() * height()));
+    zbuffer.resize(static_cast<int>(buffer.width() * buffer.height()));
     for(int i = 0; i < zbuffer.size(); i++)
         zbuffer[i] = - std::numeric_limits<float>::max();
     // Ну а дальше запустим саму отрисовку
@@ -143,7 +142,7 @@ void SWRastWidget::glMaterialfv(GLenum face, GLenum pname, const GLfloat * param
 
 QImage SWRastWidget::convertToGLFormat(const QImage & img)
 {
-    return img.convertToFormat(QImage::Format_RGB888);
+    return img.convertToFormat(QImage::Format_RGB888).mirrored(false, true);
 }
 
 void SWRastWidget::glBindTexture(GLenum target, GLuint texture)
@@ -194,117 +193,138 @@ void SWRastWidget::glBegin(GLenum mode)
     assert(mode == GL_TRIANGLES);
 }
 
-// Работа с барицентрическими координатами
-vec3f SWRastWidget::barycentric(vec2f a, vec2f b, vec2f c, vec2f p)
-{
-    vec3f s[2];
-    for(size_t i = 0; i < 2; i++)
-    {
-        s[i][0] = c[i]-a[i];
-        s[i][1] = b[i]-a[i];
-        s[i][2] = a[i]-p[i];
-    }
-    vec3f u = cross(s[0], s[1]);
-    if(fabs(u[2]) > 1e-7)
-        return vec3f(1.0f - (u[0] + u[1]) / u[2], u[1] / u[2], u[0] / u[2]);
-    return vec3f(-1.0f, 1.0f, 1.0f);
-}
-
 // Рисуем треугольник
-void SWRastWidget::triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & texs, mat_t<3, 3, float> & norms, mat_t<3, 3, float> light_intensity)
+void SWRastWidget::triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & texs, mat_t<3, 3, float> light_intensity)
 {
-    mat_t<3, 4, float> pts = (sw_viewport * verts).transpose();
-    mat_t<3, 2, float> pts2;
+    // Переводим в экранные координаты
+    mat_t<3, 4, float> nodes = (sw_viewport * verts).transpose();
+    // Строим матрицу L-координат
+    typedef double L_type;
+    mat_t<3, 3, L_type> L;
+    for(size_t i = 0; i < 2; i++)
+        for(size_t j = 0; j < 3; j++)
+            L[i][j] = nodes[j][i];
     for(size_t i = 0; i < 3; i++)
-        pts2[i] = proj<2>(pts[i] / pts[i][3]);
+        L[2][i] = 1.0;
+    L_type det_D;
+    L = inv(L, det_D);
+    // Если матрица не разложиласть - значит какая-то фигня, треугольник вырожден
+    if(fabs(det_D) < 1e-12) return;
 
-    vec2f bboxmin( std::numeric_limits<float>::max(),  std::numeric_limits<float>::max());
-    vec2f bboxmax(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
-    vec2f clamp(width() - 1, height() - 1);
+    // Находим границы изображения и текстуры
+    vec2i buf_size(buffer.width() - 1, buffer.height() - 1);
+    vec2f tex_size;
+    if(textures_enabled)
+        tex_size = vec2f(textures[current_texture].width() - 1, textures[current_texture].height() - 1);
+
+    // Находим прямоугольник, в который вписан наш треугольник
+    vec2i bound_min(std::numeric_limits<int>::max(), std::numeric_limits<int>::max());
+    vec2i bound_max(std::numeric_limits<int>::min(), std::numeric_limits<int>::min());
     for(size_t i = 0; i < 3; i++)
     {
         for(size_t j = 0; j < 2; j++)
         {
-            bboxmin[j] = std::max(0.0f,     std::min(bboxmin[j], pts2[i][j]));
-            bboxmax[j] = std::min(clamp[j], std::max(bboxmax[j], pts2[i][j]));
+            bound_min[j] = std::max(0,           std::min(bound_min[j], (int)nodes[i][j]));
+            bound_max[j] = std::min(buf_size[j], std::max(bound_max[j], (int)nodes[i][j]));
         }
     }
-    vec2i p;
-    QColor color;
-    for(p[0] = (int)bboxmin[0]; p[0] <= (int)bboxmax[0]; p[0]++)
+
+    // Теперь проходим по прямоугольнику и закрашиваем что попало в треугольник
+    for(int x = bound_min[0]; x <= bound_max[0]; x++)
     {
-        for(p[1] = (int)bboxmin[1]; p[1] <= (int)bboxmax[1]; p[1]++)
+        for(int y = bound_min[1]; y <= bound_max[1]; y++)
         {
-            vec3f bc_screen = barycentric(pts2[0], pts2[1], pts2[2], p);
-            vec3f bc_clip = vec3f(bc_screen[0] / pts[0][3], bc_screen[1] / pts[1][3], bc_screen[2] / pts[2][3]);
-            bc_clip = bc_clip / (bc_clip[0] + bc_clip[1] + bc_clip[2]);
-            float frag_depth = verts[2] * bc_clip;
-            if(bc_screen[0] < 0 || bc_screen[1] < 0 || bc_screen[2] < 0 || zbuffer[p[0] + p[1] * width()] > frag_depth)
+            // Рассчитаем L-координаты точки
+            vec3f L_point;
+            for(size_t i = 0; i < 3; i++)
+                L_point[i] = (float)(L[i][2] + L[i][0] * x + L[i][1] * y);
+
+            // Если L-координаты не в диапазоне [0,1] - значит точка вне треугольника
+            if(L_point[0] > 1.0f || L_point[1] > 1.0f || L_point[2] > 1.0f)
+                continue;
+            if(L_point[0] < 0.0f || L_point[1] < 0.0f || L_point[2] < 0.0f)
                 continue;
 
-            vec3f intensity = light_intensity * bc_clip;
+            // Проверим, что точка находится спереди от всего уже отрисованного
+            int zbuffer_ind = x + y * buffer.width();
+            float frag_depth = verts[2] * L_point;
+            if(zbuffer[zbuffer_ind] > frag_depth)
+                continue;
+            zbuffer[zbuffer_ind] = frag_depth;
+
+            // Подсчитаем уровень освещенности и раскрасим
+            vec3f intensity = light_intensity * L_point;
             if(textures_enabled)
             {
-                vec3f bn = (norms * bc_clip).normalize();
-                vec2f uv = texs * bc_clip;
-                mat_t<3, 3, float> ndc_tri;
-                for(size_t i = 0; i < 3; i++)
-                    ndc_tri.set_col(i, proj<3>(verts.col(i) / verts.col(i)[3]));
-                mat_t<3, 3, float> A;
-                A[0] = ndc_tri.col(1) - ndc_tri.col(0);
-                A[1] = ndc_tri.col(2) - ndc_tri.col(0);
-                A[2] = bn;
-                A = A.inverse();
-                vec3f bu = A * vec3f(texs[0][1] - texs[0][0], texs[0][2] - texs[0][0], 0);
-                vec3f bv = A * vec3f(texs[1][1] - texs[1][0], texs[1][2] - texs[1][0], 0);
-                mat_t<3, 3, float> B;
-                B.set_col(0, bu.normalize());
-                B.set_col(1, bv.normalize());
-                B.set_col(2, bn);
-
-                int tex_x = (int)(uv[0] * (textures[current_texture].width() - 1));
-                int tex_y = textures[current_texture].height() - 1 - (int)(uv[1] * (textures[current_texture].height() - 1));
-                QRgb rgb = textures[current_texture].pixel(tex_x, tex_y);
-                color = QColor((int)(qRed(rgb) * intensity[0]), (int)(qGreen(rgb) * intensity[0]), (int)(qBlue(rgb) * intensity[0]));
+                vec2f uv = texs * L_point;
+                QRgb rgb = textures[current_texture].pixel((int)(uv[0] * tex_size[0]), (int)(uv[1] * tex_size[1]));
+                QColor color((int)(qRed(rgb) * intensity[0]), (int)(qGreen(rgb) * intensity[0]), (int)(qBlue(rgb) * intensity[0]));
+                painter.setPen(QPen(color));
             }
             else
             {
-                color = QColor((int)(255 * intensity[0]), (int)(255 * intensity[1]), (int)(255 * intensity[2]));
+                QColor color((int)(255 * intensity[0]), (int)(255 * intensity[1]), (int)(255 * intensity[2]));
+                painter.setPen(QPen(color));
             }
-
-            zbuffer[p[0] + p[1] * width()] = frag_depth;
-            painter.setPen(QPen(color));
-            painter.setBrush(QBrush(color));
-            painter.drawPoint(p[0], p[1]);
+            painter.drawPoint(x, y);
         }
     }
 }
 
 void SWRastWidget::glEnd()
 {
+    // Немного черной магии
+    const float ambient_correct = 1.633986928f;
+    float diffuse_correct = 0.7f;
+    // Матричный бог, объясни мне пожалуйста строчку ниже...
+    if(width() > height()) diffuse_correct *= (float)height() / (float)width();
+
+    // Фоновый свет не зависит от вершины, поэтому обсчитаем его заранее
+    vec3f intensity_ambient;
+    // Заодно и запомним направление источника света (для точечного источника так нельзя!)
+    vec3f v3[SW_LIGHT_MAX];
+    // Обойдем все источники света
+    for(size_t j = 0; j < SW_LIGHT_MAX; j++)
+    {
+        // Выключенные источники нас не интересуют
+        if(lights[j].is_enabled)
+        {
+            // Найдем вектор от источника
+            v3[j] = proj<3>(sw_projection * lights[j].position).normalize();
+            // Смешение цветов пока простое - кто ярче, того и тапки
+            float r = lights[j].ambient[0];
+            float g = lights[j].ambient[1];
+            float b = lights[j].ambient[2];
+            if(r > intensity_ambient[0]) intensity_ambient[0] = r;
+            if(g > intensity_ambient[1]) intensity_ambient[1] = g;
+            if(b > intensity_ambient[2]) intensity_ambient[2] = b;
+        }
+    }
+    for(size_t j = 0; j < 3; j++)
+        intensity_ambient[j] = intensity_ambient[j] * material.ambient[j] * ambient_correct;
+
+    // Сохраним также произведение матриц GL_PROJECTION на GL_MODELVIEW
+    matrix sw_pm = sw_projection * sw_modelview;
+    // А также его обратно-транспонированное значение
+    matrix sw_pm_it = sw_pm.inverse().transpose();
+
     // Обойдем все треугольники
     for(int i = 0; i < vertex.size(); i += 3)
     {
         mat_t<4, 3, float> verts;
         mat_t<2, 3, float> texs;
-        mat_t<3, 3, float> norms;
         mat_t<3, 3, float> light_intensity;
-
-        // Немного черной магии
-        const float ambient_correct = 1.633986928f;
-        const float diffuse_correct = 0.7f;
 
         // Обойдем все вершины треугольника и упакуем данные в матрицы выше
         for(size_t k = 0; k < 3; k++)
         {
-            vec3f norm_vert = proj<3>((sw_projection * sw_modelview).inverse().transpose() * embed<4>(normal[(int)(i + k)], 0.0f));
-            vec4f coord_vert = sw_projection * sw_modelview * embed<4>(vertex[(int)(i + k)]);
-
-            texs.set_col(k, texcoord[(int)(i + k)]);
-            norms.set_col(k, norm_vert);
+            int vert_ind = (int)(i + k);
+            vec3f norm_vert = proj<3>(sw_pm_it * embed<4>(normal[vert_ind], 0.0f));
+            vec4f coord_vert = sw_pm * embed<4>(vertex[vert_ind]);
+            texs.set_col(k, texcoord[vert_ind]);
             verts.set_col(k, coord_vert);
 
-            vec3f intensity_ambient;
+            // Диффузный свет зависит от вершины, поэтому в цикле смотрим его
             vec3f intensity_diffuse;
             // Далее обойдем все источники света
             for(size_t j = 0; j < SW_LIGHT_MAX; j++)
@@ -312,36 +332,25 @@ void SWRastWidget::glEnd()
                 // Выключенные источники нас не интересуют
                 if(lights[j].is_enabled)
                 {
-                    // Найдем вектор от источника к вершине треугольника
-                    vec3f v3 = proj<3>(sw_projection * lights[j].position).normalize();
-                    // И скалярно умножим на нормаль
-                    float intensity = std::max(v3 * norm_vert, 0.0f);
+                    // Скалярно умножим вектор от источника на нормаль
+                    float intensity = std::max(v3[j] * norm_vert, 0.0f);
                     // Смешение цветов пока простое - кто ярче, того и тапки
-                    // Диффузный свет
                     float r = lights[j].diffuse[0] * intensity;
                     float g = lights[j].diffuse[1] * intensity;
                     float b = lights[j].diffuse[2] * intensity;
                     if(r > intensity_diffuse[0]) intensity_diffuse[0] = r;
                     if(g > intensity_diffuse[1]) intensity_diffuse[1] = g;
                     if(b > intensity_diffuse[2]) intensity_diffuse[2] = b;
-                    // Фоновый свет
-                    r = lights[j].ambient[0];
-                    g = lights[j].ambient[1];
-                    b = lights[j].ambient[2];
-                    if(r > intensity_ambient[0]) intensity_ambient[0] = r;
-                    if(g > intensity_ambient[1]) intensity_ambient[1] = g;
-                    if(b > intensity_ambient[2]) intensity_ambient[2] = b;
                 }
             }
             // Теперь все смешиваем, не без помощи черной магии
             vec3f intensity;
             for(size_t j = 0; j < 3; j++)
-                intensity[j] = std::min(1.0f, intensity_diffuse[j] * material.diffuse[j] * diffuse_correct +
-                                              intensity_ambient[j] * material.ambient[j] * ambient_correct);
+                intensity[j] = std::min(1.0f, intensity_diffuse[j] * material.diffuse[j] * diffuse_correct + intensity_ambient[j]);
             light_intensity.set_col(k, intensity);
         }
         // Посылаем треугольник на отрисовку
-        triangle(verts, texs, norms, light_intensity);
+        triangle(verts, texs, light_intensity);
     }
 
     vertex.clear();
