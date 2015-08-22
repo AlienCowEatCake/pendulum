@@ -28,7 +28,7 @@ SWRastWidget::SWRastWidget(QWidget * parent) : QWidget(parent)
 // Задание фонового цвета
 void SWRastWidget::qglClearColor(const QColor & c)
 {
-    background = c;
+    background = c.rgb();
 }
 
 // Обновление содержимого буфера
