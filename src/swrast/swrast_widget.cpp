@@ -11,7 +11,7 @@ SWRastWidget * sw_context;
 SWRastWidget::SWRastWidget(QWidget * parent) : QWidget(parent)
 {
     buffer = QImage(width(), height(), QImage::Format_RGB888);
-    background = QBrush(Qt::white);
+    background = Qt::white;
     is_initialized = false;
     sw_context = this;
     memset(lights, 0, sizeof(light) * SW_LIGHT_MAX);
@@ -28,7 +28,7 @@ SWRastWidget::SWRastWidget(QWidget * parent) : QWidget(parent)
 // Задание фонового цвета
 void SWRastWidget::qglClearColor(const QColor & c)
 {
-    background = QBrush(c);
+    background = c;
 }
 
 // Обновление содержимого буфера
@@ -45,18 +45,14 @@ void SWRastWidget::updateGL()
     {
         buffer = QImage(width(), height(), QImage::Format_RGB888);
     }
-    // А теперь отрисуем
-    painter.begin(& buffer);
-    painter.setViewport(0, 0, buffer.width(), buffer.height());
     // Сперва нужно залить фон
-    painter.fillRect(0, 0, buffer.width(), buffer.height(), background);
+    buffer.fill(background);
     // И инициализировать z-буфер
     zbuffer.resize(static_cast<int>(buffer.width() * buffer.height()));
     for(int i = 0; i < zbuffer.size(); i++)
         zbuffer[i] = - std::numeric_limits<float>::max();
     // Ну а дальше запустим саму отрисовку
     paintGL();
-    painter.end();
     repaint();
 }
 
@@ -197,13 +193,13 @@ void SWRastWidget::glBegin(GLenum mode)
 void SWRastWidget::triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & texs, mat_t<3, 3, float> light_intensity)
 {
     // Переводим в экранные координаты
-    mat_t<3, 4, float> nodes = (sw_viewport * verts).transpose();
+    mat_t<4, 3, float> nodes = sw_viewport * verts;
     // Строим матрицу L-координат
     typedef double L_type;
     mat_t<3, 3, L_type> L;
     for(size_t i = 0; i < 2; i++)
         for(size_t j = 0; j < 3; j++)
-            L[i][j] = nodes[j][i];
+            L[i][j] = nodes[i][j];
     for(size_t i = 0; i < 3; i++)
         L[2][i] = 1.0;
     L_type det_D;
@@ -224,8 +220,8 @@ void SWRastWidget::triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & tex
     {
         for(size_t j = 0; j < 2; j++)
         {
-            bound_min[j] = std::max(0,           std::min(bound_min[j], (int)nodes[i][j]));
-            bound_max[j] = std::min(buf_size[j], std::max(bound_max[j], (int)nodes[i][j]));
+            bound_min[j] = std::max(0,           std::min(bound_min[j], (int)nodes[j][i]));
+            bound_max[j] = std::min(buf_size[j], std::max(bound_max[j], (int)nodes[j][i]));
         }
     }
 
@@ -259,14 +255,13 @@ void SWRastWidget::triangle(mat_t<4, 3, float> & verts, mat_t<2, 3, float> & tex
                 vec2f uv = texs * L_point;
                 QRgb rgb = textures[current_texture].pixel((int)(uv[0] * tex_size[0]), (int)(uv[1] * tex_size[1]));
                 QColor color((int)(qRed(rgb) * intensity[0]), (int)(qGreen(rgb) * intensity[0]), (int)(qBlue(rgb) * intensity[0]));
-                painter.setPen(QPen(color));
+                buffer.setPixel(x, y, color.rgb());
             }
             else
             {
                 QColor color((int)(255 * intensity[0]), (int)(255 * intensity[1]), (int)(255 * intensity[2]));
-                painter.setPen(QPen(color));
+                buffer.setPixel(x, y, color.rgb());
             }
-            painter.drawPoint(x, y);
         }
     }
 }

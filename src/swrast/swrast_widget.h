@@ -76,7 +76,7 @@ protected:
     bool is_initialized;        // Инициализировано ли?
     QImage buffer;              // Буфер изображения
     QPainter painter;           // На чем рисуем в данный момент
-    QBrush background;          // Фоновый цвет
+    QColor background;          // Фоновый цвет
 
     QVector<vec3f> vertex;      // Вектор из вершин
     QVector<vec3f> normal;      // Вектор из нормалей
