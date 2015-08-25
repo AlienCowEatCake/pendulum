@@ -146,7 +146,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // окно-заставка
     fr = new Frame;
-    //fr->show();
+    fr->show();
     fr->startTimer(10);
 }
 
