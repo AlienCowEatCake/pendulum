@@ -22,8 +22,19 @@
 
 #ifndef CMODEL_H
 #define CMODEL_H
+
+#if !defined USE_SWRAST
+#include <QGLWidget>
 #include <QtOpenGL>
+typedef QGLWidget BaseWidget;
+#else
+#include "swrast/swrast_common.h"
+#include "swrast/swrast_widget.h"
+typedef SWRastWidget BaseWidget;
+#endif
+#include <QImage>
 #include <cmath>
+#include <cstring>
 
 // класс для описания 3D моделей
 class Cmodel

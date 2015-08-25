@@ -27,7 +27,7 @@ GLuint LoadGLTextures(const char* name)
     QImage texti;
     GLuint texPntr[1];
     texti.load(name);
-    texti = QGLWidget::convertToGLFormat(texti);
+    texti = BaseWidget::convertToGLFormat(texti);
     glGenTextures(1, &texPntr[0]);
     glBindTexture(GL_TEXTURE_2D, texPntr[0]);
     glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)texti.width(), (GLsizei)texti.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texti.bits());
