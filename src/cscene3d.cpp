@@ -30,7 +30,11 @@
 #include <cmath>
 
 unsigned long long int tot = 0;
-int vfps = 10;
+#if !defined USE_SWRAST
+int vfps = 25;
+#else
+int vfps = 40;
+#endif
 const static float pi=3.141593f, k=pi/180.0f;
 int id_timer;
 Caction m_action;

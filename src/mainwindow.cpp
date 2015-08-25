@@ -104,7 +104,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->horizontalSlider_4->setValue(3); //коэффициент трения r
     ui->horizontalSlider_5->setValue(100);//скорость эксперимента
     buttonflag = io = false;
-    vfps = 40;
     ui->horizontalSlider_6->setValue(vfps);
 
     // О Qt
