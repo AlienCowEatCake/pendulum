@@ -1,5 +1,5 @@
 /* 
-   Copyright (C) 2011-2014,
+   Copyright (C) 2011-2015,
         Mikhail Alexandrov  <alexandroff.m@gmail.com>
         Andrey Kurochkin    <andy-717@yandex.ru>
         Peter Zhigalov      <peter.zhigalov@gmail.com>

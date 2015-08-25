@@ -8,12 +8,12 @@
 
 # Использовать высокополигональные модели
 #CONFIG += use_hipoly
-# Использовать софтварный растеризатор
+# Использовать софтверный растеризатор
 #CONFIG += use_swrast
 
 # ==============================================================================
 
-DEFINES += VERSION_NUMBER=\\\"v0.39\\\"
+DEFINES += VERSION_NUMBER=\\\"v0.40\\\"
 
 TARGET = pendulum
 TEMPLATE = app
@@ -39,7 +39,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
             }
         }
     } else {
-#        message("Config option use_swrast may be incompatible with Qt 5 and above")
+        win32:message("Config option use_swrast may be incompatible with Qt 5 and above")
     }
 }
 

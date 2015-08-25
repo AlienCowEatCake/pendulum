@@ -1,6 +1,6 @@
 #!/bin/bash
 V_PROJECT=pendulum
-V_VERS=0.39
+V_VERS=0.40
 V_BUILDDIR=../build_linux_qt4
 
 LINK="`readlink $0`"

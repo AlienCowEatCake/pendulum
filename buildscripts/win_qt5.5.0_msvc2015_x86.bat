@@ -1,6 +1,6 @@
 @echo off
 set V_PROJECT=pendulum
-set V_VERS=0.39
+set V_VERS=0.40
 set V_ARCH=x86
 set V_VCVARS="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
 set V_QTDIR=C:\Qt\qt5.5.0-msvc2015-x86-static
