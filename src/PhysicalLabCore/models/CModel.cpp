@@ -1,10 +1,10 @@
 /* 
-   Copyright (C) 2011-2015,
+   Copyright (C) 2011-2016,
         Mikhail Alexandrov  <alexandroff.m@gmail.com>
         Andrey Kurochkin    <andy-717@yandex.ru>
         Peter Zhigalov      <peter.zhigalov@gmail.com>
 
-   This file is part of the `pendulum' program.
+   This file is part of the `PhysicalLabCore' library.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,81 +20,70 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "cmodel.h"
+#include "CModel.h"
 
-GLuint LoadGLTextures(const char* name)
+namespace {
+
+/// @brief LoadGLTextures - загрузка текстуры из файла
+/// @param[in] name - имя файла с текстурой
+/// @return идентификатор текстуры
+GLuint LoadGLTextures(const char * name)
 {
-    QImage texti;
-    GLuint texPntr[1];
-    texti.load(name);
-    texti = BaseWidget::convertToGLFormat(texti);
-    glGenTextures(1, &texPntr[0]);
-    glBindTexture(GL_TEXTURE_2D, texPntr[0]);
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)texti.width(), (GLsizei)texti.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texti.bits());
+    QImage texImage;
+    GLuint texPtr;
+    texImage.load(name);
+    texImage = GLImplWidget::convertToGLFormat(texImage);
+    glGenTextures(1, &texPtr);
+    glBindTexture(GL_TEXTURE_2D, texPtr);
+    GLsizei texWidth = static_cast<GLsizei>(texImage.width());
+    GLsizei texHeight = static_cast<GLsizei>(texImage.height());
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, texImage.bits());
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    return texPntr[0];
+    return texPtr;
 }
 
-//конструктор модели
-Cmodel::Cmodel()
-{
-    m_numMeshes = 0;
-    m_pMeshes = NULL;
-    m_numMaterials = 0;
-    m_pMaterials = NULL;
-    m_numTriangles = 0;
-    m_pTriangles = NULL;
-    m_numVertices = 0;
-    m_pVertices = NULL;
-}
+} // namespace
 
-//деструктор модели
-Cmodel::~Cmodel()
+CModel::CModel()
+    : m_numMeshes(0), m_pMeshes(NULL),
+      m_numMaterials(0), m_pMaterials(NULL),
+      m_numTriangles(0), m_pTriangles(NULL),
+      m_numVertices(0), m_pVertices(NULL)
+{}
+
+CModel::~CModel()
 {
-    int i;
-    for (i = 0; i < m_numMeshes; i++)
+    for(int i = 0; i < m_numMeshes; i++)
         delete [] m_pMeshes[i].m_pTriangleIndices;
-    for (i = 0; i < m_numMaterials; i++)
+    for(int i = 0; i < m_numMaterials; i++)
         delete [] m_pMaterials[i].m_pTextureFilename;
 
     m_numMeshes = 0;
-    if(m_pMeshes)
-    {
-        delete [] m_pMeshes;
-        m_pMeshes = NULL;
-    }
+    delete [] m_pMeshes;
+    m_pMeshes = NULL;
 
     m_numMaterials = 0;
-    if(m_pMaterials)
-    {
-        delete [] m_pMaterials;
-        m_pMaterials = NULL;
-    }
+    delete [] m_pMaterials;
+    m_pMaterials = NULL;
 
     m_numTriangles = 0;
-    if(m_pTriangles)
-    {
-        delete [] m_pTriangles;
-        m_pTriangles = NULL;
-    }
+    delete [] m_pTriangles;
+    m_pTriangles = NULL;
 
     m_numVertices = 0;
-    if(m_pVertices)
-    {
-        delete [] m_pVertices;
-        m_pVertices = NULL;
-    }
+    delete [] m_pVertices;
+    m_pVertices = NULL;
 }
 
-// вывод модели на экран
-void Cmodel::draw()
+/// @brief draw - отрисовка модели
+void CModel::draw() const
 {
-    GLboolean texEnabled = glIsEnabled(GL_TEXTURE_2D); //если поддерживается загрузка текстур
-    for(int i = 0; i < m_numMeshes; i++) // отрисовка по группам с одинаковыми материалами
+    GLboolean texEnabled = glIsEnabled(GL_TEXTURE_2D);  //если поддерживается загрузка текстур
+    for(int i = 0; i < m_numMeshes; i++)    // отрисовка по группам с одинаковыми материалами
     {
         int materialIndex = m_pMeshes[i].m_materialIndex;
-        if(materialIndex >= 0) // если материал задан
+        if(materialIndex >= 0)  // если материал задан
         {
             // установить параметры материала
             glMaterialfv(GL_FRONT, GL_AMBIENT, m_pMaterials[materialIndex].m_ambient);
@@ -102,14 +91,17 @@ void Cmodel::draw()
             glMaterialfv(GL_FRONT, GL_SPECULAR, m_pMaterials[materialIndex].m_specular);
             glMaterialfv(GL_FRONT, GL_EMISSION, m_pMaterials[materialIndex].m_emissive);
             glMaterialf(GL_FRONT, GL_SHININESS, m_pMaterials[materialIndex].m_shininess);
-            // если задана текстура
-            if (m_pMaterials[materialIndex].m_texture > 0)
-            {// установить параметры текстуры
+            if(m_pMaterials[materialIndex].m_texture > 0)   // если задана текстура
+            {
+                // установить параметры текстуры
                 glBindTexture(GL_TEXTURE_2D, m_pMaterials[materialIndex].m_texture);
                 glEnable(GL_TEXTURE_2D);
             }
-            else // иначе отключить текстуры
+            else
+            {
+                // иначе отключить текстуры
                 glDisable(GL_TEXTURE_2D);
+            }
         }
         else
         {
@@ -120,9 +112,10 @@ void Cmodel::draw()
         glBegin(GL_TRIANGLES);
         {
             for(int j = 0; j < m_pMeshes[i].m_numTriangles; j++)
-            {// добавление в OpenGL конвеер координаты треугольников и нормалей
+            {
+                // добавление в OpenGL конвеер координаты треугольников и нормалей
                 int triangleIndex = m_pMeshes[i].m_pTriangleIndices[j];
-                const Triangle* pTri = &m_pTriangles[triangleIndex];
+                const Triangle * pTri = &m_pTriangles[triangleIndex];
                 for(int k = 0; k < 3; k++)
                 {
                     int index = pTri->m_vertexIndices[k];
@@ -136,16 +129,20 @@ void Cmodel::draw()
     }
     // если задана текстура
     if(texEnabled)
-        glEnable(GL_TEXTURE_2D);// включить текстуры
+        glEnable(GL_TEXTURE_2D);    // включить текстуры
     else
-        glDisable(GL_TEXTURE_2D);// иначе отключить текстуры
+        glDisable(GL_TEXTURE_2D);   // иначе отключить текстуры
 }
 
-void Cmodel::reloadTextures()
+/// @brief reloadTextures - перезагрузка всех текстур модели
+void CModel::reloadTextures()
 {
     for(int i = 0; i < m_numMaterials; i++)
+    {
         if(strlen(m_pMaterials[i].m_pTextureFilename) > 0)
             m_pMaterials[i].m_texture = LoadGLTextures(m_pMaterials[i].m_pTextureFilename);
         else
             m_pMaterials[i].m_texture = 0;
+    }
 }
+

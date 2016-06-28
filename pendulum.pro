@@ -18,7 +18,7 @@ DEFINES += VERSION_NUMBER=\\\"v0.40\\\"
 TARGET = pendulum
 TEMPLATE = app
 
-INCLUDEPATH += src
+INCLUDEPATH += src/Pendulum src/PhysicalLabCore
 
 QT += core gui opengl
 
@@ -49,103 +49,107 @@ win32:lessThan(QT_VERSION, 4.5.0) {
     }
 }
 
-SOURCES += src/main.cpp \
-           src/mainwindow.cpp \
-           src/frame.cpp \
-           src/cscene3d.cpp \
-           src/caction.cpp \
-           src/cmodel.cpp \
-           src/cmilkshapemodel.cpp \
-           src/gframe.cpp \
-           src/gframe1.cpp \
-           src/gframe2.cpp \
-           src/cscene2dn.cpp \
-           src/help.cpp \
-           src/author.cpp \
-           src/manual.cpp \
-           src/license.cpp
+SOURCES += src/PhysicalLabCore/models/CModel.cpp \
+           src/PhysicalLabCore/models/CMilkshapeModel.cpp
+HEADERS += src/PhysicalLabCore/models/CModel.h \
+           src/PhysicalLabCore/models/CMilkshapeModel.h
 
-HEADERS += src/mainwindow.h \
-           src/frame.h \
-           src/cscene3d.h \
-           src/caction.h \
-           src/cmodel.h \
-           src/main.h \
-           src/gframe.h \
-           src/gframe1.h \
-           src/gframe2.h \
-           src/cscene2dn.h \
-           src/help.h \
-           src/author.h \
-           src/manual.h \
-           src/license.h
+SOURCES += src/Pendulum/main.cpp \
+           src/Pendulum/mainwindow.cpp \
+           src/Pendulum/frame.cpp \
+           src/Pendulum/cscene3d.cpp \
+           src/Pendulum/caction.cpp \
+           src/Pendulum/cmilkshapemodel_old.cpp \
+           src/Pendulum/gframe.cpp \
+           src/Pendulum/gframe1.cpp \
+           src/Pendulum/gframe2.cpp \
+           src/Pendulum/cscene2dn.cpp \
+           src/Pendulum/help.cpp \
+           src/Pendulum/author.cpp \
+           src/Pendulum/manual.cpp \
+           src/Pendulum/license.cpp
 
-FORMS   += src/frame.ui \
-           src/gframe.ui \
-           src/gframe1.ui \
-           src/gframe2.ui \
-           src/mainwindow.ui
+HEADERS += src/Pendulum/mainwindow.h \
+           src/Pendulum/frame.h \
+           src/Pendulum/cscene3d.h \
+           src/Pendulum/caction.h \
+           src/Pendulum/cmodel.h \
+           src/Pendulum/main.h \
+           src/Pendulum/gframe.h \
+           src/Pendulum/gframe1.h \
+           src/Pendulum/gframe2.h \
+           src/Pendulum/cscene2dn.h \
+           src/Pendulum/help.h \
+           src/Pendulum/author.h \
+           src/Pendulum/manual.h \
+           src/Pendulum/license.h
+
+FORMS   += src/Pendulum/frame.ui \
+           src/Pendulum/gframe.ui \
+           src/Pendulum/gframe1.ui \
+           src/Pendulum/gframe2.ui \
+           src/Pendulum/mainwindow.ui
 
 win32 {
-  FORMS += src/win32/help.ui \
-           src/win32/author.ui \
-           src/win32/manual.ui \
-           src/win32/license.ui
-  RESOURCES += src/resources/manual/win32/manual.qrc
-  RC_FILE += src/resources/icon.rc
+  FORMS += src/Pendulum/win32/help.ui \
+           src/Pendulum/win32/author.ui \
+           src/Pendulum/win32/manual.ui \
+           src/Pendulum/win32/license.ui
+  RESOURCES += src/Pendulum/resources/manual/win32/manual.qrc
+  RC_FILE += src/Pendulum/resources/icon.rc
 }
 
 unix {
-  FORMS += src/linux/help.ui \
-           src/linux/author.ui \
-           src/linux/manual.ui \
-           src/linux/license.ui
-  RESOURCES += src/resources/manual/linux/manual.qrc
+  FORMS += src/Pendulum/linux/help.ui \
+           src/Pendulum/linux/author.ui \
+           src/Pendulum/linux/manual.ui \
+           src/Pendulum/linux/license.ui
+  RESOURCES += src/Pendulum/resources/manual/linux/manual.qrc
 }
 
-RESOURCES += src/resources/mres.qrc \
-             src/resources/help/help.qrc \
-             src/resources/menuicons/menuicons.qrc \
-             src/resources/models/m_cyllinder.qrc
+RESOURCES += src/Pendulum/resources/mres.qrc \
+             src/Pendulum/resources/help/help.qrc \
+             src/Pendulum/resources/menuicons/menuicons.qrc \
+             src/Pendulum/resources/models/m_cyllinder.qrc
 
 use_hipoly {
-  RESOURCES += src/resources/models/hipoly/m_mass.qrc \
-               src/resources/models/hipoly/m_scale.qrc \
-               src/resources/models/hipoly/m_spring_end.qrc \
-               src/resources/models/hipoly/m_spring_start.qrc \
-               src/resources/models/hipoly/m_string.qrc \
-               src/resources/models/hipoly/m_tripod.qrc \
-               src/resources/models/hipoly/t_black_metall.qrc \
-               src/resources/models/hipoly/t_dk_gray_metall.qrc \
-               src/resources/models/hipoly/t_lt_gray_metall.qrc \
-               src/resources/models/hipoly/t_red.qrc \
-               src/resources/models/hipoly/t_wood.qrc \
-               src/resources/models/hipoly/t_yellow.qrc
+  RESOURCES += src/Pendulum/resources/models/hipoly/m_mass.qrc \
+               src/Pendulum/resources/models/hipoly/m_scale.qrc \
+               src/Pendulum/resources/models/hipoly/m_spring_end.qrc \
+               src/Pendulum/resources/models/hipoly/m_spring_start.qrc \
+               src/Pendulum/resources/models/hipoly/m_string.qrc \
+               src/Pendulum/resources/models/hipoly/m_tripod.qrc \
+               src/Pendulum/resources/models/hipoly/t_black_metall.qrc \
+               src/Pendulum/resources/models/hipoly/t_dk_gray_metall.qrc \
+               src/Pendulum/resources/models/hipoly/t_lt_gray_metall.qrc \
+               src/Pendulum/resources/models/hipoly/t_red.qrc \
+               src/Pendulum/resources/models/hipoly/t_wood.qrc \
+               src/Pendulum/resources/models/hipoly/t_yellow.qrc
 }
 else {
-  RESOURCES += src/resources/models/lowpoly/m_mass.qrc \
-               src/resources/models/lowpoly/m_scale.qrc \
-               src/resources/models/lowpoly/m_spring_end.qrc \
-               src/resources/models/lowpoly/m_spring_start.qrc \
-               src/resources/models/lowpoly/m_string.qrc \
-               src/resources/models/lowpoly/m_tripod.qrc \
-               src/resources/models/lowpoly/t_black_metall.qrc \
-               src/resources/models/lowpoly/t_dk_gray_metall.qrc \
-               src/resources/models/lowpoly/t_lt_gray_metall.qrc \
-               src/resources/models/lowpoly/t_red.qrc \
-               src/resources/models/lowpoly/t_wood.qrc \
-               src/resources/models/lowpoly/t_yellow.qrc
+  RESOURCES += src/Pendulum/resources/models/lowpoly/m_mass.qrc \
+               src/Pendulum/resources/models/lowpoly/m_scale.qrc \
+               src/Pendulum/resources/models/lowpoly/m_spring_end.qrc \
+               src/Pendulum/resources/models/lowpoly/m_spring_start.qrc \
+               src/Pendulum/resources/models/lowpoly/m_string.qrc \
+               src/Pendulum/resources/models/lowpoly/m_tripod.qrc \
+               src/Pendulum/resources/models/lowpoly/t_black_metall.qrc \
+               src/Pendulum/resources/models/lowpoly/t_dk_gray_metall.qrc \
+               src/Pendulum/resources/models/lowpoly/t_lt_gray_metall.qrc \
+               src/Pendulum/resources/models/lowpoly/t_red.qrc \
+               src/Pendulum/resources/models/lowpoly/t_wood.qrc \
+               src/Pendulum/resources/models/lowpoly/t_yellow.qrc
 }
 
 use_swrast {
     QT -= opengl
     DEFINES += USE_SWRAST
     SOURCES += \
-        src/swrast/swrast_widget.cpp
+        src/Pendulum/swrast/swrast_widget.cpp
     HEADERS += \
-        src/swrast/swrast_common.h \
-        src/swrast/swrast_geometry.h \
-        src/swrast/swrast_widget.h
+        src/Pendulum/swrast/swrast_common.h \
+        src/Pendulum/swrast/swrast_geometry.h \
+        src/Pendulum/swrast/swrast_widget.h
 }
 
 # === Сборочные директории =====================================================
