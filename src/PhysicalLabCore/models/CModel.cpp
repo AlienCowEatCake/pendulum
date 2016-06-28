@@ -32,14 +32,14 @@ GLuint LoadGLTextures(const char * name)
     QImage texImage;
     GLuint texPtr;
     texImage.load(name);
-    texImage = GLImplWidget::convertToGLFormat(texImage);
-    glGenTextures(1, &texPtr);
-    glBindTexture(GL_TEXTURE_2D, texPtr);
+    texImage = GLWidgetImpl::convertToGLFormat(texImage);
+    GLImpl::glGenTextures(1, &texPtr);
+    GLImpl::glBindTexture(GL_TEXTURE_2D, texPtr);
     GLsizei texWidth = static_cast<GLsizei>(texImage.width());
     GLsizei texHeight = static_cast<GLsizei>(texImage.height());
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, texImage.bits());
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    GLImpl::glTexImage2D(GL_TEXTURE_2D, 0, 3, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, texImage.bits());
+    GLImpl::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    GLImpl::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     return texPtr;
 }
 
@@ -79,37 +79,37 @@ CModel::~CModel()
 /// @brief draw - отрисовка модели
 void CModel::draw() const
 {
-    GLboolean texEnabled = glIsEnabled(GL_TEXTURE_2D);  //если поддерживается загрузка текстур
+    GLboolean texEnabled = GLImpl::glIsEnabled(GL_TEXTURE_2D);  //если поддерживается загрузка текстур
     for(int i = 0; i < m_numMeshes; i++)    // отрисовка по группам с одинаковыми материалами
     {
         int materialIndex = m_pMeshes[i].m_materialIndex;
         if(materialIndex >= 0)  // если материал задан
         {
             // установить параметры материала
-            glMaterialfv(GL_FRONT, GL_AMBIENT, m_pMaterials[materialIndex].m_ambient);
-            glMaterialfv(GL_FRONT, GL_DIFFUSE, m_pMaterials[materialIndex].m_diffuse);
-            glMaterialfv(GL_FRONT, GL_SPECULAR, m_pMaterials[materialIndex].m_specular);
-            glMaterialfv(GL_FRONT, GL_EMISSION, m_pMaterials[materialIndex].m_emissive);
-            glMaterialf(GL_FRONT, GL_SHININESS, m_pMaterials[materialIndex].m_shininess);
+            GLImpl::glMaterialfv(GL_FRONT, GL_AMBIENT, m_pMaterials[materialIndex].m_ambient);
+            GLImpl::glMaterialfv(GL_FRONT, GL_DIFFUSE, m_pMaterials[materialIndex].m_diffuse);
+            GLImpl::glMaterialfv(GL_FRONT, GL_SPECULAR, m_pMaterials[materialIndex].m_specular);
+            GLImpl::glMaterialfv(GL_FRONT, GL_EMISSION, m_pMaterials[materialIndex].m_emissive);
+            GLImpl::glMaterialf(GL_FRONT, GL_SHININESS, m_pMaterials[materialIndex].m_shininess);
             if(m_pMaterials[materialIndex].m_texture > 0)   // если задана текстура
             {
                 // установить параметры текстуры
-                glBindTexture(GL_TEXTURE_2D, m_pMaterials[materialIndex].m_texture);
-                glEnable(GL_TEXTURE_2D);
+                GLImpl::glBindTexture(GL_TEXTURE_2D, m_pMaterials[materialIndex].m_texture);
+                GLImpl::glEnable(GL_TEXTURE_2D);
             }
             else
             {
                 // иначе отключить текстуры
-                glDisable(GL_TEXTURE_2D);
+                GLImpl::glDisable(GL_TEXTURE_2D);
             }
         }
         else
         {
             // иначе отключить материалы
-            glDisable(GL_TEXTURE_2D);
+            GLImpl::glDisable(GL_TEXTURE_2D);
         }
         // начать вывод по треугольникам
-        glBegin(GL_TRIANGLES);
+        GLImpl::glBegin(GL_TRIANGLES);
         {
             for(int j = 0; j < m_pMeshes[i].m_numTriangles; j++)
             {
@@ -119,19 +119,19 @@ void CModel::draw() const
                 for(int k = 0; k < 3; k++)
                 {
                     int index = pTri->m_vertexIndices[k];
-                    glNormal3fv(pTri->m_vertexNormals[k]);
-                    glTexCoord2f(pTri->m_s[k], pTri->m_t[k]);
-                    glVertex3fv(m_pVertices[index].m_location);
+                    GLImpl::glNormal3fv(pTri->m_vertexNormals[k]);
+                    GLImpl::glTexCoord2f(pTri->m_s[k], pTri->m_t[k]);
+                    GLImpl::glVertex3fv(m_pVertices[index].m_location);
                 }
             }
         }
-        glEnd();
+        GLImpl::glEnd();
     }
     // если задана текстура
     if(texEnabled)
-        glEnable(GL_TEXTURE_2D);    // включить текстуры
+        GLImpl::glEnable(GL_TEXTURE_2D);    // включить текстуры
     else
-        glDisable(GL_TEXTURE_2D);   // иначе отключить текстуры
+        GLImpl::glDisable(GL_TEXTURE_2D);   // иначе отключить текстуры
 }
 
 /// @brief reloadTextures - перезагрузка всех текстур модели

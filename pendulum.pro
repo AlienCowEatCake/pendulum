@@ -50,9 +50,19 @@ win32:lessThan(QT_VERSION, 4.5.0) {
 }
 
 SOURCES += src/PhysicalLabCore/models/CModel.cpp \
-           src/PhysicalLabCore/models/CMilkshapeModel.cpp
+           src/PhysicalLabCore/models/CMilkshapeModel.cpp \
+           src/PhysicalLabCore/widgets/GLWidgetImpl/software/SWRastWidget.cpp \
+
 HEADERS += src/PhysicalLabCore/models/CModel.h \
-           src/PhysicalLabCore/models/CMilkshapeModel.h
+           src/PhysicalLabCore/models/CMilkshapeModel.h \
+           src/PhysicalLabCore/widgets/GLWidgetImpl/GLWidgetImpl.h \
+           src/PhysicalLabCore/widgets/GLWidgetImpl/native/GLFunctions.h \
+           src/PhysicalLabCore/widgets/GLWidgetImpl/software/GLFunctions.h \
+           src/PhysicalLabCore/widgets/GLWidgetImpl/software/GLDefines.h \
+           src/PhysicalLabCore/widgets/GLWidgetImpl/software/SWRastVector.h \
+           src/PhysicalLabCore/widgets/GLWidgetImpl/software/SWRastMatrix.h \
+           src/PhysicalLabCore/widgets/GLWidgetImpl/software/SWRastWidget.h \
+
 
 SOURCES += src/Pendulum/main.cpp \
            src/Pendulum/mainwindow.cpp \
@@ -144,12 +154,12 @@ else {
 use_swrast {
     QT -= opengl
     DEFINES += USE_SWRAST
-    SOURCES += \
-        src/Pendulum/swrast/swrast_widget.cpp
-    HEADERS += \
-        src/Pendulum/swrast/swrast_common.h \
-        src/Pendulum/swrast/swrast_geometry.h \
-        src/Pendulum/swrast/swrast_widget.h
+#    SOURCES += \
+#        src/Pendulum/swrast/swrast_widget.cpp
+#    HEADERS += \
+#        src/Pendulum/swrast/swrast_common.h \
+#        src/Pendulum/swrast/swrast_geometry.h \
+#        src/Pendulum/swrast/swrast_widget.h
 }
 
 # === Сборочные директории =====================================================

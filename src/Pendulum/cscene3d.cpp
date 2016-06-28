@@ -43,7 +43,7 @@ GLfloat light_ambient[] = {0.3f, 0.3f, 0.3f, 0.0f};     //фоновый све�
 GLfloat light_diffuse[] = {0.5f, 0.5f, 0.5f, 0.0f};     //значение диффузного света
 GLfloat light_position[] = {0.5f, 0.0f, 0.5f, 0.0f};    //позиция источника света
 
-Cscene3D::Cscene3D(QWidget* parent) : BaseWidget(parent)
+Cscene3D::Cscene3D(QWidget* parent) : GLWidgetImpl(parent)
 {
     defaultScene();
 }
