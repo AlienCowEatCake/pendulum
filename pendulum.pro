@@ -13,46 +13,14 @@
 
 # ==============================================================================
 
+include(src/PhysicalLabCore/PhysicalLabCore.pri)
+
 DEFINES += VERSION_NUMBER=\\\"v0.40\\\"
 
 TARGET = pendulum
 TEMPLATE = app
 
-INCLUDEPATH += src/Pendulum src/PhysicalLabCore
-
-QT += core gui opengl
-
-greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += widgets
-    DEFINES += HAVE_QT5
-    !use_swrast {
-        contains(QT_CONFIG, dynamicgl) {
-            win32-g++* {
-                QMAKE_LIBS += -lopengl32
-            } else {
-                QMAKE_LIBS += opengl32.lib
-            }
-            DEFINES += USE_FORCE_GL
-        } else {
-            contains(QT_CONFIG, opengles.) | contains(QT_CONFIG, angle) {
-                error("This program requires Qt to be configured with -opengl desktop (recommended) or -opengl dynamic")
-            }
-        }
-    } else {
-        win32:message("Config option use_swrast may be incompatible with Qt 5 and above")
-    }
-}
-
-win32:lessThan(QT_VERSION, 4.5.0) {
-    win32-g++*|win32-msvc|win32-msvc.net|win32-msvc200* {
-        DEFINES += HAVE_OLD_QT
-    }
-}
-
-SOURCES += src/PhysicalLabCore/models/CModel.cpp \
-           src/PhysicalLabCore/models/CMilkshapeModel.cpp
-HEADERS += src/PhysicalLabCore/models/CModel.h \
-           src/PhysicalLabCore/models/CMilkshapeModel.h
+INCLUDEPATH += src/Pendulum
 
 SOURCES += src/Pendulum/main.cpp \
            src/Pendulum/mainwindow.cpp \
@@ -141,17 +109,6 @@ else {
                src/Pendulum/resources/models/lowpoly/t_yellow.qrc
 }
 
-use_swrast {
-    QT -= opengl
-    DEFINES += USE_SWRAST
-    SOURCES += \
-        src/Pendulum/swrast/swrast_widget.cpp
-    HEADERS += \
-        src/Pendulum/swrast/swrast_common.h \
-        src/Pendulum/swrast/swrast_geometry.h \
-        src/Pendulum/swrast/swrast_widget.h
-}
-
 # === Сборочные директории =====================================================
 
 DESTDIR = .
@@ -163,21 +120,8 @@ UI_DIR = build
 # === Опции компиляции =========================================================
 
 QMAKE_RESOURCE_FLAGS += -threshold 0 -compress 9
-CONFIG += warn_on
 
 *g++*|*clang* {
-    QMAKE_CXXFLAGS_WARN_ON *= -Wextra
-    QMAKE_CXXFLAGS_RELEASE -= -O2
-    QMAKE_CXXFLAGS_RELEASE *= -O3
     QMAKE_CXXFLAGS_RELEASE *= -ffast-math
     QMAKE_CXXFLAGS_RELEASE *= -fno-math-errno
-    QMAKE_CXXFLAGS_RELEASE *= -DNDEBUG
 }
-
-*msvc* {
-    QMAKE_CXXFLAGS_RELEASE -= -O2
-    QMAKE_CXXFLAGS_RELEASE *= -Ox
-    DEFINES += _CRT_SECURE_NO_WARNINGS
-    DEFINES += _USE_MATH_DEFINES
-}
-

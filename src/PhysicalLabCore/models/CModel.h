@@ -23,10 +23,7 @@
 #if !defined(PHYSICALLABCORE_CMODEL_H_INCLUDED)
 #define PHYSICALLABCORE_CMODEL_H_INCLUDED
 
-/// @todo Заменить на инклуд обертки для подстановки правильной реализации OpenGL
-#include <QtOpenGL>
-#include <QGLWidget>
-typedef QGLWidget GLImplWidget;
+#include "../widgets/GLWidgetImpl/GLWidgetImpl.h"
 
 /// @brief Класс для описания абстрактных 3D моделей
 class CModel
