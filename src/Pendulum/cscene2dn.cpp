@@ -1,5 +1,5 @@
 /* 
-   Copyright (C) 2011-2015,
+   Copyright (C) 2011-2016,
         Mikhail Alexandrov  <alexandroff.m@gmail.com>
         Andrey Kurochkin    <andy-717@yandex.ru>
         Peter Zhigalov      <peter.zhigalov@gmail.com>
@@ -29,11 +29,12 @@
 #include "main.h"
 #include <cmath>
 
-Cscene2dn::Cscene2dn(QWidget* parent) : QWidget(parent)
+Cscene2dn::Cscene2dn(QWidget* parent, bool proj_t) : QWidget(parent)
 {
+	proj_type = proj_t;
     // Мин/макс значения рисуемой области в локальных координатах
     min_x_loc = 0.0f;
-    min_y_loc = -1.0f;
+    (proj_type ? min_y_loc = -1.0f : min_y_loc = 0.0f);
     max_x_loc = 1.0f;
     max_y_loc = 1.0f;
     // Локальный размер рисуемой области без учета осей, подписей и прочего
@@ -87,10 +88,19 @@ void Cscene2dn::resize(float x0, float x1, float y0, float y1)
 QPoint Cscene2dn::to_window(float x, float y) const
 {
     // В OpenGL это был бы glOrtho
-    const float gl_x0 = -0.06f;
-    const float gl_y0 = -1.03f;
-    const float gl_x1 = 1.012f;
-    const float gl_y1 = 1.03f;
+    float gl_x0, gl_y0, gl_x1, gl_y1;
+    gl_x0 = -0.06f;
+    gl_x1 = 1.012f;
+    if(proj_type)
+    {
+        gl_y0 = -1.03f;
+        gl_y1 = 1.03f;
+    }
+    else
+    {
+        gl_y0 = -0.07f;
+        gl_y1 = 1.02f;
+    }
     const float gl_hx = gl_x1 - gl_x0;
     const float gl_hy = gl_y1 - gl_y0;
     // Перевод
@@ -141,8 +151,12 @@ void Cscene2dn::paintEvent(QPaintEvent * event)
 
     // Координатные оси
     painter.setPen(QPen(Qt::black, 3));
-    painter.drawLine(to_window(0.0f, -1.0f), to_window(0.0f, 1.0f));
+    if(proj_type)
+        painter.drawLine(to_window(0.0f, -1.0f), to_window(0.0f, 1.0f));
+    else
+        painter.drawLine(to_window(0.0f, 0.0f), to_window(0.0f, 1.0f));
     painter.drawLine(to_window(0.0f, 0.0f), to_window(1.0f, 0.0f));
+   
 
     // Отрисовка шкалы
 #if defined _WIN32 && defined HAVE_QT5 // Почему-то в Qt5 под Win гигантские шрифты
@@ -158,7 +172,10 @@ void Cscene2dn::paintEvent(QPaintEvent * event)
         float x_real = (float)(floor((x * size_x + min_x) * 1e5 + 0.5)) * 1e-5;
         x = x * size_x_loc + min_x_loc;
         QString st = QString::number(x_real);
-        painter.drawText(to_window(x - 0.01f, -0.06f), st);
+        if(proj_type)
+            painter.drawText(to_window(x - 0.01f, -0.06f), st);
+        else
+            painter.drawText(to_window(x - 0.01f, -0.04f), st);
     }
     for(int i = 0; i < num_ticks_y; i++)
     {
@@ -172,8 +189,17 @@ void Cscene2dn::paintEvent(QPaintEvent * event)
     // Подписи осей
     serifFont.setBold(true);
     painter.setFont(serifFont);
-    painter.drawText(to_window(0.97f, -0.06f), axisX);
-    painter.drawText(to_window(-0.05f, 0.955f), axisY);
+    if(proj_type)
+    {
+        painter.drawText(to_window(0.97f, -0.06f), axisX);
+        painter.drawText(to_window(-0.05f, 0.955f), axisY);
+    }
+    else
+    {
+        painter.drawText(to_window(0.97f, -0.04f), axisX);
+        painter.drawText(to_window(-0.05f, 0.98f), axisY);
+    }
+    
 
     // Отрисовка графика
     painter.setPen(QPen(Qt::black, 2));

@@ -1,5 +1,5 @@
 /* 
-   Copyright (C) 2011-2015,
+   Copyright (C) 2011-2016,
         Mikhail Alexandrov  <alexandroff.m@gmail.com>
         Andrey Kurochkin    <andy-717@yandex.ru>
         Peter Zhigalov      <peter.zhigalov@gmail.com>
@@ -34,7 +34,7 @@ class Cscene2dn : public QWidget
     Q_OBJECT
 
 public:
-    Cscene2dn(QWidget* parent = 0);
+    Cscene2dn(QWidget* parent = 0, bool proj_t = true);
     // Подписи осей
     QString axisX, axisY;
     // Сами значения для графика
@@ -51,6 +51,8 @@ protected:
 private:
     // Подгонка минимальных/максимальных значений и числа линий, для нормальной рисовки сетки
     void adjustAxis(float & min, float & max, int & numTicks);
+    // Тип отображения графика
+    bool proj_type;
     // Минимальные и максимальные значения в глобальных координатах
     float max_x, max_y;
     float min_x, min_y;
