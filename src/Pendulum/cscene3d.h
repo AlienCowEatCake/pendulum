@@ -26,8 +26,9 @@
 /* класс 3D сцены в главном окне*/
 
 #include "cmodel.h"
+#include "widgets/CScene3DAbstract/CScene3DAbstract.h"
 
-class Cscene3D : public GLWidgetImpl
+class Cscene3D : public CScene3DAbstract
 {
     Q_OBJECT
 
@@ -36,35 +37,9 @@ private:
     CMilkshapeModel tripod, sphere, scale, spring_start, spring_end, strng;
     CModelSpring cyll;
 
-    GLfloat xRot;
-    GLfloat yRot;
-    GLfloat zRot;
-    GLfloat zTra;
-    GLfloat nSca;
-
-    QPoint ptrMousePosition;
-    //реакция на клавиши и мышь
-    void scale_plus();
-    void scale_minus();
-    void rotate_up();
-    void rotate_down();
-    void rotate_left();
-    void rotate_right();
-    void translate_down();
-    void translate_up();
-    void defaultScene();
-    // Обновление освещения при изменении масштаба
-    void update_light();
-
 protected:
-    void initializeGL();
-    void resizeGL(int nWidth, int nHeight);
     void paintGL();
-    void mousePressEvent(QMouseEvent* pe);
-    void mouseMoveEvent(QMouseEvent* pe);
-    void mouseReleaseEvent(QMouseEvent*);
-    void wheelEvent(QWheelEvent* pe);
-    void keyPressEvent(QKeyEvent* pe);
+    void initializeGL();
     void timerEvent(QTimerEvent *); // обработка события таймера
 
 public:

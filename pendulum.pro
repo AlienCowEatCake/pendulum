@@ -13,14 +13,14 @@
 
 # ==============================================================================
 
-include(src/PhysicalLabCore/PhysicalLabCore.pri)
-
 DEFINES += VERSION_NUMBER=\\\"v0.40\\\"
 
 TARGET = pendulum
 TEMPLATE = app
 
 INCLUDEPATH += src/Pendulum
+
+include(src/PhysicalLabCore/PhysicalLabCore.pri)
 
 SOURCES += src/Pendulum/main.cpp \
            src/Pendulum/mainwindow.cpp \
