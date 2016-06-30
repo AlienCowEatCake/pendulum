@@ -50,11 +50,13 @@ lessThan(QT_VERSION, 4.5.0) {
 
 HEADERS += \
     $$files($$PWD/models/*.h) \
+    $$files($$PWD/widgets/CScene3DAbstract/*.h) \
     $$files($$PWD/widgets/GLWidgetImpl/*.h) \
     $$files($$PWD/widgets/GLWidgetImpl/native/*.h)
 
 SOURCES += \
-    $$files($$PWD/models/*.cpp)
+    $$files($$PWD/models/*.cpp) \
+    $$files($$PWD/widgets/CScene3DAbstract/*.cpp)
 
 use_swrast {
     QT -= opengl
