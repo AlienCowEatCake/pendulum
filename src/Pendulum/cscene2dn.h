@@ -34,7 +34,7 @@ class Cscene2dn : public QWidget
     Q_OBJECT
 
 public:
-    Cscene2dn(QWidget* parent = 0, bool proj_t = true);
+    Cscene2dn(QWidget* parent = 0, bool haveNegY = true);
     // Подписи осей
     QString axisX, axisY;
     // Сами значения для графика
@@ -43,6 +43,15 @@ public:
     void resize(float x0, float x1, float y0, float y1);
     // Коэффициенты масштабирования по осям x и y
     float scale_x, scale_y;
+    //Интерфейсы для кастомизации отображения
+    void setGridSCol(QColor col){grid_s_col = col;}
+    void setGridBCol(QColor col){grid_b_col = col;}
+    void setAxisCol(QColor col){axis_col = col;}
+    void setPlotCol(QColor col){plot_col = col;}
+    void setGridSWidth(qreal width){grid_s_width = width;}
+    void setGridBWidth(qreal width){grid_b_width = width;}
+    void setAxisWidth(qreal width){axis_width = width;}
+    void setPlotWidth(qreal width){plot_width = width;}
 
 protected:
     // Событие рисования
@@ -52,7 +61,7 @@ private:
     // Подгонка минимальных/максимальных значений и числа линий, для нормальной рисовки сетки
     void adjustAxis(float & min, float & max, int & numTicks);
     // Тип отображения графика
-    bool proj_type;
+    bool haveNegativeY;
     // Минимальные и максимальные значения в глобальных координатах
     float max_x, max_y;
     float min_x, min_y;
@@ -68,6 +77,9 @@ private:
 
     // Функция перевода координат сцены в координаты окна
     QPoint to_window(float x, float y) const;
+    //Кастомизация отображения
+    QColor grid_s_col, grid_b_col, axis_col, plot_col;
+    qreal grid_s_width, grid_b_width, axis_width, plot_width;
 };
 
 #endif // CSCENE2DN_H

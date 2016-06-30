@@ -29,17 +29,26 @@
 #include "main.h"
 #include <cmath>
 
-Cscene2dn::Cscene2dn(QWidget* parent, bool proj_t) : QWidget(parent)
+Cscene2dn::Cscene2dn(QWidget* parent, bool haveNegY) : QWidget(parent)
 {
-	proj_type = proj_t;
+    haveNegativeY = haveNegY;
     // Мин/макс значения рисуемой области в локальных координатах
     min_x_loc = 0.0f;
-    (proj_type ? min_y_loc = -1.0f : min_y_loc = 0.0f);
+    (haveNegativeY ? min_y_loc = -1.0f : min_y_loc = 0.0f);
     max_x_loc = 1.0f;
     max_y_loc = 1.0f;
     // Локальный размер рисуемой области без учета осей, подписей и прочего
     size_x_loc = max_x_loc - min_x_loc;
     size_y_loc = max_y_loc - min_y_loc;
+    //Цвет и ширина для всех линий графиков
+    grid_s_col = Qt::lightGray;
+    grid_b_col = Qt::gray;
+    axis_col = Qt::black;
+    plot_col = Qt::black;
+    grid_s_width = 1;
+    grid_b_width = 1.5;
+    axis_width = 3;
+    plot_width = 2;
 }
 
 // Подгонка минимальных/максимальных значений и числа линий, для нормальной рисовки сетки
@@ -91,7 +100,7 @@ QPoint Cscene2dn::to_window(float x, float y) const
     float gl_x0, gl_y0, gl_x1, gl_y1;
     gl_x0 = -0.06f;
     gl_x1 = 1.012f;
-    if(proj_type)
+    if(haveNegativeY)
     {
         gl_y0 = -1.03f;
         gl_y1 = 1.03f;
@@ -120,7 +129,7 @@ void Cscene2dn::paintEvent(QPaintEvent * event)
     painter.fillRect(event->rect(), QBrush(Qt::white));
 
     // координатная сетка
-    painter.setPen(QPen(Qt::lightGray));
+    painter.setPen(QPen(grid_s_col, grid_s_width));
     for(int i = 0; i <= num_ticks_x * 5; i++)
     {
         float x = (float)i / (float)num_ticks_x * size_x_loc;
@@ -135,7 +144,7 @@ void Cscene2dn::paintEvent(QPaintEvent * event)
         y += min_y_loc;
         painter.drawLine(to_window(min_x_loc, y), to_window(max_x_loc, y));
     }
-    painter.setPen(QPen(Qt::gray, 1.5));
+    painter.setPen(QPen(grid_b_col, grid_b_width));
     for(int i = 0; i <= num_ticks_x; i++)
     {
         float x = (float)i / (float)num_ticks_x * size_x_loc;
@@ -150,8 +159,8 @@ void Cscene2dn::paintEvent(QPaintEvent * event)
     }
 
     // Координатные оси
-    painter.setPen(QPen(Qt::black, 3));
-    if(proj_type)
+    painter.setPen(QPen(axis_col, axis_width));
+    if(haveNegativeY)
         painter.drawLine(to_window(0.0f, -1.0f), to_window(0.0f, 1.0f));
     else
         painter.drawLine(to_window(0.0f, 0.0f), to_window(0.0f, 1.0f));
@@ -165,14 +174,14 @@ void Cscene2dn::paintEvent(QPaintEvent * event)
     QFont serifFont("Times", 11);
 #endif
     painter.setFont(serifFont);
-    painter.setPen(QPen(Qt::black));
+    painter.setPen(QPen(axis_col));
     for(int i = 1; i < num_ticks_x; i++)
     {
         float x = (float)i / (float)num_ticks_x;
         float x_real = (float)(floor((x * size_x + min_x) * 1e5 + 0.5)) * 1e-5;
         x = x * size_x_loc + min_x_loc;
         QString st = QString::number(x_real);
-        if(proj_type)
+        if(haveNegativeY)
             painter.drawText(to_window(x - 0.01f, -0.06f), st);
         else
             painter.drawText(to_window(x - 0.01f, -0.04f), st);
@@ -189,7 +198,7 @@ void Cscene2dn::paintEvent(QPaintEvent * event)
     // Подписи осей
     serifFont.setBold(true);
     painter.setFont(serifFont);
-    if(proj_type)
+    if(haveNegativeY)
     {
         painter.drawText(to_window(0.97f, -0.06f), axisX);
         painter.drawText(to_window(-0.05f, 0.955f), axisY);
@@ -202,7 +211,7 @@ void Cscene2dn::paintEvent(QPaintEvent * event)
     
 
     // Отрисовка графика
-    painter.setPen(QPen(Qt::black, 2));
+    painter.setPen(QPen(plot_col, plot_width));
     size_t maslength = masX.size();
     for(size_t i = 1; i < maslength; i++)
         painter.drawLine(to_window(masX[i-1], masY[i-1]), to_window(masX[i], masY[i]));
