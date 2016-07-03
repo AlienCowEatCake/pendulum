@@ -71,7 +71,7 @@ void CGraphWindowAbstract::on_actionGraphColor_triggered()
         , trUtf8("Select Graph Color")
 #endif
         );
-    if(newColor != oldColor)
+    if(newColor.isValid() && newColor != oldColor)
     {
         m_scene2D->setPlotColor(newColor);
         emit settingsChanged();
