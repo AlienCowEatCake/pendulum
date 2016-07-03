@@ -38,6 +38,7 @@ CGraphWindowAbstract::CGraphWindowAbstract(bool haveNegativeY, QWidget *parent)
     m_ui->setupUi(this);
     m_scene2D = new CScene2D(haveNegativeY, m_ui->centralwidget);
     setCentralWidget(m_scene2D);
+    connect(this, SIGNAL(settingsChanged()), this, SLOT(onSettingsChanged()));
 }
 
 CGraphWindowAbstract::~CGraphWindowAbstract()
@@ -73,7 +74,7 @@ void CGraphWindowAbstract::on_actionGraphColor_triggered()
     if(newColor != oldColor)
     {
         m_scene2D->setPlotColor(newColor);
-        repaint();
+        emit settingsChanged();
     }
 }
 
@@ -87,8 +88,14 @@ void CGraphWindowAbstract::on_actionGraphWidth_triggered()
     if(ok && std::fabs(oldValue - newValue) > 1e-5)
     {
         m_scene2D->setPlotWidth(newValue);
-        repaint();
+        emit settingsChanged();
     }
+}
+
+/// @brief onSettingsChanged - Слот на изменение настроек
+void CGraphWindowAbstract::onSettingsChanged()
+{
+    repaint();
 }
 
 /// @brief arrX - Получить ссылку на вектор из значений по оси абсцисс

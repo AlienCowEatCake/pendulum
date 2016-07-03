@@ -109,6 +109,14 @@ MainWindow::MainWindow(QWidget *parent) :
     // О Qt
     connect(ui->action_about_qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 
+    // Соединяем графики друг с другом, чтобы они могли сообщать об изменении настроек
+    connect(speed, SIGNAL(settingsChanged()), delta, SLOT(onSettingsChanged()));
+    connect(speed, SIGNAL(settingsChanged()), energy, SLOT(onSettingsChanged()));
+    connect(delta, SIGNAL(settingsChanged()), speed, SLOT(onSettingsChanged()));
+    connect(delta, SIGNAL(settingsChanged()), energy, SLOT(onSettingsChanged()));
+    connect(energy, SIGNAL(settingsChanged()), speed, SLOT(onSettingsChanged()));
+    connect(energy, SIGNAL(settingsChanged()), delta, SLOT(onSettingsChanged()));
+
     // Фикс шрифтов
 #if defined(_WIN32) || defined(WIN32)
     fix_fonts(this);

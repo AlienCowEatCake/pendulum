@@ -54,6 +54,13 @@ private slots:
     /// @brief on_actionGraphWidth_triggered - Слот на событие изменения толщины графика
     void on_actionGraphWidth_triggered();
 
+signals:
+    /// @brief settingsChanged - Сигнал, испускаемый при изменении настроек
+    void settingsChanged();
+private slots:
+    /// @brief onSettingsChanged - Слот на изменение настроек
+    void onSettingsChanged();
+
 protected:
     /// @brief arrX - Получить ссылку на вектор из значений по оси абсцисс
     QVector<float> & arrX();
