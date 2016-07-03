@@ -56,7 +56,7 @@ void CScene2D::adjustAxis(float & min, float & max, int & numTicks)
     }
 
     const int minTicks = 6;
-    double grossStep = (max - min) / minTicks;
+    double grossStep = static_cast<double>(max - min) / minTicks;
     double step = std::pow(10, std::floor(std::log10(grossStep)));
 
     if (5 * step < grossStep)
@@ -106,19 +106,15 @@ QPoint CScene2D::toWindow(float x, float y) const
 /// @brief paintEvent - Событие рисования
 void CScene2D::paintEvent(QPaintEvent * event)
 {
-    // Кастомизация отображения
-    QColor gridSmallColor, gridBigColor, axisColor, plotColor;
-    qreal gridSmallWidth, gridBigWidth, axisWidth, plotWidth;
-
     // Цвет и ширина для всех линий графиков
-    gridSmallColor = this->gridSmallColor();
-    gridBigColor   = this->gridBigColor();
-    axisColor      = this->axisColor();
-    plotColor      = this->plotColor();
-    gridSmallWidth = this->gridSmallWidth();
-    gridBigWidth   = this->gridBigWidth();
-    axisWidth      = this->axisWidth();
-    plotWidth      = this->plotWidth();
+    QColor currentGridSmallColor = gridSmallColor();
+    QColor currentGridBigColor   = gridBigColor();
+    QColor currentAxisColor      = axisColor();
+    QColor currentPlotColor      = plotColor();
+    qreal currentGridSmallWidth  = gridSmallWidth();
+    qreal currentGridBigWidth    = gridBigWidth();
+    qreal currentAxisWidth       = axisWidth();
+    qreal currentPlotWidth       = plotWidth();
 
 
     // Поехали рисовать
@@ -130,7 +126,7 @@ void CScene2D::paintEvent(QPaintEvent * event)
     painter.fillRect(event->rect(), QBrush(Qt::white));
 
     // Координатная сетка
-    painter.setPen(QPen(gridSmallColor, gridSmallWidth));
+    painter.setPen(QPen(currentGridSmallColor, currentGridSmallWidth));
     for(int i = 0; i <= m_numTicksX * 5; i++)
     {
         float x = static_cast<float>(i) / static_cast<float>(m_numTicksX) * m_sizeX_local;
@@ -145,7 +141,7 @@ void CScene2D::paintEvent(QPaintEvent * event)
         y += m_minY_local;
         painter.drawLine(toWindow(m_minX_local, y), toWindow(m_maxX_local, y));
     }
-    painter.setPen(QPen(gridBigColor, gridBigWidth));
+    painter.setPen(QPen(currentGridBigColor, currentGridBigWidth));
     for(int i = 0; i <= m_numTicksX; i++)
     {
         float x = static_cast<float>(i) / static_cast<float>(m_numTicksX) * m_sizeX_local;
@@ -160,13 +156,10 @@ void CScene2D::paintEvent(QPaintEvent * event)
     }
 
     // Координатные оси
-    painter.setPen(QPen(axisColor, axisWidth));
-    if(m_haveNegativeY)
-        painter.drawLine(toWindow(0.0f, -1.0f), toWindow(0.0f, 1.0f));
-    else
-        painter.drawLine(toWindow(0.0f, 0.0f), toWindow(0.0f, 1.0f));
-    painter.drawLine(toWindow(0.0f, 0.0f), toWindow(1.0f, 0.0f));
-   
+    painter.setPen(QPen(currentAxisColor, currentAxisWidth));
+    painter.drawLine(toWindow(0.0f, m_minY_local), toWindow(0.0f, m_maxY_local));
+    painter.drawLine(toWindow(0.0f, 0.0f), toWindow(m_maxX_local, 0.0f));
+
 
     // Отрисовка шкалы
 #if defined (Q_OS_WIN) && defined (HAVE_QT5) // Почему-то в Qt5 под Win гигантские шрифты
@@ -201,6 +194,8 @@ void CScene2D::paintEvent(QPaintEvent * event)
     // Подписи осей
     serifFont.setBold(true);
     painter.setFont(serifFont);
+    painter.setBackgroundMode(Qt::OpaqueMode);
+    painter.setBackground(QBrush(Qt::white));
     if(m_haveNegativeY)
     {
         painter.drawText(toWindow(0.97f, -0.06f), m_labelX);
@@ -211,10 +206,11 @@ void CScene2D::paintEvent(QPaintEvent * event)
         painter.drawText(toWindow(0.97f, -0.04f), m_labelX);
         painter.drawText(toWindow(-0.05f, 0.98f), m_labelY);
     }
+    painter.setBackgroundMode(Qt::TransparentMode);
     
 
     // Отрисовка графика
-    painter.setPen(QPen(plotColor, plotWidth));
+    painter.setPen(QPen(currentPlotColor, currentPlotWidth));
     int maslength = m_arrX.size();
     for(int i = 1; i < maslength; i++)
         painter.drawLine(toWindow(m_arrX[i-1], m_arrY[i-1]), toWindow(m_arrX[i], m_arrY[i]));
@@ -329,8 +325,7 @@ void CScene2D::setPlotWidth(qreal width)
 QVariant CScene2D::loadSetting(const QString &name, const QVariant &defaultValue)
 {
     m_settings.sync();
-    QVariant retval = m_settings.value(name, defaultValue);
-    return retval;
+    return m_settings.value(name, defaultValue);
 }
 
 /// @brief gridBigColor - Получить цвет основных линий сетки

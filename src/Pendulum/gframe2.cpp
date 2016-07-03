@@ -46,7 +46,7 @@ void gframe2::update()
         mactiont = log(iter.E0 / 0.001)/(2.0 * iter.sigma);
     else
         mactiont = 1.0;
-    resizeGraph(0.0f, (float)mactiont, -(float)iter.E0, (float)iter.E0);
+    resizeGraph(0.0f, (float)mactiont, 0, (float)iter.E0);
 
     float di=(float)(mactiont * 1000.0 / 50.0);
     for(float i = 0.0; i <= mactiont * 1000.0; i += di)
