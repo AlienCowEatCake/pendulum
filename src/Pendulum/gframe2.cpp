@@ -21,27 +21,20 @@
 */
 
 #include "gframe2.h"
-#include "ui_gframe2.h"
 #include "main.h"
 
 gframe2::gframe2(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::gframe2)
+    CGraphWindowAbstract(false, parent)
 {
-    ui->setupUi(this);
-    setCentralWidget(ui->widget);
-    ui->widget->axisX = trUtf8("t, c");
-    ui->widget->axisY = trUtf8("E, Дж");
+    setLabels(trUtf8("Механическая энергия"), trUtf8("t, c"), trUtf8("E, Дж"));
     update();
-}
-
-gframe2::~gframe2()
-{
-    delete ui;
 }
 
 void gframe2::update()
 {
+    QVector<float> & arrX = this->arrX();
+    QVector<float> & arrY = this->arrY();
+
     iter.r = m_action.r;
     iter.m = m_action.m;
     iter.k = m_action.k;
@@ -53,22 +46,15 @@ void gframe2::update()
         mactiont = log(iter.E0 / 0.001)/(2.0 * iter.sigma);
     else
         mactiont = 1.0;
-    ui->widget->resize(0.0f, (float)mactiont, -(float)iter.E0, (float)iter.E0);
+    resizeGraph(0.0f, (float)mactiont, -(float)iter.E0, (float)iter.E0);
 
     float di=(float)(mactiont * 1000.0 / 50.0);
     for(float i = 0.0; i <= mactiont * 1000.0; i += di)
     {
         iter.Refresh(i);
-        ui->widget->masX.push_back((float)(i / 1000.0) * ui->widget->scale_x);
-        ui->widget->masY.push_back((float)iter.E * ui->widget->scale_y);
+        arrX.push_back((float)(i / 1000.0) * scaleX());
+        arrY.push_back((float)iter.E * scaleY());
     }
 
     repaint();
 }
-
-void gframe2::clear()
-{
-    ui->widget->masX.clear();
-    ui->widget->masY.clear();
-}
-

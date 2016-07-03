@@ -25,10 +25,10 @@
 
 #include <QPoint>
 #include <QList>
-#include "../GLWidgetImpl/GLWidgetImpl.h"
+#include "widgets/CGLWidgetImpl/CGLWidgetImpl.h"
 
 /// @brief Абстрактный класс 3D сцены с камерой
-class CScene3DAbstract : public GLWidgetImpl
+class CScene3DAbstract : public CGLWidgetImpl
 {
     Q_OBJECT
 

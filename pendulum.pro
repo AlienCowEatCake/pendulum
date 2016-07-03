@@ -31,7 +31,6 @@ SOURCES += src/Pendulum/main.cpp \
            src/Pendulum/gframe.cpp \
            src/Pendulum/gframe1.cpp \
            src/Pendulum/gframe2.cpp \
-           src/Pendulum/cscene2dn.cpp \
            src/Pendulum/help.cpp \
            src/Pendulum/author.cpp \
            src/Pendulum/manual.cpp \
@@ -46,16 +45,12 @@ HEADERS += src/Pendulum/mainwindow.h \
            src/Pendulum/gframe.h \
            src/Pendulum/gframe1.h \
            src/Pendulum/gframe2.h \
-           src/Pendulum/cscene2dn.h \
            src/Pendulum/help.h \
            src/Pendulum/author.h \
            src/Pendulum/manual.h \
            src/Pendulum/license.h
 
 FORMS   += src/Pendulum/frame.ui \
-           src/Pendulum/gframe.ui \
-           src/Pendulum/gframe1.ui \
-           src/Pendulum/gframe2.ui \
            src/Pendulum/mainwindow.ui
 
 win32 {

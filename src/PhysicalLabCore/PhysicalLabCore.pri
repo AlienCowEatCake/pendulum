@@ -51,17 +51,24 @@ lessThan(QT_VERSION, 4.5.0) {
 HEADERS += \
     $$files($$PWD/models/*.h) \
     $$files($$PWD/widgets/CScene3DAbstract/*.h) \
-    $$files($$PWD/widgets/GLWidgetImpl/*.h) \
-    $$files($$PWD/widgets/GLWidgetImpl/native/*.h)
+    $$files($$PWD/widgets/CGLWidgetImpl/*.h) \
+    $$files($$PWD/widgets/CGLWidgetImpl/native/*.h) \
+    $$files($$PWD/widgets/CGraphWindowAbstract/*.h) \
+    $$files($$PWD/widgets/CScene2D/*.h)
 
 SOURCES += \
     $$files($$PWD/models/*.cpp) \
-    $$files($$PWD/widgets/CScene3DAbstract/*.cpp)
+    $$files($$PWD/widgets/CScene3DAbstract/*.cpp) \
+    $$files($$PWD/widgets/CGraphWindowAbstract/*.cpp) \
+    $$files($$PWD/widgets/CScene2D/*.cpp)
+
+FORMS += \
+    $$files($$PWD/widgets/CGraphWindowAbstract/*.ui)
 
 use_swrast {
     QT -= opengl
     DEFINES += USE_SWRAST
-    SOURCES += $$files($$PWD/widgets/GLWidgetImpl/software/*.cpp)
-    HEADERS += $$files($$PWD/widgets/GLWidgetImpl/software/*.h)
+    SOURCES += $$files($$PWD/widgets/CGLWidgetImpl/software/*.cpp)
+    HEADERS += $$files($$PWD/widgets/CGLWidgetImpl/software/*.h)
 }
 

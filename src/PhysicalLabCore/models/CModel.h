@@ -23,7 +23,7 @@
 #if !defined(PHYSICALLABCORE_CMODEL_H_INCLUDED)
 #define PHYSICALLABCORE_CMODEL_H_INCLUDED
 
-#include "../widgets/GLWidgetImpl/GLWidgetImpl.h"
+#include "widgets/CGLWidgetImpl/CGLWidgetImpl.h"
 
 /// @brief Класс для описания абстрактных 3D моделей
 class CModel
