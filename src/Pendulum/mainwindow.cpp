@@ -152,9 +152,9 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
     // окно-заставка
-    fr = new Frame;
-    fr->show();
-    fr->startTimer(10);
+    fr = new CSplashScreenWindow(this);
+    fr->setPixmap(":/mres/splash.png");
+    fr->setTitle("Пружинный маятник в среде с сопротивлением");
 }
 
 MainWindow::~MainWindow()
@@ -394,7 +394,6 @@ void MainWindow::closeEvent(QCloseEvent *)
     delete auth;
     delete manuala;
     delete licensef;
-    delete fr;
 }
 
 void MainWindow::on_action_6_triggered()

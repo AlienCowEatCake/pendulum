@@ -33,7 +33,7 @@
 #include "author.h"
 #include "manual.h"
 #include "license.h"
-#include "frame.h"
+#include "widgets/CSplashScreenWindow/CSplashScreenWindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -47,7 +47,7 @@ public:
 
     QTimer *qtmr;
     bool buttonflag, io;
-    Frame *fr;
+    CSplashScreenWindow *fr;
     gframe *speed;
     gframe1 *delta;
     gframe2 *energy;

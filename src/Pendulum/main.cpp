@@ -45,7 +45,5 @@ int main(int argc, char *argv[])
 #endif
     MainWindow w;// главное окно
     w.show();
-    if(!w.fr->isActiveWindow())
-        w.fr->activateWindow();
     return app.exec();
 }
