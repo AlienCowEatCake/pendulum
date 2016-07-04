@@ -70,11 +70,11 @@ public:
     /// @brief Дефолтное состояние сцены
     struct SceneDefault : SceneParameters
     {
-        SceneDefault(const SceneParameters & sceneParameters = SceneParameters(), GLfloat scale_max = 0.1f, GLfloat scale_min = 3.0f)
-            : SceneParameters(sceneParameters), scaleMax(scale_max), scaleMin(scale_min)
+        SceneDefault(const SceneParameters & sceneParameters = SceneParameters(), GLfloat scale_min = 0.1f, GLfloat scale_max = 3.0f)
+            : SceneParameters(sceneParameters), scaleMin(scale_min), scaleMax(scale_max)
         {}
-        GLfloat scaleMax;
         GLfloat scaleMin;
+        GLfloat scaleMax;
     };
 
 protected:
