@@ -23,7 +23,8 @@
 #if !defined(PHYSICALLABCORE_CMODEL_H_INCLUDED)
 #define PHYSICALLABCORE_CMODEL_H_INCLUDED
 
-#include "../widgets/GLWidgetImpl/GLWidgetImpl.h"
+#include "widgets/CGLWidgetImpl/CGLWidgetImpl.h"
+#include <QString>
 
 /// @brief Класс для описания абстрактных 3D моделей
 class CModel
@@ -80,7 +81,7 @@ public:
     /// @brief loadModelData - загрузка модели из файла
     /// @param[in] filename - имя файла
     /// @return true, если загрузка прошла успешно, false иначе
-    virtual bool loadModelData(const char * filename) = 0;
+    virtual bool loadModelData(const QString & filename) = 0;
 
     /// @brief draw - отрисовка модели
     void draw() const;

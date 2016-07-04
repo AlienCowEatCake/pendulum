@@ -31,8 +31,8 @@ GLuint LoadGLTextures(const char * name)
 {
     QImage texImage;
     GLuint texPtr;
-    texImage.load(name);
-    texImage = GLWidgetImpl::convertToGLFormat(texImage);
+    texImage.load(QString::fromUtf8(name));
+    texImage = CGLWidgetImpl::convertToGLFormat(texImage);
     GLImpl::glGenTextures(1, &texPtr);
     GLImpl::glBindTexture(GL_TEXTURE_2D, texPtr);
     GLsizei texWidth = static_cast<GLsizei>(texImage.width());

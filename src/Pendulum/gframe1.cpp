@@ -21,37 +21,29 @@
 */
 
 #include "gframe1.h"
-#include "ui_gframe1.h"
 #include "main.h"
 
 gframe1::gframe1(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::gframe1)
+    CGraphWindowAbstract(true, parent)
 {
-    ui->setupUi(this);
-    setCentralWidget(ui->widget);
-    ui->widget->axisX = trUtf8("t, c");
-    ui->widget->axisY = trUtf8("x, м");
+    setLabels(trUtf8("Смещение"), trUtf8("t, c"), trUtf8("x, м"));
     numT = 3;
     update();
-
-}
-
-gframe1::~gframe1()
-{
-    delete ui;
 }
 
 void gframe1::update()
 {   
+    QVector<float> & arrX = this->arrX();
+    QVector<float> & arrY = this->arrY();
+
     if(m_action.w0<=m_action.sigma && fabs(m_action.A0)<0.0001)
     {
-        ui->widget->masX.push_back(0.0f);
-        ui->widget->masX.push_back(1.0f);
-        ui->widget->masY.push_back(0.0f);
-        ui->widget->masY.push_back(0.0f);
+        arrX.push_back(0.0f);
+        arrX.push_back(1.0f);
+        arrY.push_back(0.0f);
+        arrY.push_back(0.0f);
 
-        ui->widget->resize(0.0f, 1.0f, -1.0f, 1.0f);
+        resizeGraph(0.0f, 1.0f, -1.0f, 1.0f);
     }
     else
     {
@@ -61,7 +53,7 @@ void gframe1::update()
         else
             mactiont = m_action.T;
 
-        ui->widget->resize(0.0f, (float)mactiont * (float)numT, -(float)fabs(m_action.A0), (float)fabs(m_action.A0));
+        resizeGraph(0.0f, (float)mactiont * (float)numT, -(float)fabs(m_action.A0), (float)fabs(m_action.A0));
 
         iter.r = m_action.r;
         iter.m = m_action.m;
@@ -73,16 +65,10 @@ void gframe1::update()
         for(float i = 0.0f; i <= (float)(mactiont * numT * 1000.0); i += di)
         {
             iter.Refresh(i);
-            ui->widget->masX.push_back((float)(i / 1000.0) * ui->widget->scale_x);
-            ui->widget->masY.push_back((float)iter.x * ui->widget->scale_y);
+            arrX.push_back((float)(i / 1000.0) * scaleX());
+            arrY.push_back((float)iter.x * scaleY());
         }
     }
 
     repaint();
-}
-
-void gframe1::clear()
-{
-    ui->widget->masX.clear();
-    ui->widget->masY.clear();
 }

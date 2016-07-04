@@ -23,23 +23,20 @@
 #ifndef GFRAME_H
 #define GFRAME_H
 
-#include "cscene2dn.h"
+#include "widgets/CGraphWindowAbstract/CGraphWindowAbstract.h"
 #include "main.h"
-#include <QMainWindow>
 
 namespace Ui {
 class gframe;
 }
 
-class gframe : public QMainWindow
+class gframe : public CGraphWindowAbstract
 {
     Q_OBJECT
     
 public:
     explicit gframe(QWidget *parent = 0);
-    ~gframe();
     void update();
-    void clear();
 
 private:
     Ui::gframe *ui;

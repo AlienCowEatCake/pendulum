@@ -26,7 +26,7 @@
 #include <cassert>
 
 CScene3DAbstract::CScene3DAbstract(QWidget* parent)
-    : GLWidgetImpl(parent)
+    : CGLWidgetImpl(parent)
 {}
 
 /// @brief Установить параметры сцены по-умолчанию
