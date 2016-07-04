@@ -68,7 +68,7 @@ void CGraphWindowAbstract::on_actionGraphColor_triggered()
     QColor oldColor = m_scene2D->plotColor();
     QColor newColor = QColorDialog::getColor(oldColor, this
 #if !defined (HAVE_LESS_THAN_QT45)
-        , trUtf8("Select Graph Color")
+        , tr("Select Graph Color")
 #endif
         );
     if(newColor.isValid() && newColor != oldColor)
@@ -83,7 +83,7 @@ void CGraphWindowAbstract::on_actionGraphWidth_triggered()
 {
     bool ok = false;
     qreal oldValue = m_scene2D->plotWidth();
-    double value = QInputDialog::getDouble(this, trUtf8("Width"), trUtf8("Select Graph Width:"), static_cast<double>(oldValue), 1.0, 10.0, 1, &ok);
+    double value = QInputDialog::getDouble(this, tr("Width"), tr("Select Graph Width:"), static_cast<double>(oldValue), 1.0, 10.0, 1, &ok);
     qreal newValue = static_cast<qreal>(value);
     if(ok && std::fabs(oldValue - newValue) > 1e-5)
     {

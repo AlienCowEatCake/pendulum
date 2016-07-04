@@ -7,6 +7,8 @@ CONFIG += object_with_source object_parallel_to_source no_batch warn_on
 
 QT += core gui opengl
 
+#DEFINES += QT_NO_CAST_FROM_ASCII
+
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     DEFINES += HAVE_QT5

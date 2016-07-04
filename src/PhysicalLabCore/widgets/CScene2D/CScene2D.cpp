@@ -163,11 +163,11 @@ void CScene2D::paintEvent(QPaintEvent * event)
 
     // Отрисовка шкалы
 #if defined (Q_OS_WIN) && defined (HAVE_QT5) // Почему-то в Qt5 под Win гигантские шрифты
-    QFont serifFont("Times", 9);
+    QFont serifFont(tr("Times"), 9);
 #elif defined (Q_OS_MAC)
     #error TODO /// @todo Подобрать размер шрифта под OS X
 #else
-    QFont serifFont("Times", 11);
+    QFont serifFont(tr("Times"), 11);
 #endif
     painter.setFont(serifFont);
     painter.setPen(QPen(Qt::black));
@@ -187,15 +187,15 @@ void CScene2D::paintEvent(QPaintEvent * event)
         float y = static_cast<float>(i) / static_cast<float>(m_numTicksY);
         float y_real = static_cast<float>(std::floor((y * m_sizeY + m_minY) * 1e5 + 0.5)) * 1e-5f;
         y = y * m_sizeY_local + m_minY_local;
-        QString st = QString("%1").arg(y_real, 5, 'g', -1, ' ');
+        QString st = QString(QLatin1String("%1")).arg(y_real, 5, 'g', -1, QLatin1Char(' '));
         painter.drawText(toWindow(-0.05f, y - 0.01f), st);
     }
 
     // Подписи осей
     serifFont.setBold(true);
     painter.setFont(serifFont);
-    painter.setBackgroundMode(Qt::OpaqueMode);
-    painter.setBackground(QBrush(Qt::white));
+//    painter.setBackgroundMode(Qt::OpaqueMode);
+//    painter.setBackground(QBrush(Qt::white));
     if(m_haveNegativeY)
     {
         painter.drawText(toWindow(0.97f, -0.06f), m_labelX);
@@ -206,7 +206,7 @@ void CScene2D::paintEvent(QPaintEvent * event)
         painter.drawText(toWindow(0.97f, -0.04f), m_labelX);
         painter.drawText(toWindow(-0.05f, 0.98f), m_labelY);
     }
-    painter.setBackgroundMode(Qt::TransparentMode);
+//    painter.setBackgroundMode(Qt::TransparentMode);
     
 
     // Отрисовка графика

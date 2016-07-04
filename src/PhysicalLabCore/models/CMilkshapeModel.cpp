@@ -124,7 +124,7 @@ CMilkshapeModel::~CMilkshapeModel()
 /// @brief loadModelData - загрузка модели из файла
 /// @param[in] filename - имя файла
 /// @return true, если загрузка прошла успешно, false иначе
-bool CMilkshapeModel::loadModelData(const char * filename)
+bool CMilkshapeModel::loadModelData(const QString & filename)
 {
     QFile inputFile(filename);
     inputFile.open(QFile::ReadOnly);

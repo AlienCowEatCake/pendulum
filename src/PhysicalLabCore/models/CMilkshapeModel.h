@@ -35,7 +35,7 @@ public:
     /// @brief loadModelData - загрузка модели из файла
     /// @param[in] filename - имя файла
     /// @return true, если загрузка прошла успешно, false иначе
-    bool loadModelData(const char * filename);
+    bool loadModelData(const QString & filename);
 
 protected:
     /// @brief generateNormales - просчет нормалей
