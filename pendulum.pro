@@ -24,7 +24,6 @@ include(src/PhysicalLabCore/PhysicalLabCore.pri)
 
 SOURCES += src/Pendulum/main.cpp \
            src/Pendulum/mainwindow.cpp \
-           src/Pendulum/frame.cpp \
            src/Pendulum/cscene3d.cpp \
            src/Pendulum/caction.cpp \
            src/Pendulum/cmilkshapemodel_old.cpp \
@@ -37,7 +36,6 @@ SOURCES += src/Pendulum/main.cpp \
            src/Pendulum/license.cpp
 
 HEADERS += src/Pendulum/mainwindow.h \
-           src/Pendulum/frame.h \
            src/Pendulum/cscene3d.h \
            src/Pendulum/caction.h \
            src/Pendulum/cmodel.h \
@@ -50,8 +48,7 @@ HEADERS += src/Pendulum/mainwindow.h \
            src/Pendulum/manual.h \
            src/Pendulum/license.h
 
-FORMS   += src/Pendulum/frame.ui \
-           src/Pendulum/mainwindow.ui
+FORMS   += src/Pendulum/mainwindow.ui
 
 win32 {
   FORMS += src/Pendulum/win32/help.ui \
