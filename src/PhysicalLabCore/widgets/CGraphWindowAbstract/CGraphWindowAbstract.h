@@ -20,7 +20,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PHYSICALLABCORE_CGRAPHWINDOWABSTRACT_H_INCLUDED
+#if !defined (PHYSICALLABCORE_CGRAPHWINDOWABSTRACT_H_INCLUDED)
 #define PHYSICALLABCORE_CGRAPHWINDOWABSTRACT_H_INCLUDED
 
 #include <QMainWindow>
@@ -86,3 +86,4 @@ private:
 };
 
 #endif // PHYSICALLABCORE_CGRAPHWINDOWABSTRACT_H_INCLUDED
+

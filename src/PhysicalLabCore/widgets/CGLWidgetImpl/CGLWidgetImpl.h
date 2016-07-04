@@ -20,10 +20,10 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if !defined(PHYSICALLABCORE_CGLWIDGETIMPL_H_INCLUDED)
+#if !defined (PHYSICALLABCORE_CGLWIDGETIMPL_H_INCLUDED)
 #define PHYSICALLABCORE_CGLWIDGETIMPL_H_INCLUDED
 
-#if !defined USE_SWRAST
+#if !defined (USE_SWRAST)
 #include <QtOpenGL>
 #include <QGLWidget>
 #include "native/GLFunctions.h"
@@ -34,10 +34,9 @@ typedef SWRastWidget CGLWidgetImpl;
 #include "software/GLFunctions.h"
 #endif
 
-#if !defined(GL_MULTISAMPLE)
+#if !defined (GL_MULTISAMPLE)
 #define GL_MULTISAMPLE  0x809D
 #endif
 
 #endif // PHYSICALLABCORE_CGLWIDGETIMPL_H_INCLUDED
-
 

@@ -20,7 +20,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PHYSICALLABCORE_CSCENE3DABSTRACT_H_INCLUDED
+#if !defined (PHYSICALLABCORE_CSCENE3DABSTRACT_H_INCLUDED)
 #define PHYSICALLABCORE_CSCENE3DABSTRACT_H_INCLUDED
 
 #include <QPoint>
@@ -122,3 +122,4 @@ private:
 };
 
 #endif // PHYSICALLABCORE_CSCENE3DABSTRACT_H_INCLUDED
+

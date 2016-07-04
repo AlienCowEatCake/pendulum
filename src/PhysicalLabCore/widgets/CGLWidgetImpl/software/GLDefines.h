@@ -20,7 +20,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if !defined(PHYSICALLABCORE_GLDEFINES_H_INCLUDED)
+#if !defined (PHYSICALLABCORE_GLDEFINES_H_INCLUDED)
 #define PHYSICALLABCORE_GLDEFINES_H_INCLUDED
 
 // В Qt 5 файл gl.h уже включен в какой-то из заголовочных файлов, включенных в QtWidgets,
@@ -28,7 +28,7 @@
 // Для определенности пусть это будет GL_TRUE. Такой способ определения может привести к
 // печальным последствиям, если системная реализация OpenGL несовместима по константам с
 // Mesa 3D, однако более безболезненного решения пока не обнаружено.
-#if !defined(GL_TRUE)
+#if !defined (GL_TRUE)
 
 // Типы данных и константы OpenGL (взято из Mesa 7.8.2)
 
@@ -654,8 +654,7 @@ typedef double          GLclampd;   /* double precision float in [0,1] */
 #define GL_ALL_CLIENT_ATTRIB_BITS           0xFFFFFFFF
 #define GL_CLIENT_ALL_ATTRIB_BITS           0xFFFFFFFF
 
-#endif // !defined(GL_TRUE)
+#endif // !defined (GL_TRUE)
 
 #endif // PHYSICALLABCORE_GLDEFINES_H_INCLUDED
-
 

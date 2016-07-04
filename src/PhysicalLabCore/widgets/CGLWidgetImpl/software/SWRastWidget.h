@@ -20,7 +20,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if !defined(PHYSICALLABCORE_SWRASTWIDGET_H_INCLUDED)
+#if !defined (PHYSICALLABCORE_SWRASTWIDGET_H_INCLUDED)
 #define PHYSICALLABCORE_SWRASTWIDGET_H_INCLUDED
 
 #include <QWidget>

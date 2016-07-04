@@ -139,3 +139,4 @@ float CGraphWindowAbstract::scaleY() const
 {
     return m_scene2D->scaleY();
 }
+

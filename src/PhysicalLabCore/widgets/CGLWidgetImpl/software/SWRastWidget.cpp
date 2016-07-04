@@ -549,3 +549,4 @@ void SWRastWidget::glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
         break;
     }
 }
+

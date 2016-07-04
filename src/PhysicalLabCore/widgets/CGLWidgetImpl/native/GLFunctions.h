@@ -20,7 +20,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if !defined(PHYSICALLABCORE_GLFUNCTIONS_H_INCLUDED)
+#if !defined (PHYSICALLABCORE_GLFUNCTIONS_H_INCLUDED)
 #define PHYSICALLABCORE_GLFUNCTIONS_H_INCLUDED
 
 #include <QtOpenGL>
@@ -58,5 +58,4 @@ inline void glMaterialf(GLenum face, GLenum pname, GLfloat param)           { ::
 } // GLImpl
 
 #endif // PHYSICALLABCORE_GLFUNCTIONS_H_INCLUDED
-
 

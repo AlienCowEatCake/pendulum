@@ -20,7 +20,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if defined(HAVE_QT5)
+#if defined (HAVE_QT5)
 #include <QtWidgets>
 #else
 #include <QtGui>
@@ -379,3 +379,4 @@ qreal CScene2D::plotWidth()
 {
     return loadSetting(QLatin1String("PlotWidth"), 2.0f).toReal();
 }
+

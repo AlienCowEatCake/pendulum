@@ -260,3 +260,4 @@ void CScene3DAbstract::updateLight()
         GLImpl::glLightfv(it->lightID, GL_DIFFUSE, light_diffuse_new);
     }
 }
+

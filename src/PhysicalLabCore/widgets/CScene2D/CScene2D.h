@@ -20,7 +20,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if !defined(PHYSICALLABCORE_CSCENE2D_H_INCLUDED)
+#if !defined (PHYSICALLABCORE_CSCENE2D_H_INCLUDED)
 #define PHYSICALLABCORE_CSCENE2D_H_INCLUDED
 
 #include <QString>
@@ -134,3 +134,4 @@ private:
 };
 
 #endif // PHYSICALLABCORE_CSCENE2D_H_INCLUDED
+

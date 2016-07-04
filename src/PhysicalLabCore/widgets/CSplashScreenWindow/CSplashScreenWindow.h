@@ -20,8 +20,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CSplashScreenWindow_H
-#define CSplashScreenWindow_H
+#if !defined (PHYSICALLABCORE_CSPLASHSCREENWINDOW_H_INCLUDED)
+#define PHYSICALLABCORE_CSPLASHSCREENWINDOW_H_INCLUDED
 
 #include <QWidget>
 #include <QString>
@@ -58,5 +58,5 @@ private:
     Ui::CSplashScreenWindow * m_ui;
 };
 
-#endif // CSplashScreenWindow_H
+#endif // PHYSICALLABCORE_CSPLASHSCREENWINDOW_H_INCLUDED
 
