@@ -44,19 +44,22 @@ FORMS   += src/Pendulum/mainwindow.ui
 
 win32 {
   RESOURCES += src/Pendulum/resources/manual/win32/manual.qrc \
-               src/Pendulum/win32/html.qrc
+               src/Pendulum/win32/html_old.qrc \
+               src/Pendulum-new/resources/html/stylesheet/stylesheet-windows.qrc
   RC_FILE += src/Pendulum/resources/icon.rc
 }
 
 unix {
   RESOURCES += src/Pendulum/resources/manual/linux/manual.qrc \
-               src/Pendulum/linux/html.qrc
+               src/Pendulum/linux/html_old.qrc \
+               src/Pendulum-new/resources/html/stylesheet/stylesheet-linux.qrc
 }
 
 RESOURCES += src/Pendulum/resources/mres.qrc \
-             src/Pendulum/resources/help/help.qrc \
              src/Pendulum/resources/menuicons/menuicons.qrc \
-             src/Pendulum/resources/models/m_cyllinder.qrc
+             src/Pendulum/resources/models/m_cyllinder.qrc \
+             src/Pendulum-new/resources/html/help/help.qrc \
+             src/Pendulum-new/resources/html/html.qrc
 
 use_hipoly {
   RESOURCES += src/Pendulum/resources/models/hipoly/m_mass.qrc \

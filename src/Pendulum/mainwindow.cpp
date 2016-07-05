@@ -87,26 +87,26 @@ MainWindow::MainWindow(QWidget *parent) :
     energy->setHidden(true);
     spravka = new CHtmlWindow;
     spravka->setHidden(true);
-    spravka->loadHtml(":/html/help.html");
+    spravka->loadHtml(":/html/help_ru.html");
     spravka->setSize(880, 540);
     spravka->setScrollBarEnabled();
-    spravka->setTitle("О программе");
+    spravka->setTitle(trUtf8("О программе"));
     auth = new CHtmlWindow;
     auth->setHidden(true);
-    auth->loadHtml(":/html/author.html");
+    auth->loadHtml(":/html/author_ru.html");
     auth->setSize(670, 400);
-    auth->setTitle("Авторы");
+    auth->setTitle(trUtf8("Авторы"));
     manuala = new CHtmlWindow;
     manuala->setHidden(true);
-    manuala->loadHtml(":/html/manual.html");
+    manuala->loadHtml(":/html/manual_ru.html");
     manuala->setSize(880, 540);
     manuala->setScrollBarEnabled();
-    manuala->setTitle("Руководство пользователя");
+    manuala->setTitle(trUtf8("Руководство пользователя"));
     licensef = new CHtmlWindow;
     licensef->setHidden(true);
     licensef->loadHtml(":/html/license.html");
     licensef->setSize(560, 383);
-    licensef->setTitle("Лицензия");
+    licensef->setTitle(trUtf8("Лицензия"));
     //дефолтные значения(пример)
     m_action.m = 0.01;
     m_action.A0 = 0.5;
@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // окно-заставка
     fr = new CSplashScreenWindow(this);
     fr->setPixmap(":/mres/splash.png");
-    fr->setTitle("Пружинный маятник в среде с сопротивлением");
+    fr->setTitle(trUtf8("Пружинный маятник в среде с сопротивлением"));
 }
 
 MainWindow::~MainWindow()

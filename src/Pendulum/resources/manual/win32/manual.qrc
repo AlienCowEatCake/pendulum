@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/manual.files">
+    <qresource prefix="/html/manual.files">
         <file>screen1.png</file>
         <file>screen2.png</file>
     </qresource>

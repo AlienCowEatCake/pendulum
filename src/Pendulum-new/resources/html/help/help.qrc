@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/help.files">
+    <qresource prefix="/html/help.files">
         <file>image001.png</file>
         <file>image002.png</file>
         <file>image004.png</file>

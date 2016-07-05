@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/html">
+        <file alias="platform.css">stylesheet-windows.css</file>
+    </qresource>
+</RCC>
