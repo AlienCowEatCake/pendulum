@@ -29,10 +29,7 @@
 #include "gframe1.h"
 #include "gframe2.h"
 #include "cscene3d.h"
-#include "help.h"
-#include "author.h"
-#include "manual.h"
-#include "license.h"
+#include "widgets/CHtmlWindow/CHtmlWindow.h"
 #include "widgets/CSplashScreenWindow/CSplashScreenWindow.h"
 
 namespace Ui {
@@ -51,10 +48,10 @@ public:
     gframe *speed;
     gframe1 *delta;
     gframe2 *energy;
-    help *spravka;
-    author *auth;
-    manual *manuala;
-    license *licensef;
+    CHtmlWindow *spravka;
+    CHtmlWindow *auth;
+    CHtmlWindow *manuala;
+    CHtmlWindow *licensef;
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
