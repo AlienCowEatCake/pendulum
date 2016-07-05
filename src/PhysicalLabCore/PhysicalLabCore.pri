@@ -57,18 +57,21 @@ HEADERS += \
     $$files($$PWD/widgets/CGLWidgetImpl/native/*.h) \
     $$files($$PWD/widgets/CGraphWindowAbstract/*.h) \
     $$files($$PWD/widgets/CScene2D/*.h) \
-    $$files($$PWD/widgets/CSplashScreenWindow/*.h)
+    $$files($$PWD/widgets/CSplashScreenWindow/*.h) \
+    $$files($$PWD/widgets/CHtmlWindow/*.h)
 
 SOURCES += \
     $$files($$PWD/models/*.cpp) \
     $$files($$PWD/widgets/CScene3DAbstract/*.cpp) \
     $$files($$PWD/widgets/CGraphWindowAbstract/*.cpp) \
     $$files($$PWD/widgets/CScene2D/*.cpp) \
-    $$files($$PWD/widgets/CSplashScreenWindow/*.cpp)
+    $$files($$PWD/widgets/CSplashScreenWindow/*.cpp) \
+    $$files($$PWD/widgets/CHtmlWindow/*.cpp)
 
 FORMS += \
     $$files($$PWD/widgets/CGraphWindowAbstract/*.ui) \
-    $$files($$PWD/widgets/CSplashScreenWindow/*.ui)
+    $$files($$PWD/widgets/CSplashScreenWindow/*.ui) \
+    $$files($$PWD/widgets/CHtmlWindow/*.ui)
 
 use_swrast {
     QT -= opengl

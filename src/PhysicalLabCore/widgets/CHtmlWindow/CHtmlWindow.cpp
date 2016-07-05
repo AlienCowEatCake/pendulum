@@ -20,73 +20,73 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "CSplashScreenWindow.h"
-#include "ui_CSplashScreenWindow.h"
+#include "CHtmlWindow.h"
+#include "ui_CHtmlWindow.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QPoint>
-#include <QTimer>
-#include <QPixmap>
+#include <QFile>
 
-CSplashScreenWindow::CSplashScreenWindow(QWidget * parent) :
+CHtmlWindow::CHtmlWindow(QWidget * parent) :
     QWidget(parent),
-    m_ui(new Ui::CSplashScreenWindow)
+    m_ui(new Ui::CHtmlWindow)
 {
     m_ui->setupUi(this);
-    setWindowFlags(Qt::Dialog);
-    setAttribute(Qt::WA_DeleteOnClose);
-    setWindowModality(Qt::ApplicationModal);
-
-    // Закрываем через 10 секунд, если еще живы
-    QTimer::singleShot(10000, this, SLOT(close()));
-    // Показываем при следующей обработке сообщений
-    QTimer::singleShot(0, this, SLOT(show()));
+    setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |
+                   Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setWindowModality(Qt::NonModal);
 
     // Перемещение в центр экрана
     moveToCenter();
+
+    // Отключение скроллбара
+    m_ui->textBrowser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_ui->textBrowser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    // Разрешить открывать внешние ссылки
+    m_ui->textBrowser->setOpenExternalLinks(true);
 }
 
-CSplashScreenWindow::~CSplashScreenWindow()
+CHtmlWindow::~CHtmlWindow()
 {
     delete m_ui;
 }
 
-/// @brief setPixmap - Загрузить изображение в окно
-void CSplashScreenWindow::setPixmap(const QString & filename)
+/// @brief setScrollBarEnabled - Включить или отключить вертикальный скроллбар
+void CHtmlWindow::setScrollBarEnabled(bool enabled)
 {
-    QPixmap image(filename);
-    if(!image.isNull())
-    {
-        m_ui->label->setGeometry(0, 0, image.width(), image.height());
-        m_ui->label->setPixmap(image);
-        adjustSize();
-        setMinimumSize(size());
-        setMaximumSize(size());
-        moveToCenter();
-    }
+    m_ui->textBrowser->setVerticalScrollBarPolicy(enabled ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
 }
 
 /// @brief setTitle - Установить заголовок окна
-void CSplashScreenWindow::setTitle(const QString & title)
+void CHtmlWindow::setTitle(const QString & title)
 {
     setWindowTitle(title);
 }
 
-/// @brief keyPressEvent - Реакция на нажатие клавиши (закрытие)
-void CSplashScreenWindow::keyPressEvent(QKeyEvent *)
+/// @brief loadHtml - Загрузить html из файла
+void CHtmlWindow::loadHtml(const QString & filename)
 {
-    close();
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    QString htmlString = QString::fromUtf8(file.readAll());
+    m_ui->textBrowser->setHtml(htmlString);
 }
 
-/// @brief mousePressEvent - Реакция на нажатие мыши (закрытие)
-void CSplashScreenWindow::mousePressEvent(QMouseEvent *)
+/// @brief setSize - Установить размер окна
+void CHtmlWindow::setSize(int width, int height)
 {
-    close();
+    m_ui->textBrowser->setGeometry(0, 0, width, height);
+    adjustSize();
+    setMinimumSize(size());
+    setMaximumSize(size());
+    moveToCenter();
 }
+
 
 /// @brief moveToCenter - Перемещение окна в центр экрана
-void CSplashScreenWindow::moveToCenter()
+void CHtmlWindow::moveToCenter()
 {
     QPoint center = QApplication::desktop()->availableGeometry().center();
     QPoint corner = QApplication::desktop()->availableGeometry().topLeft();
