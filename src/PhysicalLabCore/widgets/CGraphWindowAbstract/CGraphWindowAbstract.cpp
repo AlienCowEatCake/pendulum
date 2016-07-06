@@ -42,7 +42,7 @@ CGraphWindowAbstract::CGraphWindowAbstract(bool haveNegativeY, QWidget *parent)
     m_scene2D = new CScene2D(haveNegativeY, m_ui->centralwidget);
     setCentralWidget(m_scene2D);
     connect(this, SIGNAL(settingsChanged()), this, SLOT(onSettingsChanged()));
-    m_lastSaved = trUtf8("graph.png");
+    m_lastSaved = tr("graph.png");
 }
 
 CGraphWindowAbstract::~CGraphWindowAbstract()
@@ -96,7 +96,7 @@ void CGraphWindowAbstract::on_actionGraphWidth_triggered()
     }
 }
 
-/// @brief void on_actionSaveGraphFile_triggered - Слот на событие сохранения графика в файл
+/// @brief on_actionSaveGraphFile_triggered - Слот на событие сохранения графика в файл
 void CGraphWindowAbstract::on_actionSaveGraphFile_triggered()
 {
     QList<QByteArray> supportedTemp = QImageWriter::supportedImageFormats();
@@ -119,16 +119,16 @@ void CGraphWindowAbstract::on_actionSaveGraphFile_triggered()
             formats.append(";;");
         formats.append(it->toUpper());
         formats.append(" ");
-        formats.append(trUtf8("Images"));
+        formats.append(tr("Images"));
         formats.append(" (*.");
         formats.append(*it);
         formats.append(")");
     }
-    formatsAll.prepend(trUtf8("All Images").append(" ("));
+    formatsAll.prepend(tr("All Images").append(" ("));
     formatsAll.append(");;");
     formats.prepend(formatsAll);
 
-    QString filename = QFileDialog::getSaveFileName(this, trUtf8("Save Image File"), m_lastSaved, formats);
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image File"), m_lastSaved, formats);
     if(filename.length() == 0) return;
 
     QString def_ext("png"), ext;
@@ -163,8 +163,8 @@ void CGraphWindowAbstract::on_actionSaveGraphFile_triggered()
         msgBox.setAttribute(Qt::WA_QuitOnClose);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.setWindowTitle(trUtf8("Error"));
-        msgBox.setText(trUtf8("Error: Can't save file"));
+        msgBox.setWindowTitle(tr("Error"));
+        msgBox.setText(tr("Error: Can't save file"));
         msgBox.setIcon(QMessageBox::Critical);
         msgBox.exec();
     }

@@ -53,7 +53,7 @@ private slots:
     void on_actionGraphColor_triggered();
     /// @brief on_actionGraphWidth_triggered - Слот на событие изменения толщины графика
     void on_actionGraphWidth_triggered();
-    /// @brief void on_actionSaveGraphFile_triggered - Слот на событие сохранения графика в файл
+    /// @brief on_actionSaveGraphFile_triggered - Слот на событие сохранения графика в файл
     void on_actionSaveGraphFile_triggered();
 
 signals:

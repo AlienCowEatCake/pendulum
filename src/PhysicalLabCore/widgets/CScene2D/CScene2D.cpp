@@ -106,6 +106,7 @@ QPoint CScene2D::toWindow(float x, float y) const
 /// @brief paintEvent - Событие рисования
 void CScene2D::paintEvent(QPaintEvent * event)
 {
+    Q_UNUSED(event);
     drawGraph(this);
 }
 
