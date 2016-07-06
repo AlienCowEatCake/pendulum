@@ -48,9 +48,14 @@ win32 {
   RC_FILE += src/Pendulum/resources/icon.rc
 }
 
-unix {
+unix:!macx {
   RESOURCES += src/Pendulum/resources/manual/linux/manual.qrc \
                src/Pendulum-new/resources/html/stylesheet/stylesheet-linux.qrc
+}
+
+macx {
+  RESOURCES += src/Pendulum/resources/manual/linux/manual.qrc \
+               src/Pendulum-new/resources/html/stylesheet/stylesheet-macosx.qrc
 }
 
 RESOURCES += src/Pendulum/resources/mres.qrc \

@@ -75,7 +75,11 @@ void CSplashScreenWindow::setPixmap(const QString & filename)
 /// @brief setTitle - Установить заголовок окна
 void CSplashScreenWindow::setTitle(const QString & title)
 {
+#if !defined (Q_OS_MAC)
     setWindowTitle(title);
+#else
+   Q_UNUSED(title);
+#endif
 }
 
 /// @brief keyPressEvent - Реакция на нажатие клавиши (закрытие)

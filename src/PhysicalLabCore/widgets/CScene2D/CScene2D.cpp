@@ -171,7 +171,7 @@ void CScene2D::drawGraph(QPaintDevice * device)
 #if defined (Q_OS_WIN) && defined (HAVE_QT5) // Почему-то в Qt5 под Win гигантские шрифты
     QFont serifFont(tr("Times"), 9);
 #elif defined (Q_OS_MAC)
-    #error TODO /// @todo Подобрать размер шрифта под OS X
+    QFont serifFont(tr("Times"), 15);
 #else
     QFont serifFont(tr("Times"), 11);
 #endif
