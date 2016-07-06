@@ -27,6 +27,9 @@
 #include <QPaintEvent>
 #include <QInputDialog>
 #include <QColorDialog>
+#include <QImageWriter>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <cmath>
 
 #include "widgets/CScene2D/CScene2D.h"
@@ -39,6 +42,7 @@ CGraphWindowAbstract::CGraphWindowAbstract(bool haveNegativeY, QWidget *parent)
     m_scene2D = new CScene2D(haveNegativeY, m_ui->centralwidget);
     setCentralWidget(m_scene2D);
     connect(this, SIGNAL(settingsChanged()), this, SLOT(onSettingsChanged()));
+    m_lastSaved = trUtf8("graph.png");
 }
 
 CGraphWindowAbstract::~CGraphWindowAbstract()
@@ -89,6 +93,80 @@ void CGraphWindowAbstract::on_actionGraphWidth_triggered()
     {
         m_scene2D->setPlotWidth(newValue);
         emit settingsChanged();
+    }
+}
+
+/// @brief void on_actionSaveGraphFile_triggered - Слот на событие сохранения графика в файл
+void CGraphWindowAbstract::on_actionSaveGraphFile_triggered()
+{
+    QList<QByteArray> supportedTemp = QImageWriter::supportedImageFormats();
+    QVector<QString> supported;
+    for(QList<QByteArray>::const_iterator it = supportedTemp.begin(); it != supportedTemp.end(); ++it)
+        supported.push_back(QString(*it).toLower());
+    supportedTemp.clear();
+    std::sort(supported.begin(), supported.end());
+
+    QString formats, formatsAll;
+    for(QVector<QString>::const_iterator it = supported.begin(); it != supported.end(); ++it)
+    {
+        if(formatsAll.length() > 0)
+            formatsAll.append(" *.");
+        else
+            formatsAll.append("*.");
+        formatsAll.append(*it);
+
+        if(formats.length() > 0)
+            formats.append(";;");
+        formats.append(it->toUpper());
+        formats.append(" ");
+        formats.append(trUtf8("Images"));
+        formats.append(" (*.");
+        formats.append(*it);
+        formats.append(")");
+    }
+    formatsAll.prepend(trUtf8("All Images").append(" ("));
+    formatsAll.append(");;");
+    formats.prepend(formatsAll);
+
+    QString filename = QFileDialog::getSaveFileName(this, trUtf8("Save Image File"), m_lastSaved, formats);
+    if(filename.length() == 0) return;
+
+    QString def_ext("png"), ext;
+    int found = filename.lastIndexOf('.');
+    if(found == -1)
+    {
+        filename.append(".");
+        filename.append(def_ext);
+        ext = def_ext;
+    }
+    else
+    {
+        ext = filename.right(filename.length() - found - 1).toLower();
+        if(std::find(supported.begin(), supported.end(), ext) == supported.end())
+        {
+            filename.append(".");
+            filename.append(def_ext);
+            ext = def_ext;
+        }
+    }
+    m_lastSaved = filename;
+
+    bool saved = false;
+
+    QImage image(m_scene2D->width(), m_scene2D->height(), QImage::Format_ARGB32_Premultiplied);
+    m_scene2D->drawGraph(& image);
+    saved = image.save(filename);
+
+    if(!saved)
+    {
+        QMessageBox msgBox;
+        msgBox.setAttribute(Qt::WA_QuitOnClose);
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.setWindowTitle(trUtf8("Error"));
+        msgBox.setText(trUtf8("Error: Can't save file"));
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.exec();
     }
 }
 

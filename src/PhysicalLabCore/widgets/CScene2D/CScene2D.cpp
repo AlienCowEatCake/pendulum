@@ -106,6 +106,12 @@ QPoint CScene2D::toWindow(float x, float y) const
 /// @brief paintEvent - Событие рисования
 void CScene2D::paintEvent(QPaintEvent * event)
 {
+    drawGraph(this);
+}
+
+/// @brief drawGraph - Обобщённое событие отрисовки графика
+void CScene2D::drawGraph(QPaintDevice * device)
+{
     // Цвет и ширина для всех линий графиков
     QColor currentGridSmallColor = gridSmallColor();
     QColor currentGridBigColor   = gridBigColor();
@@ -119,11 +125,11 @@ void CScene2D::paintEvent(QPaintEvent * event)
 
     // Поехали рисовать
     QPainter painter;
-    painter.begin(this);
-    painter.setViewport(0, 0, this->width(), this->height());
+    painter.begin(device);
+    painter.setViewport(0, 0, device->width(), device->height());
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setRenderHint(QPainter::SmoothPixmapTransform);
-    painter.fillRect(event->rect(), QBrush(Qt::white));
+    painter.fillRect(0, 0, device->width(), device->height(), QBrush(Qt::white));
 
     // Координатная сетка
     painter.setPen(QPen(currentGridSmallColor, currentGridSmallWidth));
@@ -160,7 +166,6 @@ void CScene2D::paintEvent(QPaintEvent * event)
     painter.drawLine(toWindow(0.0f, m_minY_local), toWindow(0.0f, m_maxY_local));
     painter.drawLine(toWindow(0.0f, 0.0f), toWindow(m_maxX_local, 0.0f));
 
-
     // Отрисовка шкалы
 #if defined (Q_OS_WIN) && defined (HAVE_QT5) // Почему-то в Qt5 под Win гигантские шрифты
     QFont serifFont(tr("Times"), 9);
@@ -194,8 +199,8 @@ void CScene2D::paintEvent(QPaintEvent * event)
     // Подписи осей
     serifFont.setBold(true);
     painter.setFont(serifFont);
-//    painter.setBackgroundMode(Qt::OpaqueMode);
-//    painter.setBackground(QBrush(Qt::white));
+    //painter.setBackgroundMode(Qt::OpaqueMode);
+    //painter.setBackground(QBrush(Qt::white));
     if(m_haveNegativeY)
     {
         painter.drawText(toWindow(0.97f, -0.06f), m_labelX);
@@ -206,8 +211,7 @@ void CScene2D::paintEvent(QPaintEvent * event)
         painter.drawText(toWindow(0.97f, -0.04f), m_labelX);
         painter.drawText(toWindow(-0.05f, 0.98f), m_labelY);
     }
-//    painter.setBackgroundMode(Qt::TransparentMode);
-    
+    //painter.setBackgroundMode(Qt::TransparentMode);
 
     // Отрисовка графика
     painter.setPen(QPen(currentPlotColor, currentPlotWidth));
@@ -379,4 +383,3 @@ qreal CScene2D::plotWidth()
 {
     return loadSetting(QLatin1String("PlotWidth"), 2.0f).toReal();
 }
-

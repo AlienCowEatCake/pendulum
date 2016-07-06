@@ -53,6 +53,8 @@ private slots:
     void on_actionGraphColor_triggered();
     /// @brief on_actionGraphWidth_triggered - Слот на событие изменения толщины графика
     void on_actionGraphWidth_triggered();
+    /// @brief void on_actionSaveGraphFile_triggered - Слот на событие сохранения графика в файл
+    void on_actionSaveGraphFile_triggered();
 
 signals:
     /// @brief settingsChanged - Сигнал, испускаемый при изменении настроек
@@ -83,6 +85,8 @@ private:
     Ui::CGraphWindowAbstract *m_ui;
 
     CScene2D * m_scene2D;
+    
+    QString m_lastSaved;
 };
 
 #endif // PHYSICALLABCORE_CGRAPHWINDOWABSTRACT_H_INCLUDED
