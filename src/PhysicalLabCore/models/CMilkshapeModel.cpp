@@ -42,8 +42,8 @@ namespace {
 #	error you must byte-align these structures with the appropriate compiler directives
 #endif
 
-typedef unsigned char byte;
-typedef unsigned short word;
+typedef unsigned char MS3DByte;
+typedef unsigned short MS3DWord;
 
 /// @brief Заголовок файла ms3d
 struct MS3DHeader
@@ -55,21 +55,21 @@ struct MS3DHeader
 /// @brief Данные о вершинах
 struct MS3DVertex
 {
-    byte m_flags;
+    MS3DByte m_flags;
     float m_vertex[3];
     char m_boneID;
-    byte m_refCount;
+    MS3DByte m_refCount;
 } PACK_STRUCT;
 
 /// @brief Данные о треугольниках
 struct MS3DTriangle
 {
-    word m_flags;
-    word m_vertexIndices[3];
+    MS3DWord m_flags;
+    MS3DWord m_vertexIndices[3];
     float m_vertexNormals[3][3];
     float m_s[3], m_t[3];
-    byte m_smoothingGroup;
-    byte m_groupIndex;
+    MS3DByte m_smoothingGroup;
+    MS3DByte m_groupIndex;
 } PACK_STRUCT;
 
 /// @brief Данные о материалах
@@ -82,7 +82,7 @@ struct MS3DMaterial
     float m_emissive[4];
     float m_shininess;
     float m_transparency;
-    byte m_mode;
+    MS3DByte m_mode;
     char m_texture[128];
     char m_alphamap[128];
 } PACK_STRUCT;
@@ -90,13 +90,13 @@ struct MS3DMaterial
 /// @brief Данные об анимации (Joint)
 struct MS3DJoint
 {
-    byte m_flags;
+    MS3DByte m_flags;
     char m_name[32];
     char m_parentName[32];
     float m_rotation[3];
     float m_translation[3];
-    word m_numRotationKeyframes;
-    word m_numTranslationKeyframes;
+    MS3DWord m_numRotationKeyframes;
+    MS3DWord m_numTranslationKeyframes;
 } PACK_STRUCT;
 
 /// @brief Данные об анимации (Keyframe)
@@ -139,10 +139,10 @@ bool CMilkshapeModel::loadModelData(const QString & filename)
     if(strncmp(pHeader->m_ID, "MS3D000000", 10) != 0)
         return false; // неправильный заголовок файла
     // загрузка вершин
-    int nVertices = *reinterpret_cast<const word*>(pPtr);
+    int nVertices = *reinterpret_cast<const MS3DWord*>(pPtr);
     m_numVertices = nVertices;
     m_pVertices = new Vertex[nVertices];
-    pPtr += sizeof(word);
+    pPtr += sizeof(MS3DWord);
 
     for(int i = 0; i < nVertices; i++)
     {
@@ -152,10 +152,10 @@ bool CMilkshapeModel::loadModelData(const QString & filename)
         pPtr += sizeof(MS3DVertex);
     }
     // загрузка треугольников
-    int nTriangles = *reinterpret_cast<const word*>(pPtr);
+    int nTriangles = *reinterpret_cast<const MS3DWord*>(pPtr);
     m_numTriangles = nTriangles;
     m_pTriangles = new Triangle[nTriangles];
-    pPtr += sizeof(word);
+    pPtr += sizeof(MS3DWord);
 
     for(int i = 0; i < nTriangles; i++)
     {
@@ -169,22 +169,22 @@ bool CMilkshapeModel::loadModelData(const QString & filename)
         pPtr += sizeof(MS3DTriangle);
     }
     // загрузка сетки
-    int nGroups = *reinterpret_cast<const word*>(pPtr);
+    int nGroups = *reinterpret_cast<const MS3DWord*>(pPtr);
     m_numMeshes = nGroups;
     m_pMeshes = new Mesh[nGroups];
-    pPtr += sizeof(word);
+    pPtr += sizeof(MS3DWord);
     for(int i = 0; i < nGroups; i++)
     {
-        pPtr += sizeof(byte);
+        pPtr += sizeof(MS3DByte);
         pPtr += 32;
 
-        word nTriangles = *reinterpret_cast<const word*>(pPtr);
-        pPtr += sizeof(word);
+        MS3DWord nTriangles = *reinterpret_cast<const MS3DWord*>(pPtr);
+        pPtr += sizeof(MS3DWord);
         int *pTriangleIndices = new int[nTriangles];
         for(int j = 0; j < nTriangles; j++)
         {
-            pTriangleIndices[j] = *reinterpret_cast<const word*>(pPtr);
-            pPtr += sizeof(word);
+            pTriangleIndices[j] = *reinterpret_cast<const MS3DWord*>(pPtr);
+            pPtr += sizeof(MS3DWord);
         }
 
         char materialIndex = *reinterpret_cast<const char*>(pPtr);
@@ -195,10 +195,10 @@ bool CMilkshapeModel::loadModelData(const QString & filename)
         m_pMeshes[i].m_pTriangleIndices = pTriangleIndices;
     }
     // загрузка материалов
-    int nMaterials = *reinterpret_cast<const word*>(pPtr);
+    int nMaterials = *reinterpret_cast<const MS3DWord*>(pPtr);
     m_numMaterials = nMaterials;
     m_pMaterials = new Material[nMaterials];
-    pPtr += sizeof(word);
+    pPtr += sizeof(MS3DWord);
     for(int i = 0; i < nMaterials; i++)
     {
         const MS3DMaterial *pMaterial = reinterpret_cast<const MS3DMaterial*>(pPtr);

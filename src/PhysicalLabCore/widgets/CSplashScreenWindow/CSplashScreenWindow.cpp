@@ -34,7 +34,12 @@ CSplashScreenWindow::CSplashScreenWindow(QWidget * parent) :
     m_ui(new Ui::CSplashScreenWindow)
 {
     m_ui->setupUi(this);
-    setWindowFlags(Qt::Dialog);
+    setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint |
+                   Qt::WindowSystemMenuHint
+#if !defined (HAVE_LESS_THAN_QT45)
+                   | Qt::WindowCloseButtonHint
+#endif
+                   );
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
 

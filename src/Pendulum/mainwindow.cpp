@@ -104,7 +104,7 @@ MainWindow::MainWindow(QWidget *parent) :
     manuala->setTitle(trUtf8("Руководство пользователя"));
     licensef = new CHtmlWindow;
     licensef->setHidden(true);
-    licensef->loadHtml(":/html/license.html");
+    licensef->loadHtml(":/html/license_ru.html");
     licensef->setSize(560, 383);
     licensef->setTitle(trUtf8("Лицензия"));
     //дефолтные значения(пример)

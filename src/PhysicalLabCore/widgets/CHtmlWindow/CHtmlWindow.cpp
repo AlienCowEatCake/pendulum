@@ -33,8 +33,12 @@ CHtmlWindow::CHtmlWindow(QWidget * parent) :
     m_ui(new Ui::CHtmlWindow)
 {
     m_ui->setupUi(this);
-    setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |
-                   Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint |
+                   Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint
+#if !defined (HAVE_LESS_THAN_QT45)
+                   | Qt::WindowCloseButtonHint
+#endif
+                   );
     setWindowModality(Qt::NonModal);
 
     // Перемещение в центр экрана

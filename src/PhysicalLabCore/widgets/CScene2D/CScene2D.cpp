@@ -364,23 +364,23 @@ QColor CScene2D::plotColor()
 /// @brief gridSmallWidth - Получить толщину основных линий сетки
 qreal CScene2D::gridSmallWidth()
 {
-    return loadSetting(QLatin1String("GridSmallWidth"), 1.0f).toReal();
+    return static_cast<qreal>(loadSetting(QLatin1String("GridSmallWidth"), 1.0f).toDouble());
 }
 
 /// @brief gridBigWidth - Получить толщину дополнительных линий сетки
 qreal CScene2D::gridBigWidth()
 {
-    return loadSetting(QLatin1String("GridBigWidth"), 1.5f).toReal();
+    return static_cast<qreal>(loadSetting(QLatin1String("GridBigWidth"), 1.5f).toDouble());
 }
 
 /// @brief axisWidth - Получить толщину осей
 qreal CScene2D::axisWidth()
 {
-    return loadSetting(QLatin1String("AxisWidth"), 3.0f).toReal();
+    return static_cast<qreal>(loadSetting(QLatin1String("AxisWidth"), 3.0f).toDouble());
 }
 
 /// @brief plotWidth - Получить толщину графика
 qreal CScene2D::plotWidth()
 {
-    return loadSetting(QLatin1String("PlotWidth"), 2.0f).toReal();
+    return static_cast<qreal>(loadSetting(QLatin1String("PlotWidth"), 2.0f).toDouble());
 }

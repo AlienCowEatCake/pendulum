@@ -44,14 +44,12 @@ FORMS   += src/Pendulum/mainwindow.ui
 
 win32 {
   RESOURCES += src/Pendulum/resources/manual/win32/manual.qrc \
-               src/Pendulum/win32/html_old.qrc \
                src/Pendulum-new/resources/html/stylesheet/stylesheet-windows.qrc
   RC_FILE += src/Pendulum/resources/icon.rc
 }
 
 unix {
   RESOURCES += src/Pendulum/resources/manual/linux/manual.qrc \
-               src/Pendulum/linux/html_old.qrc \
                src/Pendulum-new/resources/html/stylesheet/stylesheet-linux.qrc
 }
 
