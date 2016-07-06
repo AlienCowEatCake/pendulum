@@ -54,8 +54,12 @@ unix:!macx {
 }
 
 macx {
-  RESOURCES += src/Pendulum/resources/manual/linux/manual.qrc \
-               src/Pendulum-new/resources/html/stylesheet/stylesheet-macosx.qrc
+    RESOURCES += src/Pendulum/resources/manual/linux/manual.qrc
+    lessThan(QT_MAJOR_VERSION, 5) {
+        RESOURCES += src/Pendulum-new/resources/html/stylesheet/stylesheet-macosx-qt4.qrc
+    } else {
+        RESOURCES += src/Pendulum-new/resources/html/stylesheet/stylesheet-macosx.qrc
+    }
 }
 
 RESOURCES += src/Pendulum/resources/mres.qrc \
