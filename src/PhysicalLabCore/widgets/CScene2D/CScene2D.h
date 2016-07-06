@@ -91,6 +91,9 @@ public:
     float scaleX() const;
     /// @brief scaleY - Получить коэффициент масштабирования по оси Y
     float scaleY() const;
+    
+    /// @brief drawGraph - Обобщённое событие отрисовки графика
+    void drawGraph(QPaintDevice * device);
 
 protected:
     /// @brief paintEvent - Событие рисования
