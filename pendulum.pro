@@ -18,7 +18,7 @@ DEFINES += VERSION_NUMBER=\\\"v0.40\\\"
 TARGET = pendulum
 TEMPLATE = app
 
-INCLUDEPATH += src/Pendulum
+INCLUDEPATH += src/Pendulum src/Pendulum-new
 
 include(src/PhysicalLabCore/PhysicalLabCore.pri)
 
@@ -26,7 +26,6 @@ SOURCES += src/Pendulum/main.cpp \
            src/Pendulum/mainwindow.cpp \
            src/Pendulum/cscene3d.cpp \
            src/Pendulum/caction.cpp \
-           src/Pendulum/cmilkshapemodel_old.cpp \
            src/Pendulum/gframe.cpp \
            src/Pendulum/gframe1.cpp \
            src/Pendulum/gframe2.cpp
@@ -34,11 +33,14 @@ SOURCES += src/Pendulum/main.cpp \
 HEADERS += src/Pendulum/mainwindow.h \
            src/Pendulum/cscene3d.h \
            src/Pendulum/caction.h \
-           src/Pendulum/cmodel.h \
            src/Pendulum/main.h \
            src/Pendulum/gframe.h \
            src/Pendulum/gframe1.h \
            src/Pendulum/gframe2.h
+
+SOURCES += src/Pendulum-new/CModelSpring.cpp
+
+HEADERS += src/Pendulum-new/CModelSpring.h
 
 FORMS   += src/Pendulum/mainwindow.ui
 

@@ -21,6 +21,7 @@
 */
 
 #include "CModel.h"
+#include <QImage>
 
 namespace {
 

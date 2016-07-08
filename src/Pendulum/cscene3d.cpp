@@ -73,7 +73,6 @@ void Cscene3D::initializeGL()
     tripod.loadModelData(":/data/m_tripod.ms3d");
     sphere.loadModelData(":/data/m_mass.ms3d");
     cyll.loadModelData(":/data/m_cyllinder.ms3d");
-    cyll.init();
     scale.loadModelData(":/data/m_scale.ms3d");
     spring_start.loadModelData(":/data/m_spring_start.ms3d");
     spring_end.loadModelData(":/data/m_spring_end.ms3d");

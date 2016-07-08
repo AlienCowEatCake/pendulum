@@ -25,7 +25,7 @@
 
 /* класс 3D сцены в главном окне*/
 
-#include "cmodel.h"
+#include "CModelSpring.h"
 #include "widgets/CScene3DAbstract/CScene3DAbstract.h"
 
 class Cscene3D : public CScene3DAbstract
