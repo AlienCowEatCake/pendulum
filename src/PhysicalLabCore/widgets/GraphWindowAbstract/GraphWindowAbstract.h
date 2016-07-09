@@ -81,6 +81,9 @@ protected:
     /// @brief scaleY - Получить коэффициент масштабирования по оси Y
     float scaleY() const;
 
+    /// @brief changeEvent - событие при изменении чего-либо (например, языка)
+    void changeEvent(QEvent *event);
+
 private:
     Ui::GraphWindowAbstract *m_ui;
 

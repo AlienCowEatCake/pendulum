@@ -45,6 +45,10 @@ HEADERS += \
 
 FORMS   += src/Pendulum/MainWindow.ui
 
+TRANSLATIONS += \
+    src/Pendulum/resources/translations/en.ts \
+    src/Pendulum/resources/translations/ru.ts
+
 win32 {
   RESOURCES += src/Pendulum/resources-old/manual/win32/manual.qrc \
                src/Pendulum/resources/html/stylesheet/stylesheet-windows.qrc
@@ -65,11 +69,13 @@ macx {
     }
 }
 
-RESOURCES += src/Pendulum/resources-old/mres.qrc \
-             src/Pendulum/resources-old/menuicons/menuicons.qrc \
-             src/Pendulum/resources/models/m_cyllinder.qrc \
-             src/Pendulum/resources/html/help/help.qrc \
-             src/Pendulum/resources/html/html.qrc
+RESOURCES += \
+    src/Pendulum/resources-old/mres.qrc \
+    src/Pendulum/resources/menuicons/menuicons.qrc \
+    src/Pendulum/resources/models/m_cyllinder.qrc \
+    src/Pendulum/resources/html/help/help.qrc \
+    src/Pendulum/resources/html/html.qrc \
+    src/Pendulum/resources/translations/translations.qrc
 
 use_hipoly {
   RESOURCES += src/Pendulum/resources/models/hipoly/m_mass.qrc \
