@@ -74,3 +74,6 @@ Makefile*
 /pendulum-*_qt4
 /pendulum-*_qt5
 
+# OS X garbage
+.DS_Store
+

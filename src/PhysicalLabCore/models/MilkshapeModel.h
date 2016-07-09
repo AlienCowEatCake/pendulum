@@ -4,7 +4,7 @@
         Andrey Kurochkin    <andy-717@yandex.ru>
         Peter Zhigalov      <peter.zhigalov@gmail.com>
 
-   This file is part of the `pendulum' program.
+   This file is part of the `PhysicalLabCore' library.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,33 +20,27 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if !defined (USE_SWRAST)
-#include <QGLFormat>
-#endif
-#include <QApplication>
-#include "MainWindow.h"
+#if !defined(PHYSICALLABCORE_MILKSHAPEMODEL_H_INCLUDED)
+#define PHYSICALLABCORE_MILKSHAPEMODEL_H_INCLUDED
 
-int main(int argc, char *argv[])
+#include "Model.h"
+
+/// @brief Класс для описания моделей в формате MilkShape 3D
+class MilkshapeModel: public Model
 {
-#if !defined (USE_SWRAST)
-    QGLFormat fmt;
-    fmt.setSampleBuffers(true);
-    fmt.setSamples(16); // 2, 4, 8, 16
-    QGLFormat::setDefaultFormat(fmt);
-#endif
+public:
+    MilkshapeModel();
+    ~MilkshapeModel();
 
-    QApplication app(argc, argv);
-    app.setOrganizationDomain("fami.codefreak.ru");
-    app.setOrganizationName("fami_net_team");
-    app.setApplicationName("pendulum");
-    app.setApplicationVersion("1.0");
-#if !defined (Q_OS_MAC)
-    app.setWindowIcon(QIcon(":/mres/ball.ico"));
-#endif
-#if defined USE_FORCE_GL
-    app.setAttribute(Qt::AA_UseDesktopOpenGL);
-#endif
-    MainWindow w;// главное окно
-    w.show();
-    return app.exec();
-}
+    /// @brief loadModelData - загрузка модели из файла
+    /// @param[in] filename - имя файла
+    /// @return true, если загрузка прошла успешно, false иначе
+    bool loadModelData(const QString & filename);
+
+protected:
+    /// @brief generateNormales - просчет нормалей
+    void generateNormales();
+};
+
+#endif // PHYSICALLABCORE_MILKSHAPEMODEL_H_INCLUDED
+

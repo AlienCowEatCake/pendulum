@@ -4,7 +4,7 @@
         Andrey Kurochkin    <andy-717@yandex.ru>
         Peter Zhigalov      <peter.zhigalov@gmail.com>
 
-   This file is part of the `pendulum' program.
+   This file is part of the `PhysicalLabCore' library.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,33 +20,23 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if !defined (USE_SWRAST)
-#include <QGLFormat>
-#endif
-#include <QApplication>
-#include "MainWindow.h"
+#if !defined (PHYSICALLABCORE_GLWIDGETIMPL_H_INCLUDED)
+#define PHYSICALLABCORE_GLWIDGETIMPL_H_INCLUDED
 
-int main(int argc, char *argv[])
-{
 #if !defined (USE_SWRAST)
-    QGLFormat fmt;
-    fmt.setSampleBuffers(true);
-    fmt.setSamples(16); // 2, 4, 8, 16
-    QGLFormat::setDefaultFormat(fmt);
+#include <QtOpenGL>
+#include <QGLWidget>
+#include "native/GLFunctions.h"
+typedef QGLWidget GLWidgetImpl;
+#else
+#include "software/SWRastWidget.h"
+typedef SWRastWidget GLWidgetImpl;
+#include "software/GLFunctions.h"
 #endif
 
-    QApplication app(argc, argv);
-    app.setOrganizationDomain("fami.codefreak.ru");
-    app.setOrganizationName("fami_net_team");
-    app.setApplicationName("pendulum");
-    app.setApplicationVersion("1.0");
-#if !defined (Q_OS_MAC)
-    app.setWindowIcon(QIcon(":/mres/ball.ico"));
+#if !defined (GL_MULTISAMPLE)
+#define GL_MULTISAMPLE  0x809D
 #endif
-#if defined USE_FORCE_GL
-    app.setAttribute(Qt::AA_UseDesktopOpenGL);
-#endif
-    MainWindow w;// главное окно
-    w.show();
-    return app.exec();
-}
+
+#endif // PHYSICALLABCORE_GLWIDGETIMPL_H_INCLUDED
+

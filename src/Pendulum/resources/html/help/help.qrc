@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/html/help.files">
+        <file>image001.png</file>
+        <file>image002.png</file>
+        <file>image004.png</file>
+        <file>image006.png</file>
+        <file>image008.png</file>
+        <file>image010.png</file>
+        <file>image012.png</file>
+        <file>image014.png</file>
+        <file>image016.png</file>
+        <file>image018.png</file>
+        <file>image020.png</file>
+        <file>image022.png</file>
+        <file>image024.png</file>
+        <file>image026.png</file>
+        <file>image028.png</file>
+        <file>image030.png</file>
+        <file>image032.png</file>
+    </qresource>
+</RCC>
