@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>540</height>
+   </rect>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="Scene3D" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Графики</string>
+    </property>
+    <addaction name="actionSpeed"/>
+    <addaction name="actionOffset"/>
+    <addaction name="actionEnergy"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Справка</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="actionManual"/>
+    <addaction name="actionLicense"/>
+    <addaction name="actionAuthors"/>
+    <addaction name="actionAboutQt"/>
+   </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>Language</string>
+    </property>
+    <addaction name="actionEnglish"/>
+    <addaction name="actionRussian"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menuLanguage"/>
+   <addaction name="menu_2"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>230</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>7</x>
+       <y>0</y>
+       <width>216</width>
+       <height>281</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Исходные данные</string>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>220</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Масса груза [кг]</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSliderMass">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>10</number>
+      </property>
+      <property name="maximum">
+       <number>500</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>40</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.01</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>220</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Начальное смещение [м]</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSliderAmplitude">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>0</number>
+      </property>
+      <property name="maximum">
+       <number>160</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>90</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>100</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>120</y>
+        <width>220</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Коэфф. жёсткости [H/м]</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSliderRestitution">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>25</number>
+      </property>
+      <property name="maximum">
+       <number>250</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>140</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>50</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>170</y>
+        <width>220</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Коэфф. сопротивления [кг/с]</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>190</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>0</number>
+      </property>
+      <property name="maximum">
+       <number>240</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>190</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>100</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcdNumber">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>240</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>220</y>
+        <width>220</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Время [c]</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>7</x>
+       <y>290</y>
+       <width>216</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Панель управления</string>
+     </property>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>220</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Скорость эксперимента [%]</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSliderSpeed">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>161</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>10</number>
+      </property>
+      <property name="maximum">
+       <number>200</number>
+      </property>
+      <property name="singleStep">
+       <number>5</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>40</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>100</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSliderQuality">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>171</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <number>10</number>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="value">
+       <number>50</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>85</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>качество</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>110</y>
+        <width>85</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>скорость</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>220</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Графика</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonStart">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>140</y>
+        <width>91</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Старт</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButtonStop">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>140</y>
+        <width>91</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Сброс</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <action name="actionSpeed">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/speed.png</iconset>
+   </property>
+   <property name="text">
+    <string>Скорость</string>
+   </property>
+  </action>
+  <action name="actionOffset">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/position.png</iconset>
+   </property>
+   <property name="text">
+    <string>Смещение</string>
+   </property>
+  </action>
+  <action name="actionEnergy">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/energy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Энергия</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/about.png</iconset>
+   </property>
+   <property name="text">
+    <string>О программе</string>
+   </property>
+  </action>
+  <action name="actionAuthors">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/people.png</iconset>
+   </property>
+   <property name="text">
+    <string>Разработчики</string>
+   </property>
+  </action>
+  <action name="actionManual">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/manual.png</iconset>
+   </property>
+   <property name="text">
+    <string>Руководство пользователя</string>
+   </property>
+  </action>
+  <action name="actionLicense">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/license.png</iconset>
+   </property>
+   <property name="text">
+    <string>Лицензия</string>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="icon">
+    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/qt.png</iconset>
+   </property>
+   <property name="text">
+    <string>О Qt</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionRussian">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Russian</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Scene3D</class>
+   <extends>QWidget</extends>
+   <header>Scene3D.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>centralWidget</tabstop>
+  <tabstop>horizontalSliderMass</tabstop>
+  <tabstop>horizontalSliderAmplitude</tabstop>
+  <tabstop>horizontalSliderRestitution</tabstop>
+  <tabstop>horizontalSlider_4</tabstop>
+  <tabstop>horizontalSliderSpeed</tabstop>
+  <tabstop>horizontalSliderQuality</tabstop>
+  <tabstop>pushButtonStart</tabstop>
+  <tabstop>pushButtonStop</tabstop>
+ </tabstops>
+ <resources>
+  <include location="./resources/menuicons/menuicons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

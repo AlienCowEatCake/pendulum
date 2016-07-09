@@ -13,62 +13,63 @@
 
 # ==============================================================================
 
-DEFINES += VERSION_NUMBER=\\\"v0.40\\\"
-
 TARGET = pendulum
 TEMPLATE = app
 
-INCLUDEPATH += src/Pendulum src/Pendulum-new
+INCLUDEPATH += src/Pendulum
+
+#DEFINES += QT_NO_CAST_FROM_ASCII
 
 include(src/PhysicalLabCore/PhysicalLabCore.pri)
 
-SOURCES += src/Pendulum/main.cpp \
-           src/Pendulum/mainwindow.cpp \
-           src/Pendulum/cscene3d.cpp \
-           src/Pendulum/caction.cpp \
-           src/Pendulum/gframe.cpp \
-           src/Pendulum/gframe1.cpp \
-           src/Pendulum/gframe2.cpp
+SOURCES += \
+    src/Pendulum/Action.cpp \
+    src/Pendulum/PhysicalController.cpp \
+    src/Pendulum/ModelSpring.cpp \
+    src/Pendulum/Scene3D.cpp \
+    src/Pendulum/GraphWindowSpeed.cpp \
+    src/Pendulum/GraphWindowOffset.cpp \
+    src/Pendulum/GraphWindowEnergy.cpp \
+    src/Pendulum/MainWindow.cpp \
+    src/Pendulum/main.cpp \
 
-HEADERS += src/Pendulum/mainwindow.h \
-           src/Pendulum/cscene3d.h \
-           src/Pendulum/caction.h \
-           src/Pendulum/main.h \
-           src/Pendulum/gframe.h \
-           src/Pendulum/gframe1.h \
-           src/Pendulum/gframe2.h
+HEADERS += \
+    src/Pendulum/Action.h \
+    src/Pendulum/PhysicalController.h \
+    src/Pendulum/ModelSpring.h \
+    src/Pendulum/Scene3D.h \
+    src/Pendulum/GraphWindowSpeed.h \
+    src/Pendulum/GraphWindowOffset.h \
+    src/Pendulum/GraphWindowEnergy.h \
+    src/Pendulum/MainWindow.h
 
-SOURCES += src/Pendulum-new/CModelSpring.cpp
-
-HEADERS += src/Pendulum-new/CModelSpring.h
-
-FORMS   += src/Pendulum/mainwindow.ui
+FORMS   += src/Pendulum/MainWindow.ui
 
 win32 {
-  RESOURCES += src/Pendulum/resources/manual/win32/manual.qrc \
-               src/Pendulum-new/resources/html/stylesheet/stylesheet-windows.qrc
-  RC_FILE += src/Pendulum/resources/icon.rc
+  RESOURCES += src/Pendulum/resources-old/manual/win32/manual.qrc \
+               src/Pendulum/resources/html/stylesheet/stylesheet-windows.qrc
+  RC_FILE += src/Pendulum/resources-old/icon.rc
 }
 
 unix:!macx {
-  RESOURCES += src/Pendulum/resources/manual/linux/manual.qrc \
-               src/Pendulum-new/resources/html/stylesheet/stylesheet-linux.qrc
+  RESOURCES += src/Pendulum/resources-old/manual/linux/manual.qrc \
+               src/Pendulum/resources/html/stylesheet/stylesheet-linux.qrc
 }
 
 macx {
-    RESOURCES += src/Pendulum/resources/manual/linux/manual.qrc
+    RESOURCES += src/Pendulum/resources-old/manual/linux/manual.qrc
     lessThan(QT_MAJOR_VERSION, 5) {
-        RESOURCES += src/Pendulum-new/resources/html/stylesheet/stylesheet-macosx-qt4.qrc
+        RESOURCES += src/Pendulum/resources/html/stylesheet/stylesheet-macosx-qt4.qrc
     } else {
-        RESOURCES += src/Pendulum-new/resources/html/stylesheet/stylesheet-macosx.qrc
+        RESOURCES += src/Pendulum/resources/html/stylesheet/stylesheet-macosx.qrc
     }
 }
 
-RESOURCES += src/Pendulum/resources/mres.qrc \
-             src/Pendulum/resources/menuicons/menuicons.qrc \
+RESOURCES += src/Pendulum/resources-old/mres.qrc \
+             src/Pendulum/resources-old/menuicons/menuicons.qrc \
              src/Pendulum/resources/models/m_cyllinder.qrc \
-             src/Pendulum-new/resources/html/help/help.qrc \
-             src/Pendulum-new/resources/html/html.qrc
+             src/Pendulum/resources/html/help/help.qrc \
+             src/Pendulum/resources/html/html.qrc
 
 use_hipoly {
   RESOURCES += src/Pendulum/resources/models/hipoly/m_mass.qrc \
