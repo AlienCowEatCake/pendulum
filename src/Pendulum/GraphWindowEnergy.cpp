@@ -28,7 +28,6 @@
 GraphWindowEnergy::GraphWindowEnergy(QWidget * parent) :
     GraphWindowAbstract(false, parent), m_physicalController(NULL)
 {
-    setLabels(trUtf8("Механическая энергия"), trUtf8("t, c"), trUtf8("E, Дж"));
 }
 
 void GraphWindowEnergy::setPhysicalController(const PhysicalController * physicalController)
@@ -40,6 +39,7 @@ void GraphWindowEnergy::update()
 {
     if(!m_physicalController)
         return;
+    clear();
 
     QVector<float> & arrX = this->arrX();
     QVector<float> & arrY = this->arrY();

@@ -132,7 +132,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>0.01</string>
+       <string notr="true">0.01</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_3">
@@ -177,7 +177,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>100</string>
+       <string notr="true">100</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_5">
@@ -222,7 +222,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>50</string>
+       <string notr="true">50</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_7">
@@ -267,7 +267,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>100</string>
+       <string notr="true">100</string>
       </property>
      </widget>
      <widget class="QLCDNumber" name="lcdNumber">
@@ -351,7 +351,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>100</string>
+       <string notr="true">100</string>
       </property>
      </widget>
      <widget class="QSlider" name="horizontalSliderQuality">
@@ -497,7 +497,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/license.png</iconset>
    </property>
    <property name="text">
-    <string>Лицензия</string>
+    <string>License</string>
    </property>
   </action>
   <action name="actionAboutQt">
@@ -505,7 +505,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/qt.png</iconset>
    </property>
    <property name="text">
-    <string>О Qt</string>
+    <string>About Qt</string>
    </property>
   </action>
   <action name="actionEnglish">

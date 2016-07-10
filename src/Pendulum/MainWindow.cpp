@@ -210,7 +210,7 @@ void MainWindow::updateTranslations(QString language)
     static QTranslator translator;
     if(!translator.isEmpty())
         qApp->removeTranslator(&translator);
-    translator.load(QString(":/l10ns/fem_draw_qt_%1").arg(language));
+    translator.load(QString(":/translations/%1").arg(language));
     qApp->installTranslator(&translator);
     m_ui->retranslateUi(this);
 
@@ -236,9 +236,13 @@ void MainWindow::updateTranslations(QString language)
     m_manualWindow->loadHtml(QString(QLatin1String(":/html/manual_%1.html")).arg(language));
     m_manualWindow->setTitle(trUtf8("Руководство пользователя"));
     m_licenseWindow->loadHtml(QString(QLatin1String(":/html/license_%1.html")).arg(language));
-    m_licenseWindow->setTitle(trUtf8("Лицензия"));
+    m_licenseWindow->setTitle(tr("License"));
     m_splashWindow->setPixmap(":/mres/splash.png");
     m_splashWindow->setTitle(trUtf8("Пружинный маятник в среде с сопротивлением"));
+
+    m_speedWindow->setLabels(trUtf8("Скорость"), trUtf8("t, c"), trUtf8("v, м/с"));
+    m_offsetWindow->setLabels(trUtf8("Смещение"), trUtf8("t, c"), trUtf8("x, м"));
+    m_energyWindow->setLabels(trUtf8("Механическая энергия"), trUtf8("t, c"), trUtf8("E, Дж"));
 
     // Также следует пересчитать геометрию виждетов
     QApplication::postEvent(this, new QResizeEvent(size(), size()));
@@ -331,12 +335,9 @@ void MainWindow::on_horizontalSliderMass_valueChanged(int value)
     double v1 = (value / 10) / 100.0;
     m_physicalController->action().set_m(v1);
     m_ui->label_2->setText(QString::number(v1));
-    m_physicalController->action().InitBall();
-    m_speedWindow->clear();
+    m_physicalController->resetPhysicalEngine();
     m_speedWindow->update();
-    m_offsetWindow->clear();
     m_offsetWindow->update();
-    m_energyWindow->clear();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
@@ -348,13 +349,10 @@ void MainWindow::on_horizontalSliderAmplitude_valueChanged(int value)
     if(std::fabs(v1) < 0.001)
         v1 = 0.0;
     m_physicalController->action().set_A0(v1);
-    m_physicalController->action().InitBall();
+    m_physicalController->resetPhysicalEngine();
     m_ui->label_4->setText(QString::number(v1));
-    m_speedWindow->clear();
     m_speedWindow->update();
-    m_offsetWindow->clear();
     m_offsetWindow->update();
-    m_energyWindow->clear();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
@@ -363,13 +361,10 @@ void MainWindow::on_horizontalSliderAmplitude_valueChanged(int value)
 void MainWindow::on_horizontalSliderRestitution_valueChanged(int value)
 {
     m_physicalController->action().set_k(value);
-    m_physicalController->action().InitBall();
+    m_physicalController->resetPhysicalEngine();
     m_ui->label_6->setText(QString::number(value));
-    m_speedWindow->clear();
     m_speedWindow->update();
-    m_offsetWindow->clear();
     m_offsetWindow->update();
-    m_energyWindow->clear();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
@@ -381,13 +376,10 @@ void MainWindow::on_horizontalSlider_4_valueChanged(int value)
     double n1 = std::exp(static_cast<double>(value) / 100.0 * 1.675) / std::exp(1.7) - 0.18; // magic-magic
     n1 = static_cast<int>(n1 * 100.0) / 100.0;
     m_physicalController->action().set_r(n1);
-    m_physicalController->action().InitBall();
+    m_physicalController->resetPhysicalEngine();
     m_ui->label_8->setText(QString::number(n1));
-    m_speedWindow->clear();
     m_speedWindow->update();
-    m_offsetWindow->clear();
     m_offsetWindow->update();
-    m_energyWindow->clear();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }

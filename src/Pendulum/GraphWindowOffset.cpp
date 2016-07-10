@@ -28,7 +28,6 @@
 GraphWindowOffset::GraphWindowOffset(QWidget * parent) :
     GraphWindowAbstract(true, parent), m_physicalController(NULL)
 {
-    setLabels(trUtf8("Смещение"), trUtf8("t, c"), trUtf8("x, м"));
     m_numT = 3;
 }
 
@@ -41,6 +40,7 @@ void GraphWindowOffset::update()
 {   
     if(!m_physicalController)
         return;
+    clear();
 
     QVector<float> & arrX = this->arrX();
     QVector<float> & arrY = this->arrY();

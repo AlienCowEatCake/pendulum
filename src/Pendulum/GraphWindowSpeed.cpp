@@ -28,7 +28,6 @@
 GraphWindowSpeed::GraphWindowSpeed(QWidget * parent) :
     GraphWindowAbstract(true, parent), m_physicalController(NULL)
 {
-    setLabels(trUtf8("Скорость"), trUtf8("t, c"), trUtf8("v, м/с"));
     m_numT = 3;
 }
 
@@ -41,6 +40,7 @@ void GraphWindowSpeed::update()
 {
     if(!m_physicalController)
         return;
+    clear();
 
     QVector<float> & arrX = this->arrX();
     QVector<float> & arrY = this->arrY();
@@ -78,7 +78,7 @@ void GraphWindowSpeed::update()
         float maxspeedf = static_cast<float>(maxspeed);
         resizeGraph(0.0f, static_cast<float>(mactiont) * static_cast<float>(m_numT), -maxspeedf, maxspeedf);
 
-        for(int i = 0; i <  arrY.size(); i++)
+        for(int i = 0; i < arrY.size(); i++)
         {
             arrX[i] *= scaleX();
             arrY[i] *= scaleY();

@@ -199,3 +199,11 @@ float GraphWindowAbstract::scaleY() const
     return m_scene2D->scaleY();
 }
 
+/// @brief changeEvent - событие при изменении чего-либо (например, языка)
+void GraphWindowAbstract::changeEvent(QEvent *event)
+{
+    QWidget::changeEvent(event);
+    if(event->type() == QEvent::LanguageChange)
+        m_ui->retranslateUi(this);
+}
+
