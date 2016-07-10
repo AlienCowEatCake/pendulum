@@ -23,11 +23,6 @@
 #include "Scene3D.h"
 
 #include <cmath>
-#if defined (HAVE_QT5)
-#include <QtWidgets>
-#else
-#include <QtGui>
-#endif
 #include "PhysicalController.h"
 
 Scene3D::Scene3D(QWidget* parent) : Scene3DAbstract(parent), m_physicalController(NULL)
@@ -36,7 +31,7 @@ Scene3D::Scene3D(QWidget* parent) : Scene3DAbstract(parent), m_physicalControlle
     const GLfloat light_diffuse[] = {0.5f, 0.5f, 0.5f, 0.0f};   // значение диффузного света
     const GLfloat light_position[] = {0.5f, 0.0f, 0.5f, 0.0f};  // позиция источника света
     setDefaultScene(SceneDefault(SceneParameters(-85.0f, 0.0f, 90.0f, 0.0f, 0.5f), 0.1f, 2.5f));
-    setLightParameters(LightParameters(GL_LIGHT0, light_ambient, light_diffuse, light_position));
+    setLightParameters(LightParameters(GL_LIGHT0, light_ambient, light_diffuse, light_position, 2.0f));
 }
 
 /// @brief setPhysicalController - установить контроллер физического процесса

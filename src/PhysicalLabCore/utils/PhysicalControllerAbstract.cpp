@@ -27,11 +27,7 @@
 PhysicalControllerAbstract::PhysicalControllerAbstract(QObject * parent)
     : QObject(parent), m_timer(new QTimer(this)), m_simulationSpeed(1.0), m_currentTime(0), m_currentState(SimulationNotRunning)
 {
-#if !defined (USE_SWRAST)
     m_timerStep = 25;
-#else
-    m_timerStep = 40;
-#endif
 }
 
 PhysicalControllerAbstract::~PhysicalControllerAbstract()

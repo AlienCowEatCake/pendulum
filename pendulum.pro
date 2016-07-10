@@ -43,21 +43,23 @@ HEADERS += \
     src/Pendulum/GraphWindowEnergy.h \
     src/Pendulum/MainWindow.h
 
-FORMS   += src/Pendulum/MainWindow.ui
+FORMS += src/Pendulum/MainWindow.ui
 
 TRANSLATIONS += \
     src/Pendulum/resources/translations/en.ts \
     src/Pendulum/resources/translations/ru.ts
 
 win32 {
-  RESOURCES += src/Pendulum/resources-old/manual/win32/manual.qrc \
-               src/Pendulum/resources/html/stylesheet/stylesheet-windows.qrc
-  RC_FILE += src/Pendulum/resources-old/icon.rc
+    RESOURCES += \
+        src/Pendulum/resources-old/manual/win32/manual.qrc \
+        src/Pendulum/resources/html/stylesheet/stylesheet-windows.qrc
+    RC_FILE += src/Pendulum/resources-old/icon.rc
 }
 
 unix:!macx {
-  RESOURCES += src/Pendulum/resources-old/manual/linux/manual.qrc \
-               src/Pendulum/resources/html/stylesheet/stylesheet-linux.qrc
+    RESOURCES += \
+        src/Pendulum/resources-old/manual/linux/manual.qrc \
+        src/Pendulum/resources/html/stylesheet/stylesheet-linux.qrc
 }
 
 macx {
@@ -78,32 +80,34 @@ RESOURCES += \
     src/Pendulum/resources/translations/translations.qrc
 
 use_hipoly {
-  RESOURCES += src/Pendulum/resources/models/hipoly/m_mass.qrc \
-               src/Pendulum/resources/models/hipoly/m_scale.qrc \
-               src/Pendulum/resources/models/hipoly/m_spring_end.qrc \
-               src/Pendulum/resources/models/hipoly/m_spring_start.qrc \
-               src/Pendulum/resources/models/hipoly/m_string.qrc \
-               src/Pendulum/resources/models/hipoly/m_tripod.qrc \
-               src/Pendulum/resources/models/hipoly/t_black_metall.qrc \
-               src/Pendulum/resources/models/hipoly/t_dk_gray_metall.qrc \
-               src/Pendulum/resources/models/hipoly/t_lt_gray_metall.qrc \
-               src/Pendulum/resources/models/hipoly/t_red.qrc \
-               src/Pendulum/resources/models/hipoly/t_wood.qrc \
-               src/Pendulum/resources/models/hipoly/t_yellow.qrc
+    RESOURCES += \
+        src/Pendulum/resources/models/hipoly/m_mass.qrc \
+        src/Pendulum/resources/models/hipoly/m_scale.qrc \
+        src/Pendulum/resources/models/hipoly/m_spring_end.qrc \
+        src/Pendulum/resources/models/hipoly/m_spring_start.qrc \
+        src/Pendulum/resources/models/hipoly/m_string.qrc \
+        src/Pendulum/resources/models/hipoly/m_tripod.qrc \
+        src/Pendulum/resources/models/hipoly/t_black_metall.qrc \
+        src/Pendulum/resources/models/hipoly/t_dk_gray_metall.qrc \
+        src/Pendulum/resources/models/hipoly/t_lt_gray_metall.qrc \
+        src/Pendulum/resources/models/hipoly/t_red.qrc \
+        src/Pendulum/resources/models/hipoly/t_wood.qrc \
+        src/Pendulum/resources/models/hipoly/t_yellow.qrc
 }
 else {
-  RESOURCES += src/Pendulum/resources/models/lowpoly/m_mass.qrc \
-               src/Pendulum/resources/models/lowpoly/m_scale.qrc \
-               src/Pendulum/resources/models/lowpoly/m_spring_end.qrc \
-               src/Pendulum/resources/models/lowpoly/m_spring_start.qrc \
-               src/Pendulum/resources/models/lowpoly/m_string.qrc \
-               src/Pendulum/resources/models/lowpoly/m_tripod.qrc \
-               src/Pendulum/resources/models/lowpoly/t_black_metall.qrc \
-               src/Pendulum/resources/models/lowpoly/t_dk_gray_metall.qrc \
-               src/Pendulum/resources/models/lowpoly/t_lt_gray_metall.qrc \
-               src/Pendulum/resources/models/lowpoly/t_red.qrc \
-               src/Pendulum/resources/models/lowpoly/t_wood.qrc \
-               src/Pendulum/resources/models/lowpoly/t_yellow.qrc
+    RESOURCES += \
+        src/Pendulum/resources/models/lowpoly/m_mass.qrc \
+        src/Pendulum/resources/models/lowpoly/m_scale.qrc \
+        src/Pendulum/resources/models/lowpoly/m_spring_end.qrc \
+        src/Pendulum/resources/models/lowpoly/m_spring_start.qrc \
+        src/Pendulum/resources/models/lowpoly/m_string.qrc \
+        src/Pendulum/resources/models/lowpoly/m_tripod.qrc \
+        src/Pendulum/resources/models/lowpoly/t_black_metall.qrc \
+        src/Pendulum/resources/models/lowpoly/t_dk_gray_metall.qrc \
+        src/Pendulum/resources/models/lowpoly/t_lt_gray_metall.qrc \
+        src/Pendulum/resources/models/lowpoly/t_red.qrc \
+        src/Pendulum/resources/models/lowpoly/t_wood.qrc \
+        src/Pendulum/resources/models/lowpoly/t_yellow.qrc
 }
 
 # === Сборочные директории =====================================================

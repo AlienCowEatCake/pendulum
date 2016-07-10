@@ -221,8 +221,10 @@ bool MilkshapeModel::loadModelData(const QString & filename)
 }
 
 /// @brief generateNormales - просчет нормалей
-void MilkshapeModel::generateNormales()
+/// @param[in] smoothNormalesWeight - веса сглаживания нормалей [0..1], чем больше, тем сильнее сглаживание
+void MilkshapeModel::generateNormales(float smoothNormalesWeight)
 {
+    float oldNormalesWeight = 1.0f - smoothNormalesWeight;
     for(int i = 0; i < m_numTriangles; i++)
     {
         float ax = m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[0] - m_pVertices[m_pTriangles[i].m_vertexIndices[0]].m_location[0];
@@ -271,9 +273,9 @@ void MilkshapeModel::generateNormales()
             {
                 if(m_pTriangles[j].m_vertexIndices[k] == i)
                 {
-                    m_pTriangles[j].m_vertexNormals[k][0] = count_x;
-                    m_pTriangles[j].m_vertexNormals[k][1] = count_y;
-                    m_pTriangles[j].m_vertexNormals[k][2] = count_z;
+                    m_pTriangles[j].m_vertexNormals[k][0] = count_x * smoothNormalesWeight + m_pTriangles[j].m_vertexNormals[k][0] * oldNormalesWeight;
+                    m_pTriangles[j].m_vertexNormals[k][1] = count_y * smoothNormalesWeight + m_pTriangles[j].m_vertexNormals[k][1] * oldNormalesWeight;
+                    m_pTriangles[j].m_vertexNormals[k][2] = count_z * smoothNormalesWeight + m_pTriangles[j].m_vertexNormals[k][2] * oldNormalesWeight;
                 }
             }
         }

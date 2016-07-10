@@ -251,14 +251,18 @@ void Scene3DAbstract::updateLight()
 {
     for(QList<LightParameters>::ConstIterator it = m_lightParameters.begin(); it != m_lightParameters.end(); ++it)
     {
-        GLfloat light_diffuse_new[] =
+        GLfloat correctionFactor = it->lightCorrection;
+        if(correctionFactor > 0.0f)
         {
-            it->lightDiffuse[0] * 2.0f * m_sceneParameters.nSca,
-            it->lightDiffuse[1] * 2.0f * m_sceneParameters.nSca,
-            it->lightDiffuse[2] * 2.0f * m_sceneParameters.nSca,
-            it->lightDiffuse[3]
-        };
-        GLImpl::glLightfv(it->lightID, GL_DIFFUSE, light_diffuse_new);
+            GLfloat light_diffuse_new[] =
+            {
+                it->lightDiffuse[0] * correctionFactor * m_sceneParameters.nSca,
+                it->lightDiffuse[1] * correctionFactor * m_sceneParameters.nSca,
+                it->lightDiffuse[2] * correctionFactor * m_sceneParameters.nSca,
+                it->lightDiffuse[3]
+            };
+            GLImpl::glLightfv(it->lightID, GL_DIFFUSE, light_diffuse_new);
+        }
     }
 }
 

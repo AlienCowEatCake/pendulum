@@ -94,11 +94,11 @@ MainWindow::MainWindow(QWidget *parent) :
     m_licenseWindow->setHidden(true);
     m_licenseWindow->setSize(560, 380);
     // =======
-    m_ui->horizontalSliderMass->setValue(10);       // масса груза m
-    m_ui->horizontalSliderAmplitude->setValue(50);     // начальное смещение
-    m_ui->horizontalSliderRestitution->setValue(50);     // коэффициент жесткости k
-    m_ui->horizontalSlider_4->setValue(3);      // коэффициент трения r
-    m_ui->horizontalSliderSpeed->setValue(100);    // скорость эксперимента
+    m_ui->horizontalSliderMass->setValue(10);           // масса груза m
+    m_ui->horizontalSliderAmplitude->setValue(50);      // начальное смещение
+    m_ui->horizontalSliderRestitution->setValue(50);    // коэффициент жесткости k
+    m_ui->horizontalSlider_4->setValue(3);              // коэффициент трения r
+    m_ui->horizontalSliderSpeed->setValue(100);         // скорость эксперимента
     m_ui->horizontalSliderQuality->setValue(m_physicalController->timerStep());
 
     // О Qt
@@ -270,7 +270,7 @@ void MainWindow::closeEvent(QCloseEvent *)
 void MainWindow::updateLcdDisplay()
 {
     QString str;
-    str.setNum(m_physicalController->currentTime()/1000.0,10,2);
+    str.setNum(m_physicalController->currentTime() / 1000.0, 10, 2);
     m_ui->lcdNumber->display(str);
 }
 
@@ -294,21 +294,30 @@ void MainWindow::on_pushButtonStart_clicked()
     case PhysicalController::SimulationRunning:
         m_ui->pushButtonStart->setText(tr("Start"));
         m_physicalController->pauseSimulation();
+        break;
     }
 }
 
 /// @brief Слот на нажатие кнопки стоп
 void MainWindow::on_pushButtonStop_clicked()
 {
-    m_physicalController->stopSimulation();
-    m_ui->horizontalSliderMass->setEnabled(true);
-    m_ui->horizontalSliderAmplitude->setEnabled(true);
-    m_ui->horizontalSliderRestitution->setEnabled(true);
-    m_ui->horizontalSlider_4->setEnabled(true);
-    m_ui->pushButtonStart->setEnabled(true);
-    m_ui->pushButtonStart->setText(tr("Start"));
-    m_ui->lcdNumber->display(0);
-    m_ui->widget->updateGL();
+    switch(m_physicalController->currentState())
+    {
+    case PhysicalController::SimulationRunning:
+    case PhysicalController::SimulationPaused:
+        m_physicalController->stopSimulation();
+        m_ui->horizontalSliderMass->setEnabled(true);
+        m_ui->horizontalSliderAmplitude->setEnabled(true);
+        m_ui->horizontalSliderRestitution->setEnabled(true);
+        m_ui->horizontalSlider_4->setEnabled(true);
+        m_ui->pushButtonStart->setEnabled(true);
+        m_ui->pushButtonStart->setText(tr("Start"));
+        m_ui->lcdNumber->display(0);
+        m_ui->widget->updateGL();
+        break;
+    case PhysicalController::SimulationNotRunning:
+        break;
+    }
 }
 
 /// @brief Слот на открытие графика скорости из меню

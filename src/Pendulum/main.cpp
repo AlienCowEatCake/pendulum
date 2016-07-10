@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 #if !defined (Q_OS_MAC)
     app.setWindowIcon(QIcon(":/mres/ball.ico"));
 #endif
-#if defined USE_FORCE_GL
+#if defined (USE_FORCE_GL)
     app.setAttribute(Qt::AA_UseDesktopOpenGL);
 #endif
     MainWindow w;// главное окно

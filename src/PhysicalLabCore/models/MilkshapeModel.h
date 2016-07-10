@@ -39,7 +39,8 @@ public:
 
 protected:
     /// @brief generateNormales - просчет нормалей
-    void generateNormales();
+    /// @param[in] smoothNormalesWeight - веса сглаживания нормалей [0..1], чем больше, тем сильнее сглаживание
+    void generateNormales(float smoothNormalesWeight = 1.0f);
 };
 
 #endif // PHYSICALLABCORE_MILKSHAPEMODEL_H_INCLUDED

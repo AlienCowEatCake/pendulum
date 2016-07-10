@@ -51,8 +51,8 @@ public:
     /// @brief Описание источника света
     struct LightParameters
     {
-        LightParameters(GLenum light_ID, const GLfloat light_ambient[4], const GLfloat light_diffuse[4], const GLfloat light_position[4])
-            : lightID(light_ID)
+        LightParameters(GLenum light_ID, const GLfloat light_ambient[4], const GLfloat light_diffuse[4], const GLfloat light_position[4], GLfloat light_correction = -1.0f)
+            : lightID(light_ID), lightCorrection(light_correction)
         {
             for(std::size_t i = 0; i < 4; i++)
             {
@@ -65,6 +65,7 @@ public:
         GLfloat lightAmbient[4];  ///< фоновый свет
         GLfloat lightDiffuse[4];  ///< значение диффузного света
         GLfloat lightPosition[4]; ///< позиция источника света
+        GLfloat lightCorrection;  ///< коэффициент корректировки света при масштабировании
     };
 
     /// @brief Дефолтное состояние сцены
