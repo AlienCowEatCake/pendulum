@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru">
+<TS version="2.0" language="ru">
 <context>
     <name>GraphWindowAbstract</name>
     <message>
         <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.ui" line="17"/>
         <source>File</source>
-        <translation>Файл</translation>
+        <translation type="unfinished">Файл</translation>
     </message>
     <message>
         <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.ui" line="25"/>
@@ -84,12 +84,12 @@
     <message>
         <location filename="../../MainWindow.ui" line="31"/>
         <source>Графики</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Графики</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="39"/>
         <source>Справка</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Справка</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="49"/>
@@ -99,101 +99,101 @@
     <message>
         <location filename="../../MainWindow.ui" line="91"/>
         <source>Исходные данные</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Исходные данные</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="103"/>
         <source>Масса груза [кг]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Масса груза [кг]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="148"/>
         <source>Начальное смещение [м]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Начальное смещение [м]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="193"/>
         <source>Коэфф. жёсткости [H/м]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Коэфф. жёсткости [H/м]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="238"/>
         <source>Коэфф. сопротивления [кг/с]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Коэфф. сопротивления [кг/с]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="293"/>
         <source>Время [c]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Время [c]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="307"/>
         <source>Панель управления</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Панель управления</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="319"/>
         <source>Скорость эксперимента [%]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Скорость эксперимента [%]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="389"/>
         <source>качество</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">качество</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="402"/>
         <source>скорость</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">скорость</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="415"/>
         <source>Графика</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Графика</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="428"/>
         <source>Старт</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Старт</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="441"/>
         <source>Сброс</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сброс</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="452"/>
         <location filename="../../MainWindow.cpp" line="243"/>
         <source>Скорость</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Скорость</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="460"/>
         <location filename="../../MainWindow.cpp" line="244"/>
         <source>Смещение</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Смещение</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="468"/>
         <source>Энергия</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Энергия</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="476"/>
         <location filename="../../MainWindow.cpp" line="233"/>
         <source>О программе</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">О программе</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="484"/>
         <source>Разработчики</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Разработчики</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="492"/>
         <location filename="../../MainWindow.cpp" line="237"/>
         <source>Руководство пользователя</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Руководство пользователя</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="500"/>
@@ -234,39 +234,39 @@
         <location filename="../../MainWindow.cpp" line="231"/>
         <location filename="../../MainWindow.cpp" line="241"/>
         <source>Пружинный маятник в среде с сопротивлением</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пружинный маятник в среде с сопротивлением</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="235"/>
         <source>Авторы</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Авторы</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="243"/>
         <location filename="../../MainWindow.cpp" line="244"/>
         <location filename="../../MainWindow.cpp" line="245"/>
         <source>t, c</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">t, c</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="243"/>
         <source>v, м/с</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">v, м/с</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="244"/>
         <source>x, м</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">x, м</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="245"/>
         <source>Механическая энергия</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Механическая энергия</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="245"/>
         <source>E, Дж</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">E, Дж</translation>
     </message>
 </context>
 <context>
