@@ -52,3 +52,4 @@ protected:
 };
 
 #endif // MODELSPRING_H_INCLUDED
+

@@ -210,3 +210,4 @@ void ModelSpring::indexate()
     }
     delete [] a_y_tmp;
 }
+

@@ -43,3 +43,4 @@ private:
 };
 
 #endif // GRAPHWINDOWOFFSET_H_INCLUDED
+

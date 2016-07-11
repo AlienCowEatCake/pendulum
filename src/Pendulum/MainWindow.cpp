@@ -441,3 +441,4 @@ void MainWindow::on_actionRussian_triggered()
 {
     updateTranslations("ru");
 }
+

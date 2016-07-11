@@ -43,3 +43,4 @@ private:
 };
 
 #endif // GRAPHWINDOWSPEED_H_INCLUDED
+

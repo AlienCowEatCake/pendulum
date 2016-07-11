@@ -126,3 +126,4 @@ QMAKE_RESOURCE_FLAGS += -threshold 0 -compress 9
     QMAKE_CXXFLAGS_RELEASE *= -ffast-math
     QMAKE_CXXFLAGS_RELEASE *= -fno-math-errno
 }
+

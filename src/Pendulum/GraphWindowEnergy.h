@@ -42,3 +42,4 @@ private:
 };
 
 #endif // GRAPHWINDOWENERGY_H_INCLUDED
+

@@ -76,3 +76,4 @@ void Action::Refresh(double Ntime)
     oldtime = t;
     E = E0 * std::exp(- 2.0 * sigma * t);
 }
+
