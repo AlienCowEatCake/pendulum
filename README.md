@@ -27,36 +27,37 @@
 
 ## Модель
 
-![image](src/resources/help/image001.png)
+![image](src/Pendulum/resources/html/help/image001.png)
 
-![r](src/resources/help/image002.png) - коэффициент сопротивления среды,
+![r](src/Pendulum/resources/html/help/image002.png) - коэффициент сопротивления среды,
 
-![k](src/resources/help/image004.png) - коэффициент жёсткости пружины,
+![k](src/Pendulum/resources/html/help/image004.png) - коэффициент жёсткости пружины,
 
-![m](src/resources/help/image006.png) - масса груза,
+![m](src/Pendulum/resources/html/help/image006.png) - масса груза,
 
-![A_0](src/resources/help/image008.png) - начальная амплитуда,
+![A_0](src/Pendulum/resources/html/help/image008.png) - начальная амплитуда,
 
-![x](src/resources/help/image010.png) - смещение груза,
+![x](src/Pendulum/resources/html/help/image010.png) - смещение груза,
 
-![t](src/resources/help/image012.png) - время,
+![t](src/Pendulum/resources/html/help/image012.png) - время,
 
-![ω_0=sqrt(k/m)](src/resources/help/image014.png) - циклическая частота свободных незатухающих колебаний,
+![ω_0=sqrt(k/m)](src/Pendulum/resources/html/help/image014.png) - циклическая частота свободных незатухающих колебаний,
 
-![β=r/(2*m)](src/resources/help/image016.png) - коэффициент затухания,
+![β=r/(2*m)](src/Pendulum/resources/html/help/image016.png) - коэффициент затухания,
 
-![ω=sqrt(ω_0^2-β^2)](src/resources/help/image018.png) - циклическая частота свободных затухающих колебаний,
+![ω=sqrt(ω_0^2-β^2)](src/Pendulum/resources/html/help/image018.png) - циклическая частота свободных затухающих колебаний,
 
-![T=2*π/sqrt(ω_0^2-β^2)](src/resources/help/image020.png) - период колебаний,
+![T=2*π/sqrt(ω_0^2-β^2)](src/Pendulum/resources/html/help/image020.png) - период колебаний,
 
-![A_T=A_0*exp(-β*T)*cos(ω*T)](src/resources/help/image022.png) - амплитуда колебаний в момент времени, равный периоду,
+![A_T=A_0*exp(-β*T)*cos(ω*T)](src/Pendulum/resources/html/help/image022.png) - амплитуда колебаний в момент времени, равный периоду,
 
-![θ=ln(A_0/A_T)](src/resources/help/image024.png) - логарифмический декремент,
+![θ=ln(A_0/A_T)](src/Pendulum/resources/html/help/image024.png) - логарифмический декремент,
 
-![E_0=k*A_0^2/2](src/resources/help/image026.png) - энергия в начале эксперимента,
+![E_0=k*A_0^2/2](src/Pendulum/resources/html/help/image026.png) - энергия в начале эксперимента,
 
-![x=A_0*exp(-β*t)*cos(ω*t)](src/resources/help/image028.png) - смещение в текущий момент времени,
+![x=A_0*exp(-β*t)*cos(ω*t)](src/Pendulum/resources/html/help/image028.png) - смещение в текущий момент времени,
 
-![v=Δx/Δt](src/resources/help/image030.png) - скорость в текущий момент времени,
+![v=Δx/Δt](src/Pendulum/resources/html/help/image030.png) - скорость в текущий момент времени,
 
-![E=E_0*exp(-2*β*t)](src/resources/help/image032.png) - энергия в текущий момент времени.
+![E=E_0*exp(-2*β*t)](src/Pendulum/resources/html/help/image032.png) - энергия в текущий момент времени.
+
