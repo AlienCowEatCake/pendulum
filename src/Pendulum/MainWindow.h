@@ -72,8 +72,7 @@ private slots:
     /// @brief Слот на изменение ползунка коэффициента жесткости k
     void on_horizontalSliderRestitution_valueChanged(int value);
     /// @brief Слот на изменение ползунка коэффициента трения r
-    /// @todo Переименовать ползунок!
-    void on_horizontalSlider_4_valueChanged(int value);
+    void on_horizontalSliderDamping_valueChanged(int value);
     /// @brief Слот на изменение ползунка скорости эксперимента
     void on_horizontalSliderSpeed_valueChanged(int value);
     /// @brief Слот на изменение ползунка качества картинки

@@ -97,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->horizontalSliderMass->setValue(10);           // масса груза m
     m_ui->horizontalSliderAmplitude->setValue(50);      // начальное смещение
     m_ui->horizontalSliderRestitution->setValue(50);    // коэффициент жесткости k
-    m_ui->horizontalSlider_4->setValue(3);              // коэффициент трения r
+    m_ui->horizontalSliderDamping->setValue(3);         // коэффициент трения r
     m_ui->horizontalSliderSpeed->setValue(100);         // скорость эксперимента
     m_ui->horizontalSliderQuality->setValue(m_physicalController->timerStep());
 
@@ -283,7 +283,7 @@ void MainWindow::on_pushButtonStart_clicked()
         m_ui->horizontalSliderMass->setEnabled(false);
         m_ui->horizontalSliderAmplitude->setEnabled(false);
         m_ui->horizontalSliderRestitution->setEnabled(false);
-        m_ui->horizontalSlider_4->setEnabled(false);
+        m_ui->horizontalSliderDamping->setEnabled(false);
         m_ui->pushButtonStart->setText(tr("Stop"));
         m_physicalController->startSimulation();
         break;
@@ -309,7 +309,7 @@ void MainWindow::on_pushButtonStop_clicked()
         m_ui->horizontalSliderMass->setEnabled(true);
         m_ui->horizontalSliderAmplitude->setEnabled(true);
         m_ui->horizontalSliderRestitution->setEnabled(true);
-        m_ui->horizontalSlider_4->setEnabled(true);
+        m_ui->horizontalSliderDamping->setEnabled(true);
         m_ui->pushButtonStart->setEnabled(true);
         m_ui->pushButtonStart->setText(tr("Start"));
         m_ui->lcdNumber->display(0);
@@ -341,9 +341,9 @@ void MainWindow::on_actionEnergy_triggered()
 /// @brief Слот на изменение ползунка массы груза m
 void MainWindow::on_horizontalSliderMass_valueChanged(int value)
 {
-    double v1 = (value / 10) / 100.0;
+    double v1 = value / 100.0;
     m_physicalController->action().set_m(v1);
-    m_ui->label_2->setText(QString::number(v1));
+    m_ui->labelMass->setText(QString::number(v1));
     m_physicalController->resetPhysicalEngine();
     m_speedWindow->update();
     m_offsetWindow->update();
@@ -359,7 +359,7 @@ void MainWindow::on_horizontalSliderAmplitude_valueChanged(int value)
         v1 = 0.0;
     m_physicalController->action().set_A0(v1);
     m_physicalController->resetPhysicalEngine();
-    m_ui->label_4->setText(QString::number(v1));
+    m_ui->labelAmplitude->setText(QString::number(v1));
     m_speedWindow->update();
     m_offsetWindow->update();
     m_energyWindow->update();
@@ -371,7 +371,7 @@ void MainWindow::on_horizontalSliderRestitution_valueChanged(int value)
 {
     m_physicalController->action().set_k(value);
     m_physicalController->resetPhysicalEngine();
-    m_ui->label_6->setText(QString::number(value));
+    m_ui->labelRestitution->setText(QString::number(value));
     m_speedWindow->update();
     m_offsetWindow->update();
     m_energyWindow->update();
@@ -379,14 +379,13 @@ void MainWindow::on_horizontalSliderRestitution_valueChanged(int value)
 }
 
 /// @brief Слот на изменение ползунка коэффициента трения r
-/// @todo Переименовать ползунок!
-void MainWindow::on_horizontalSlider_4_valueChanged(int value)
+void MainWindow::on_horizontalSliderDamping_valueChanged(int value)
 {
     double n1 = std::exp(static_cast<double>(value) / 100.0 * 1.675) / std::exp(1.7) - 0.18; // magic-magic
     n1 = static_cast<int>(n1 * 100.0) / 100.0;
     m_physicalController->action().set_r(n1);
     m_physicalController->resetPhysicalEngine();
-    m_ui->label_8->setText(QString::number(n1));
+    m_ui->labelDamping->setText(QString::number(n1));
     m_speedWindow->update();
     m_offsetWindow->update();
     m_energyWindow->update();
@@ -396,7 +395,7 @@ void MainWindow::on_horizontalSlider_4_valueChanged(int value)
 /// @brief Слот на изменение ползунка скорости эксперимента
 void MainWindow::on_horizontalSliderSpeed_valueChanged(int value)
 {
-    m_ui->label_10->setText(QString::number(value));
+    m_ui->labelSpeed->setText(QString::number(value));
     m_physicalController->setSimulationSpeed(value / 100.0);
     m_ui->widget->updateGL();
 }
