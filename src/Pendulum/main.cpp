@@ -36,12 +36,12 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication app(argc, argv);
-    app.setOrganizationDomain("fami.codefreak.ru");
-    app.setOrganizationName("fami_net_team");
-    app.setApplicationName("pendulum");
-    app.setApplicationVersion("1.0");
+    app.setOrganizationDomain(QString::fromLatin1("fami.codefreak.ru"));
+    app.setOrganizationName(QString::fromLatin1("fami_net_team"));
+    app.setApplicationName(QString::fromLatin1("pendulum"));
+    app.setApplicationVersion(QString::fromLatin1("1.0"));
 #if !defined (Q_OS_MAC)
-    app.setWindowIcon(QIcon(":/mres/ball.ico"));
+    app.setWindowIcon(QIcon(QString::fromLatin1(":/mres/ball.ico")));
 #endif
 #if defined (USE_FORCE_GL)
     app.setAttribute(Qt::AA_UseDesktopOpenGL);

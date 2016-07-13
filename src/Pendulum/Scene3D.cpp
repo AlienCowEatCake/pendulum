@@ -51,13 +51,13 @@ void Scene3D::initializeGL()
     GLImpl::glEnableClientState(GL_VERTEX_ARRAY);
     GLImpl::glEnableClientState(GL_COLOR_ARRAY);
 
-    m_tripod.loadModelData(QLatin1String(":/data/m_tripod.ms3d"));
-    m_sphere.loadModelData(QLatin1String(":/data/m_mass.ms3d"));
-    m_cyllinder.loadModelData(QLatin1String(":/data/m_cyllinder.ms3d"));
-    m_scale.loadModelData(QLatin1String(":/data/m_scale.ms3d"));
-    m_spring_start.loadModelData(QLatin1String(":/data/m_spring_start.ms3d"));
-    m_spring_end.loadModelData(QLatin1String(":/data/m_spring_end.ms3d"));
-    m_strng.loadModelData(QLatin1String(":/data/m_string.ms3d"));
+    m_tripod.loadModelData(QString::fromLatin1(":/data/m_tripod.ms3d"));
+    m_sphere.loadModelData(QString::fromLatin1(":/data/m_mass.ms3d"));
+    m_cyllinder.loadModelData(QString::fromLatin1(":/data/m_cyllinder.ms3d"));
+    m_scale.loadModelData(QString::fromLatin1(":/data/m_scale.ms3d"));
+    m_spring_start.loadModelData(QString::fromLatin1(":/data/m_spring_start.ms3d"));
+    m_spring_end.loadModelData(QString::fromLatin1(":/data/m_spring_end.ms3d"));
+    m_strng.loadModelData(QString::fromLatin1(":/data/m_string.ms3d"));
 
     GLImpl::glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient(GL_LIGHT0));    // Установка Фонового Света
     GLImpl::glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse(GL_LIGHT0));    // Установка Диффузного Света

@@ -18,7 +18,7 @@ TEMPLATE = app
 
 INCLUDEPATH += src/Pendulum
 
-#DEFINES += QT_NO_CAST_FROM_ASCII
+DEFINES += QT_NO_CAST_FROM_ASCII
 
 include(src/PhysicalLabCore/PhysicalLabCore.pri)
 

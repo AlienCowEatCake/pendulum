@@ -105,29 +105,29 @@ void GraphWindowAbstract::on_actionSaveGraphFile_triggered()
     {
         *it = (*it).toLower();
         QString format = QString::fromLatin1(*it);
-        formatsAll.append(formatsAll.length() > 0 ? QLatin1String(" *.") : QLatin1String("*.")).append(format);
+        formatsAll.append(formatsAll.length() > 0 ? QString::fromLatin1(" *.") : QString::fromLatin1("*.")).append(format);
         if(formats.length() > 0)
-            formats.append(QLatin1String(";;"));
-        formats.append(format.toUpper()).append(QLatin1String(" ")).append(tr("Images"))
-               .append(QLatin1String(" (*.")).append(format).append(QLatin1String(")"));
+            formats.append(QString::fromLatin1(";;"));
+        formats.append(format.toUpper()).append(QString::fromLatin1(" ")).append(tr("Images"))
+               .append(QString::fromLatin1(" (*.")).append(format).append(QString::fromLatin1(")"));
     }
-    formatsAll.prepend(tr("All Images").append(QLatin1String(" ("))).append(QLatin1String(");;"));
+    formatsAll.prepend(tr("All Images").append(QString::fromLatin1(" ("))).append(QString::fromLatin1(");;"));
     formats.prepend(formatsAll);
 
     const QByteArray extensionDefault("png");
     if(m_lastSaved.isEmpty())
     {
         QString title = (windowTitle().isEmpty() ? tr("Graph") : windowTitle());
-        m_lastSaved = title.append(QLatin1String(".")).append(QLatin1String(extensionDefault));
+        m_lastSaved = title.append(QString::fromLatin1(".")).append(QString::fromLatin1(extensionDefault));
     }
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Image File"), m_lastSaved, formats);
     if(filename.length() == 0) return;
 
     QByteArray extension;
-    int found = filename.lastIndexOf(QLatin1Char('.'));
+    int found = filename.lastIndexOf(QChar::fromLatin1('.'));
     if(found == -1)
     {
-        filename.append(QLatin1String(".")).append(QString::fromLatin1(extensionDefault));
+        filename.append(QString::fromLatin1(".")).append(QString::fromLatin1(extensionDefault));
         extension = extensionDefault;
     }
     else
@@ -135,7 +135,7 @@ void GraphWindowAbstract::on_actionSaveGraphFile_triggered()
         extension = filename.right(filename.length() - found - 1).toLower().toLocal8Bit();
         if(std::find(supported.begin(), supported.end(), extension) == supported.end())
         {
-            filename.append(QLatin1String(".")).append(QString::fromLatin1(extensionDefault));
+            filename.append(QString::fromLatin1(".")).append(QString::fromLatin1(extensionDefault));
             extension = extensionDefault;
         }
     }

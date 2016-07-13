@@ -28,7 +28,7 @@
 #else
 #include <QtGui>
 #endif
-#include <QLatin1String>
+#include <QString>
 
 Scene2D::Scene2D(bool haveNegativeY, QWidget* parent)
     : QWidget(parent), m_haveNegativeY(haveNegativeY)
@@ -43,7 +43,7 @@ Scene2D::Scene2D(bool haveNegativeY, QWidget* parent)
     m_sizeY_local = m_maxY_local - m_minY_local;
 
     // Группа настроек для графиков
-    m_settings.beginGroup(QLatin1String("Scene2D"));
+    m_settings.beginGroup(QString::fromLatin1("Scene2D"));
 }
 
 // Подгонка минимальных/максимальных значений и числа линий, для нормальной рисовки сетки
@@ -193,7 +193,7 @@ void Scene2D::drawGraph(QPaintDevice * device)
         float y = static_cast<float>(i) / static_cast<float>(m_numTicksY);
         float y_real = static_cast<float>(std::floor((y * m_sizeY + m_minY) * 1e5 + 0.5)) * 1e-5f;
         y = y * m_sizeY_local + m_minY_local;
-        QString st = QString(QLatin1String("%1")).arg(y_real, 5, 'g', -1, QLatin1Char(' '));
+        QString st = QString(QString::fromLatin1("%1")).arg(y_real, 5, 'g', -1, QChar::fromLatin1(' '));
         painter.drawText(toWindow(-0.05f, y - 0.01f), st);
     }
 
@@ -281,49 +281,49 @@ void Scene2D::saveSetting(const QString &name, const QVariant &value)
 /// @brief setGridBigColor - Установить цвет основных линий сетки
 void Scene2D::setGridBigColor(const QColor &color)
 {
-    saveSetting(QLatin1String("GridBigColor"), color);
+    saveSetting(QString::fromLatin1("GridBigColor"), color);
 }
 
 /// @brief setGridSmallColor - Установить цвет дополнительных линий сетки
 void Scene2D::setGridSmallColor(const QColor &color)
 {
-    saveSetting(QLatin1String("GridSmallColor"), color);
+    saveSetting(QString::fromLatin1("GridSmallColor"), color);
 }
 
 /// @brief setAxisColor - Установить цвет осей
 void Scene2D::setAxisColor(const QColor &color)
 {
-    saveSetting(QLatin1String("AxisColor"), color);
+    saveSetting(QString::fromLatin1("AxisColor"), color);
 }
 
 /// @brief setPlotColor - Установить цвет графика
 void Scene2D::setPlotColor(const QColor &color)
 {
-    saveSetting(QLatin1String("PlotColor"), color);
+    saveSetting(QString::fromLatin1("PlotColor"), color);
 }
 
 /// @brief setGridSmallWidth - Установить толщину основных линий сетки
 void Scene2D::setGridSmallWidth(qreal width)
 {
-    saveSetting(QLatin1String("GridSmallWidth"), width);
+    saveSetting(QString::fromLatin1("GridSmallWidth"), width);
 }
 
 /// @brief setGridBigWidth - Установить толщину дополнительных линий сетки
 void Scene2D::setGridBigWidth(qreal width)
 {
-    saveSetting(QLatin1String("GridBigWidth"), width);
+    saveSetting(QString::fromLatin1("GridBigWidth"), width);
 }
 
 /// @brief setAxisWidth - Установить толщину осей
 void Scene2D::setAxisWidth(qreal width)
 {
-    saveSetting(QLatin1String("AxisWidth"), width);
+    saveSetting(QString::fromLatin1("AxisWidth"), width);
 }
 
 /// @brief setPlotWidth - Установить толщину графика
 void Scene2D::setPlotWidth(qreal width)
 {
-    saveSetting(QLatin1String("PlotWidth"), width);
+    saveSetting(QString::fromLatin1("PlotWidth"), width);
 }
 
 // Функция для чтения из настроек графиков
@@ -337,50 +337,50 @@ QVariant Scene2D::loadSetting(const QString &name, const QVariant &defaultValue)
 QColor Scene2D::gridBigColor()
 {
     static QColor defaultValue(Qt::gray);
-    return loadSetting(QLatin1String("GridBigColor"), defaultValue).value<QColor>();
+    return loadSetting(QString::fromLatin1("GridBigColor"), defaultValue).value<QColor>();
 }
 
 /// @brief gridSmallColor - Получить цвет дополнительных линий сетки
 QColor Scene2D::gridSmallColor()
 {
     static QColor defaultValue(Qt::lightGray);
-    return loadSetting(QLatin1String("GridSmallColor"), defaultValue).value<QColor>();
+    return loadSetting(QString::fromLatin1("GridSmallColor"), defaultValue).value<QColor>();
 }
 
 /// @brief axisColor - Получить цвет осей
 QColor Scene2D::axisColor()
 {
     static QColor defaultValue(Qt::black);
-    return loadSetting(QLatin1String("AxisColor"), defaultValue).value<QColor>();
+    return loadSetting(QString::fromLatin1("AxisColor"), defaultValue).value<QColor>();
 }
 
 /// @brief plotColor - Получить цвет графика
 QColor Scene2D::plotColor()
 {
     static QColor defaultValue(Qt::darkRed);
-    return loadSetting(QLatin1String("PlotColor"), defaultValue).value<QColor>();
+    return loadSetting(QString::fromLatin1("PlotColor"), defaultValue).value<QColor>();
 }
 
 /// @brief gridSmallWidth - Получить толщину основных линий сетки
 qreal Scene2D::gridSmallWidth()
 {
-    return static_cast<qreal>(loadSetting(QLatin1String("GridSmallWidth"), 1.0f).toDouble());
+    return static_cast<qreal>(loadSetting(QString::fromLatin1("GridSmallWidth"), 1.0f).toDouble());
 }
 
 /// @brief gridBigWidth - Получить толщину дополнительных линий сетки
 qreal Scene2D::gridBigWidth()
 {
-    return static_cast<qreal>(loadSetting(QLatin1String("GridBigWidth"), 1.5f).toDouble());
+    return static_cast<qreal>(loadSetting(QString::fromLatin1("GridBigWidth"), 1.5f).toDouble());
 }
 
 /// @brief axisWidth - Получить толщину осей
 qreal Scene2D::axisWidth()
 {
-    return static_cast<qreal>(loadSetting(QLatin1String("AxisWidth"), 3.0f).toDouble());
+    return static_cast<qreal>(loadSetting(QString::fromLatin1("AxisWidth"), 3.0f).toDouble());
 }
 
 /// @brief plotWidth - Получить толщину графика
 qreal Scene2D::plotWidth()
 {
-    return static_cast<qreal>(loadSetting(QLatin1String("PlotWidth"), 2.0f).toDouble());
+    return static_cast<qreal>(loadSetting(QString::fromLatin1("PlotWidth"), 2.0f).toDouble());
 }

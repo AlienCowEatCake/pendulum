@@ -127,8 +127,8 @@ void MainWindow::fontsFix(const QString & language)
     // Отображение название языка -> соответствующая ему WritingSystem
     static QList<QPair<QString, QFontDatabase::WritingSystem> > writingSystemMap =
             QList<QPair<QString, QFontDatabase::WritingSystem> >()
-            << qMakePair(QString("en"), QFontDatabase::Latin)
-            << qMakePair(QString("ru"), QFontDatabase::Cyrillic);
+            << qMakePair(QString::fromLatin1("en"), QFontDatabase::Latin)
+            << qMakePair(QString::fromLatin1("ru"), QFontDatabase::Cyrillic);
 
     // Найдем WritingSystem для текущего языка
     QFontDatabase::WritingSystem currentWritingSystem = QFontDatabase::Any;
@@ -145,7 +145,7 @@ void MainWindow::fontsFix(const QString & language)
     static QFont defaultFont = qApp->font();
     // Шрифт Tahoma, если стандартный не поддерживает выбранный язык
     QFont fallbackFont = defaultFont;
-    fallbackFont.setFamily("Tahoma");
+    fallbackFont.setFamily(QString::fromLatin1("Tahoma"));
 
     // Проверим, умеет ли стандартный шрифт писать на новом языке
     static QFontDatabase fontDatabase;
@@ -159,7 +159,7 @@ void MainWindow::fontsFix(const QString & language)
     static DWORD dwVersion = (DWORD)(LOBYTE(LOWORD(GetVersion())));
     if(dwVersion <= 4)
     {
-        if(language != "en")
+        if(language != QString::fromLatin1("en"))
             qApp->setFont(fallbackFont);
         else
             qApp->setFont(defaultFont);
@@ -179,8 +179,8 @@ void MainWindow::updateTranslations(QString language)
 {
     // Отображение название языка -> соответствующая ему менюшка
     static QList<QPair<QString, QAction *> > languagesMap = QList<QPair<QString, QAction *> >()
-            << qMakePair(QString("en"), m_ui->actionEnglish)
-            << qMakePair(QString("ru"), m_ui->actionRussian);
+            << qMakePair(QString::fromLatin1("en"), m_ui->actionEnglish)
+            << qMakePair(QString::fromLatin1("ru"), m_ui->actionRussian);
 
     // Определим системную локаль
     static QString systemLang;
@@ -196,21 +196,21 @@ void MainWindow::updateTranslations(QString language)
             }
         }
         if(systemLang.isEmpty())
-            systemLang = "en";
+            systemLang = QString::fromLatin1("en");
     }
 
     // Посмотрим в настройки, не сохранен ли случайно в них язык
     QSettings settings;
     if(language.isEmpty())
-        language = settings.value("Language", systemLang).toString();
+        language = settings.value(QString::fromLatin1("Language"), systemLang).toString();
     else
-        settings.setValue("Language", language);
+        settings.setValue(QString::fromLatin1("Language"), language);
 
     // Удалим старый перевод, установим новый
     static QTranslator translator;
     if(!translator.isEmpty())
         qApp->removeTranslator(&translator);
-    translator.load(QString(":/translations/%1").arg(language));
+    translator.load(QString::fromLatin1(":/translations/%1").arg(language));
     qApp->installTranslator(&translator);
     m_ui->retranslateUi(this);
 
@@ -229,15 +229,15 @@ void MainWindow::updateTranslations(QString language)
 
     // Перегрузим ресурсы в окнах
     setWindowTitle(trUtf8("Пружинный маятник в среде с сопротивлением"));
-    m_helpWindow->loadHtml(QString(QLatin1String(":/html/help_%1.html")).arg(language));
+    m_helpWindow->loadHtml(QString::fromLatin1(":/html/help_%1.html").arg(language));
     m_helpWindow->setTitle(trUtf8("О программе"));
-    m_authorsWindow->loadHtml(QString(QLatin1String(":/html/author_%1.html")).arg(language));
+    m_authorsWindow->loadHtml(QString::fromLatin1(":/html/author_%1.html").arg(language));
     m_authorsWindow->setTitle(trUtf8("Авторы"));
-    m_manualWindow->loadHtml(QString(QLatin1String(":/html/manual_%1.html")).arg(language));
+    m_manualWindow->loadHtml(QString::fromLatin1(":/html/manual_%1.html").arg(language));
     m_manualWindow->setTitle(trUtf8("Руководство пользователя"));
-    m_licenseWindow->loadHtml(QString(QLatin1String(":/html/license_%1.html")).arg(language));
+    m_licenseWindow->loadHtml(QString::fromLatin1(":/html/license_%1.html").arg(language));
     m_licenseWindow->setTitle(tr("License"));
-    m_splashWindow->setPixmap(":/mres/splash.png");
+    m_splashWindow->setPixmap(QString::fromLatin1(":/mres/splash.png"));
     m_splashWindow->setTitle(trUtf8("Пружинный маятник в среде с сопротивлением"));
 
     m_speedWindow->setLabels(trUtf8("Скорость"), trUtf8("t, c"), trUtf8("v, м/с"));
@@ -433,12 +433,12 @@ void MainWindow::on_actionLicense_triggered()
 /// @brief Слот на включение английского языка из меню
 void MainWindow::on_actionEnglish_triggered()
 {
-    updateTranslations("en");
+    updateTranslations(QString::fromLatin1("en"));
 }
 
 /// @brief Слот на включение русского языка из меню
 void MainWindow::on_actionRussian_triggered()
 {
-    updateTranslations("ru");
+    updateTranslations(QString::fromLatin1("ru"));
 }
 
