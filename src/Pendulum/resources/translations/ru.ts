@@ -84,12 +84,12 @@
     <message>
         <location filename="../../MainWindow.ui" line="31"/>
         <source>Графики</source>
-        <translation type="unfinished"></translation>
+        <translation>Графики</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="39"/>
         <source>Справка</source>
-        <translation type="unfinished"></translation>
+        <translation>Справка</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="49"/>
@@ -99,101 +99,101 @@
     <message>
         <location filename="../../MainWindow.ui" line="91"/>
         <source>Исходные данные</source>
-        <translation type="unfinished"></translation>
+        <translation>Исходные данные</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="103"/>
         <source>Масса груза [кг]</source>
-        <translation type="unfinished"></translation>
+        <translation>Масса груза [кг]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="148"/>
         <source>Начальное смещение [м]</source>
-        <translation type="unfinished"></translation>
+        <translation>Начальное смещение [м]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="193"/>
         <source>Коэфф. жёсткости [H/м]</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэфф. жёсткости [H/м]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="238"/>
         <source>Коэфф. сопротивления [кг/с]</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэфф. сопротивления [кг/с]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="293"/>
         <source>Время [c]</source>
-        <translation type="unfinished"></translation>
+        <translation>Время [c]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="307"/>
         <source>Панель управления</source>
-        <translation type="unfinished"></translation>
+        <translation>Панель управления</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="319"/>
         <source>Скорость эксперимента [%]</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорость эксперимента [%]</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="389"/>
         <source>качество</source>
-        <translation type="unfinished"></translation>
+        <translation>качество</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="402"/>
         <source>скорость</source>
-        <translation type="unfinished"></translation>
+        <translation>скорость</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="415"/>
         <source>Графика</source>
-        <translation type="unfinished"></translation>
+        <translation>Графика</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="428"/>
         <source>Старт</source>
-        <translation type="unfinished"></translation>
+        <translation>Старт</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="441"/>
         <source>Сброс</source>
-        <translation type="unfinished"></translation>
+        <translation>Сброс</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="452"/>
         <location filename="../../MainWindow.cpp" line="243"/>
         <source>Скорость</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорость</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="460"/>
         <location filename="../../MainWindow.cpp" line="244"/>
         <source>Смещение</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="468"/>
         <source>Энергия</source>
-        <translation type="unfinished"></translation>
+        <translation>Энергия</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="476"/>
         <location filename="../../MainWindow.cpp" line="233"/>
         <source>О программе</source>
-        <translation type="unfinished"></translation>
+        <translation>О программе</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="484"/>
         <source>Разработчики</source>
-        <translation type="unfinished"></translation>
+        <translation>Разработчики</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="492"/>
         <location filename="../../MainWindow.cpp" line="237"/>
         <source>Руководство пользователя</source>
-        <translation type="unfinished"></translation>
+        <translation>Руководство пользователя</translation>
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="500"/>
@@ -234,39 +234,39 @@
         <location filename="../../MainWindow.cpp" line="231"/>
         <location filename="../../MainWindow.cpp" line="241"/>
         <source>Пружинный маятник в среде с сопротивлением</source>
-        <translation type="unfinished"></translation>
+        <translation>Пружинный маятник в среде с сопротивлением</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="235"/>
         <source>Авторы</source>
-        <translation type="unfinished"></translation>
+        <translation>Авторы</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="243"/>
         <location filename="../../MainWindow.cpp" line="244"/>
         <location filename="../../MainWindow.cpp" line="245"/>
         <source>t, c</source>
-        <translation type="unfinished"></translation>
+        <translation>t, c</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="243"/>
         <source>v, м/с</source>
-        <translation type="unfinished"></translation>
+        <translation>v, м/с</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="244"/>
         <source>x, м</source>
-        <translation type="unfinished"></translation>
+        <translation>x, м</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="245"/>
         <source>Механическая энергия</source>
-        <translation type="unfinished"></translation>
+        <translation>Механическая энергия</translation>
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="245"/>
         <source>E, Дж</source>
-        <translation type="unfinished"></translation>
+        <translation>E, Дж</translation>
     </message>
 </context>
 <context>
