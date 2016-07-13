@@ -228,21 +228,21 @@ void MainWindow::updateTranslations(QString language)
         m_ui->pushButtonStart->setText(tr("Start"));
 
     // Перегрузим ресурсы в окнах
-    setWindowTitle(trUtf8("Пружинный маятник в среде с сопротивлением"));
+    setWindowTitle(tr("Mass Spring Damper System"));
     m_helpWindow->loadHtml(QString::fromLatin1(":/html/help_%1.html").arg(language));
-    m_helpWindow->setTitle(trUtf8("О программе"));
+    m_helpWindow->setTitle(tr("About"));
     m_authorsWindow->loadHtml(QString::fromLatin1(":/html/author_%1.html").arg(language));
-    m_authorsWindow->setTitle(trUtf8("Авторы"));
+    m_authorsWindow->setTitle(tr("Credits"));
     m_manualWindow->loadHtml(QString::fromLatin1(":/html/manual_%1.html").arg(language));
-    m_manualWindow->setTitle(trUtf8("Руководство пользователя"));
+    m_manualWindow->setTitle(tr("User Manual"));
     m_licenseWindow->loadHtml(QString::fromLatin1(":/html/license_%1.html").arg(language));
     m_licenseWindow->setTitle(tr("License"));
     m_splashWindow->setPixmap(QString::fromLatin1(":/mres/splash.png"));
-    m_splashWindow->setTitle(trUtf8("Пружинный маятник в среде с сопротивлением"));
+    m_splashWindow->setTitle(tr("Mass Spring Damper System"));
 
-    m_speedWindow->setLabels(trUtf8("Скорость"), trUtf8("t, c"), trUtf8("v, м/с"));
-    m_offsetWindow->setLabels(trUtf8("Смещение"), trUtf8("t, c"), trUtf8("x, м"));
-    m_energyWindow->setLabels(trUtf8("Механическая энергия"), trUtf8("t, c"), trUtf8("E, Дж"));
+    m_speedWindow->setLabels(tr("Speed"), tr("t, s"), tr("v, m/s"));
+    m_offsetWindow->setLabels(tr("Displacement"), tr("t, s"), tr("x, m"));
+    m_energyWindow->setLabels(tr("Mechanical Energy"), tr("t, s"), tr("E, J"));
 
     // Также следует пересчитать геометрию виждетов
     QApplication::postEvent(this, new QResizeEvent(size(), size()));

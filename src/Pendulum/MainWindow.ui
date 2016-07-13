@@ -28,7 +28,7 @@
   <widget class="QMenuBar" name="menuBar">
    <widget class="QMenu" name="menuGraphs">
     <property name="title">
-     <string>Графики</string>
+     <string>Graphs</string>
     </property>
     <addaction name="actionSpeed"/>
     <addaction name="actionOffset"/>
@@ -36,7 +36,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Справка</string>
+     <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
     <addaction name="actionManual"/>
@@ -88,7 +88,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
-        <string>Исходные данные</string>
+        <string>Initial Conditions</string>
        </property>
        <layout class="QGridLayout" name="gridLayout">
         <property name="verticalSpacing">
@@ -97,7 +97,7 @@
         <item row="0" column="0" colspan="2">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Масса груза [кг]</string>
+           <string>Mass [kg]</string>
           </property>
          </widget>
         </item>
@@ -130,7 +130,7 @@
         <item row="2" column="0" colspan="2">
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Начальное смещение [м]</string>
+           <string>Initial Displacement [m]</string>
           </property>
          </widget>
         </item>
@@ -163,7 +163,7 @@
         <item row="4" column="0" colspan="2">
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Коэфф. жёсткости [H/м]</string>
+           <string>Spring Constant [N/m]</string>
           </property>
          </widget>
         </item>
@@ -196,7 +196,7 @@
         <item row="6" column="0" colspan="2">
          <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>Коэфф. сопротивления [кг/с]</string>
+           <string>Damping Coefficient [kg/s]</string>
           </property>
          </widget>
         </item>
@@ -229,7 +229,7 @@
         <item row="8" column="0" colspan="2">
          <widget class="QLabel" name="label_14">
           <property name="text">
-           <string>Время [c]</string>
+           <string>Time [s]</string>
           </property>
          </widget>
         </item>
@@ -278,7 +278,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
-        <string>Панель управления</string>
+        <string>Control Panel</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <property name="verticalSpacing">
@@ -287,7 +287,7 @@
         <item row="0" column="0" colspan="2">
          <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>Скорость эксперимента [%]</string>
+           <string>Experiment Speed [%]</string>
           </property>
          </widget>
         </item>
@@ -323,7 +323,7 @@
         <item row="2" column="0" colspan="2">
          <widget class="QLabel" name="label_13">
           <property name="text">
-           <string>Графика</string>
+           <string>Graphic Options</string>
           </property>
          </widget>
         </item>
@@ -348,14 +348,14 @@
           <item>
            <widget class="QLabel" name="label_11">
             <property name="text">
-             <string>качество</string>
+             <string>Quality</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_12">
             <property name="text">
-             <string>скорость</string>
+             <string>Performance</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -378,7 +378,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Старт</string>
+             <string>Start</string>
             </property>
            </widget>
           </item>
@@ -391,7 +391,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Сброс</string>
+             <string>Reset</string>
             </property>
            </widget>
           </item>
@@ -421,7 +421,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/speed.png</iconset>
    </property>
    <property name="text">
-    <string>Скорость</string>
+    <string>Speed</string>
    </property>
   </action>
   <action name="actionOffset">
@@ -429,7 +429,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/position.png</iconset>
    </property>
    <property name="text">
-    <string>Смещение</string>
+    <string>Displacement</string>
    </property>
   </action>
   <action name="actionEnergy">
@@ -437,7 +437,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/energy.png</iconset>
    </property>
    <property name="text">
-    <string>Энергия</string>
+    <string>Energy</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -445,7 +445,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/about.png</iconset>
    </property>
    <property name="text">
-    <string>О программе</string>
+    <string>About</string>
    </property>
   </action>
   <action name="actionAuthors">
@@ -453,7 +453,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/people.png</iconset>
    </property>
    <property name="text">
-    <string>Разработчики</string>
+    <string>Credits</string>
    </property>
   </action>
   <action name="actionManual">
@@ -461,7 +461,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/manual.png</iconset>
    </property>
    <property name="text">
-    <string>Руководство пользователя</string>
+    <string>User Manual</string>
    </property>
   </action>
   <action name="actionLicense">
