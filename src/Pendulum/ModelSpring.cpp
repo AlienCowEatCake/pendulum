@@ -44,8 +44,6 @@ const float defSize = 1.0f;
 /// @brief эпсилон, при котором ресайз не производится
 const float epsilon = 0.0001f;
 
-/// @brief Pi
-const float pi = 3.1415926535897932384626433832795f;
 /// @brief Pi * 2
 const float pi_x2 = 6.283185307179586476925286766559f;
 /// @brief Pi / 2

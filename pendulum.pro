@@ -69,6 +69,8 @@ macx {
     } else {
         RESOURCES += src/Pendulum/resources/html/stylesheet/stylesheet-macosx.qrc
     }
+    TARGET = "Pendulum"
+    QMAKE_CXXFLAGS += -Wno-invalid-constexpr
 }
 
 RESOURCES += \

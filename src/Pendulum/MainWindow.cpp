@@ -57,6 +57,30 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     m_ui->setupUi(this);
     setCentralWidget(m_ui->widget);
+
+#if defined (Q_OS_MAC)
+    // В Mac OS X картинок в меню быть не должно
+    QList<QAction*> allActions = findChildren<QAction*>();
+    for(QList<QAction*>::ConstIterator it = allActions.begin(); it != allActions.end(); ++it)
+    {
+        QAction * action = * it;
+        action->setIcon(QIcon());
+    }
+    // Под Mac OS X из коробки выглядит настолько страшно, что приходится немного стилизовать
+    QList<QGroupBox*> allGroupBoxes = findChildren<QGroupBox*>();
+    for(QList<QGroupBox*>::ConstIterator it = allGroupBoxes.begin(); it != allGroupBoxes.end(); ++it)
+    {
+        QGroupBox * groupBox = * it;
+        groupBox->setStyleSheet(QString::fromLatin1("QGroupBox::title { font-size: 12pt; margin-bottom: 0px; margin-left: 7px; margin-top: 2px; }"));
+    }
+    QList<QLabel*> allLabels = findChildren<QLabel*>();
+    for(QList<QLabel*>::ConstIterator it = allLabels.begin(); it != allLabels.end(); ++it)
+    {
+        QLabel * label = * it;
+        label->setStyleSheet(QString::fromLatin1("QLabel { min-width: 35px; font-size: 12pt; }"));
+    }
+#endif
+
     m_ui->widget->setPhysicalController(m_physicalController);
     m_physicalController->connectToTimer(m_ui->widget, SLOT(updateGL()));
     m_physicalController->connectToTimer(this, SLOT(updateLcdDisplay()));
