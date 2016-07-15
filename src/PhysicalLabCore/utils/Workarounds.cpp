@@ -32,6 +32,7 @@
 #include <QPair>
 #include <QFont>
 #include <QFontDatabase>
+#include <QStringList>
 
 namespace Workarounds {
 
@@ -40,7 +41,7 @@ namespace Workarounds {
 /// @note Функцию следует вызывать при смене языка
 void FontsFix(const QString & language)
 {
-#if 1// defined (Q_OS_WIN)
+#if defined (Q_OS_WIN)
 
     // Отображение название языка -> соответствующая ему WritingSystem
     static QList<QPair<QString, QFontDatabase::WritingSystem> > writingSystemMap =
@@ -96,11 +97,13 @@ void FontsFix(const QString & language)
 /// @attention Актуально только для Qt 5.4+
 void HighDPIFix()
 {
-    /// @todo В Qt 5.6+ используется новый механизм, этот deprecated
-#if defined (HAVE_GREATER_THAN_OR_EQUALS_QT54)
-    static char newEnv[] = "QT_DEVICE_PIXEL_RATIO=auto";
-    char * oldEnv = getenv("QT_DEVICE_PIXEL_RATIO");
-    if(!oldEnv)
+#if defined (HAVE_GREATER_THAN_OR_EQUALS_QT56)
+    static char newEnv [] = "QT_AUTO_SCREEN_SCALE_FACTOR=1";
+    if(!getenv("QT_AUTO_SCREEN_SCALE_FACTOR") && !getenv("QT_DEVICE_PIXEL_RATIO"))
+        putenv(newEnv);
+#elif defined (HAVE_GREATER_THAN_OR_EQUALS_QT54)
+    static char newEnv [] = "QT_DEVICE_PIXEL_RATIO=auto";
+    if(!getenv("QT_DEVICE_PIXEL_RATIO"))
         putenv(newEnv);
 #endif
 }
