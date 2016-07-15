@@ -32,6 +32,14 @@ lessThan(QT_VERSION, 4.5.0) {
     }
 }
 
+greaterThan(QT_VERSION, 5.4.0) | equals(QT_VERSION, 5.4.0) {
+    DEFINES += HAVE_GREATER_THAN_OR_EQUALS_QT54
+}
+
+greaterThan(QT_VERSION, 5.6.0) | equals(QT_VERSION, 5.6.0) {
+    DEFINES += HAVE_GREATER_THAN_OR_EQUALS_QT56
+}
+
 *g++*|*clang* {
     QMAKE_CXXFLAGS_RELEASE -= -O2
     QMAKE_CXXFLAGS_RELEASE *= -O3

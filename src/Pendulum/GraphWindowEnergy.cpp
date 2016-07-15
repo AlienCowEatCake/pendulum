@@ -49,7 +49,7 @@ void GraphWindowEnergy::update()
 
     double mactiont;
     if(action.get_r() != 0.0 && action.get_A0() != 0.0)
-        mactiont = std::log(action.get_E0() / 0.001)/(2.0 * action.get_sigma());
+        mactiont = std::log(action.get_E0() / 0.001) / (2.0 * action.get_sigma());
     else
         mactiont = 1.0;
     resizeGraph(0.0f, static_cast<float>(mactiont), 0, static_cast<float>(action.get_E0()));

@@ -62,16 +62,16 @@ void Scene3DAbstract::setLightParameters(const LightParameters & lightParameters
 /// @brief Изменение размеров виджета со сценой
 void Scene3DAbstract::resizeGL(int nWidth, int nHeight)
 {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();    
+    GLImpl::glMatrixMode(GL_PROJECTION);
+    GLImpl::glLoadIdentity();
 
     GLdouble ratio = static_cast<GLdouble>(nHeight) / static_cast<GLdouble>(nWidth);
     if (nWidth>=nHeight)
-        glOrtho(-1.0/ratio, 1.0/ratio, -1.0, 1.0, -10.0, 30.0);
+        GLImpl::glOrtho(-1.0/ratio, 1.0/ratio, -1.0, 1.0, -10.0, 30.0);
     else
-        glOrtho(-1.0, 1.0, -1.0*ratio, 1.0*ratio, -10.0, 30.0);
+        GLImpl::glOrtho(-1.0, 1.0, -1.0*ratio, 1.0*ratio, -10.0, 30.0);
 
-    glViewport(0, 0, static_cast<GLint>(nWidth), static_cast<GLint>(nHeight));
+    GLImpl::glViewport(0, 0, static_cast<GLint>(nWidth), static_cast<GLint>(nHeight));
 }
 
 void Scene3DAbstract::mousePressEvent(QMouseEvent* pe)

@@ -24,10 +24,12 @@
 #include <QGLFormat>
 #endif
 #include <QApplication>
+#include "utils/Workarounds.h"
 #include "MainWindow.h"
 
 int main(int argc, char *argv[])
 {
+    Workarounds::HighDPIFix();
 #if !defined (USE_SWRAST)
     QGLFormat fmt;
     fmt.setSampleBuffers(true);

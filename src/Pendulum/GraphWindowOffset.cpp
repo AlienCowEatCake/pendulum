@@ -59,7 +59,7 @@ void GraphWindowOffset::update()
     {
         double mactiont;
         if(action.get_w0() <= action.get_sigma())
-            mactiont = -log(fabs(0.0000001/action.get_A0())) / (m_numT * action.get_sigma());
+            mactiont = -std::log(std::fabs(0.0000001 / action.get_A0())) / (m_numT * action.get_sigma());
         else
             mactiont = action.get_T();
 

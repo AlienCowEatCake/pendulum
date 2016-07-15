@@ -255,7 +255,7 @@ void SWRastWidget::triangle(const SWRastInternal::Matrix<4, 3, float> & verts,
     L_type det_D;
     L = inverse(L, det_D);
     // Если матрица не разложиласть - значит какая-то фигня, треугольник вырожден
-    if(fabs(det_D) < 1e-12) return;
+    if(std::fabs(det_D) < 1e-12) return;
 
     // Находим границы изображения и текстуры
     SWRastInternal::vec2i buf_size(m_buffer.width() - 1, m_buffer.height() - 1);
