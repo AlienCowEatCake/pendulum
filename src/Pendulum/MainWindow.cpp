@@ -34,6 +34,7 @@
 #include <QtGui>
 #endif
 #include <QTranslator>
+#include <QLibraryInfo>
 #include <QPair>
 #include <QMenu>
 #include <QSettings>
@@ -231,11 +232,16 @@ void MainWindow::updateTranslations(QString language)
         settings.setValue(QString::fromLatin1("Language"), language);
 
     // Удалим старый перевод, установим новый
-    static QTranslator translator;
-    if(!translator.isEmpty())
-        qApp->removeTranslator(&translator);
-    translator.load(QString::fromLatin1(":/translations/%1").arg(language));
-    qApp->installTranslator(&translator);
+    static QTranslator qtTranslator;
+    static QTranslator appTranslator;
+    if(!qtTranslator.isEmpty())
+        qApp->removeTranslator(&qtTranslator);
+    if(!appTranslator.isEmpty())
+        qApp->removeTranslator(&appTranslator);
+    qtTranslator.load(QString::fromLatin1("qt_%1").arg(language), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    appTranslator.load(QString::fromLatin1(":/translations/%1").arg(language));
+    qApp->installTranslator(&qtTranslator);
+    qApp->installTranslator(&appTranslator);
     m_ui->retranslateUi(this);
 
     // Пофиксим шрифты
