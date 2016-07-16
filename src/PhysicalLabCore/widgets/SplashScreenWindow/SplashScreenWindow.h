@@ -23,16 +23,11 @@
 #if !defined (PHYSICALLABCORE_SPLASHSCREENWINDOW_H_INCLUDED)
 #define PHYSICALLABCORE_SPLASHSCREENWINDOW_H_INCLUDED
 
-#include <QWidget>
+#include <QGraphicsView>
 #include <QString>
 
-namespace Ui
-{
-class SplashScreenWindow;
-}
-
 /// @brief Класс окна-заставки
-class SplashScreenWindow : public QWidget
+class SplashScreenWindow : public QGraphicsView
 {
     Q_OBJECT
 
@@ -42,6 +37,8 @@ public:
 
     /// @brief setPixmap - Загрузить изображение в окно
     void setPixmap(const QString & filename);
+    /// @brief setSVG - Загрузить SVG изображение в окно
+    void setSVG(const QString & filename);
     /// @brief setTitle - Установить заголовок окна
     void setTitle(const QString & title);
 
@@ -55,7 +52,10 @@ private:
     /// @brief moveToCenter - Перемещение окна в центр экрана
     void moveToCenter();
 
-    Ui::SplashScreenWindow * m_ui;
+    /// @brief setGraphicsItem - Загрузить QGraphicsItem в сцену
+    void setGraphicsItem(QGraphicsItem * graphicsItem);
+
+    QGraphicsItem * m_graphicsItem;
 };
 
 #endif // PHYSICALLABCORE_SPLASHSCREENWINDOW_H_INCLUDED

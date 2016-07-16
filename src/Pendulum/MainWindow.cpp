@@ -210,7 +210,7 @@ void MainWindow::updateTranslations(QString language)
     m_manualWindow->setTitle(tr("User Manual"));
     m_licenseWindow->loadHtml(QString::fromLatin1(":/html/license_%1.html").arg(language));
     m_licenseWindow->setTitle(tr("License"));
-    m_splashWindow->setPixmap(QString::fromLatin1(":/mres/splash.png"));
+    m_splashWindow->setSVG(QString::fromLatin1(":/splash/splash_ru.svg"));
     m_splashWindow->setTitle(tr("Mass Spring Damper System"));
 
     m_speedWindow->setLabels(tr("Speed"), tr("t, s"), tr("v, m/s"));

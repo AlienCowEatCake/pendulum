@@ -5,7 +5,7 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 CONFIG += object_with_source object_parallel_to_source no_batch warn_on
 
-QT += core gui opengl
+QT += core gui opengl svg
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
@@ -44,6 +44,8 @@ greaterThan(QT_VERSION, 5.6.0) | equals(QT_VERSION, 5.6.0) {
     QMAKE_CXXFLAGS_RELEASE -= -O2
     QMAKE_CXXFLAGS_RELEASE *= -O3
     QMAKE_CXXFLAGS_RELEASE *= -DNDEBUG
+    QMAKE_CXXFLAGS_RELEASE *= -DQT_NO_DEBUG_OUTPUT
+    QMAKE_CXXFLAGS_RELEASE *= -DQT_NO_WARNING_OUTPUT
 }
 
 *msvc* {
@@ -51,6 +53,8 @@ greaterThan(QT_VERSION, 5.6.0) | equals(QT_VERSION, 5.6.0) {
     QMAKE_CXXFLAGS_RELEASE *= -Ox
     QMAKE_CXXFLAGS_RELEASE -= -GS
     QMAKE_CXXFLAGS_RELEASE *= -GS-
+    QMAKE_CXXFLAGS_RELEASE *= -DQT_NO_DEBUG_OUTPUT
+    QMAKE_CXXFLAGS_RELEASE *= -DQT_NO_WARNING_OUTPUT
     DEFINES += _CRT_SECURE_NO_WARNINGS
     DEFINES += _CRT_SECURE_NO_DEPRECATE
     DEFINES += _USE_MATH_DEFINES
@@ -78,8 +82,7 @@ SOURCES += \
 
 FORMS += \
     $$files($$PWD/widgets/GraphWindowAbstract/*.ui) \
-    $$files($$PWD/widgets/HtmlWindow/*.ui) \
-    $$files($$PWD/widgets/SplashScreenWindow/*.ui)
+    $$files($$PWD/widgets/HtmlWindow/*.ui)
 
 use_swrast {
     QT -= opengl
