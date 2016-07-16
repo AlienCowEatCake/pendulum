@@ -16,7 +16,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="splash_plain_ru.svg">
+   sodipodi:docname="splash_ru.svg">
   <defs
      id="defs4">
     <radialGradient
@@ -314,16 +314,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="300"
+     inkscape:cx="85.718011"
      inkscape:cy="216.91131"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
      inkscape:window-width="1366"
-     inkscape:window-height="693"
-     inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-height="565"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -333,7 +333,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1051,7 +1051,7 @@
     <g
        style="clip-rule:evenodd;display:inline;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
        id="g5186"
-       transform="matrix(0.01771654,0,0,0.01771654,441.69486,639.96998)">
+       transform="matrix(0.01771654,0,0,0.01771654,437.97643,639.96998)">
       <g
          id="Layer_x0020_1">
         <metadata
@@ -1073,13 +1073,13 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="125.23048"
+       x="121.55348"
        y="722.86163"
        id="text4717"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4719"
-         x="125.23048"
+         x="121.55348"
          y="722.86163"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.75000191px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:-0.25000003px">«Пружинный маятник</tspan></text>
     <text
@@ -1181,13 +1181,13 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="296.80984"
+       x="294.80984"
        y="1024.1322"
        id="text4753"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4755"
-         x="296.80984"
+         x="294.80984"
          y="1024.1322"
          style="font-size:16.25000191px">2012</tspan></text>
   </g>
