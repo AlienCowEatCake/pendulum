@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/mres">
         <file>ball.ico</file>
-        <file>splash.png</file>
     </qresource>
 </RCC>

@@ -24,6 +24,7 @@
 #include "ui_GraphWindowAbstract.h"
 
 #include <cmath>
+#include <algorithm>
 #include <QApplication>
 #include <QPaintEvent>
 #include <QInputDialog>

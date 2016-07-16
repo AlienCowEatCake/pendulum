@@ -81,6 +81,12 @@ RESOURCES += \
     src/Pendulum/resources/html/html.qrc \
     src/Pendulum/resources/translations/translations.qrc
 
+lessThan(QT_MAJOR_VERSION, 5) | !contains(QT, svg) {
+    RESOURCES += src/Pendulum/resources/splash/splash-png.qrc
+} else {
+    RESOURCES += src/Pendulum/resources/splash/splash-svg.qrc
+}
+
 use_hipoly {
     RESOURCES += \
         src/Pendulum/resources/models/hipoly/m_mass.qrc \

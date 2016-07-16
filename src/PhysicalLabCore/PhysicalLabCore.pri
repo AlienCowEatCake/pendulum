@@ -8,7 +8,7 @@ CONFIG += object_with_source object_parallel_to_source no_batch warn_on
 QT += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += widgets
+    QT += widgets svg
     DEFINES += HAVE_QT5
     contains(QT_CONFIG, opengles.) | contains(QT_CONFIG, angle) {
         !contains(QT_CONFIG, dynamicgl) : CONFIG += use_swrast
@@ -34,16 +34,18 @@ lessThan(QT_VERSION, 4.5.0) {
 
 greaterThan(QT_VERSION, 5.4.0) | equals(QT_VERSION, 5.4.0) {
     DEFINES += HAVE_GREATER_THAN_OR_EQUALS_QT54
-}
-
-greaterThan(QT_VERSION, 5.6.0) | equals(QT_VERSION, 5.6.0) {
-    DEFINES += HAVE_GREATER_THAN_OR_EQUALS_QT56
+    DEFINES += USE_HIGHDPI
+    greaterThan(QT_VERSION, 5.6.0) | equals(QT_VERSION, 5.6.0) {
+        DEFINES += HAVE_GREATER_THAN_OR_EQUALS_QT56
+    }
 }
 
 *g++*|*clang* {
     QMAKE_CXXFLAGS_RELEASE -= -O2
     QMAKE_CXXFLAGS_RELEASE *= -O3
     QMAKE_CXXFLAGS_RELEASE *= -DNDEBUG
+    QMAKE_CXXFLAGS_RELEASE *= -DQT_NO_DEBUG_OUTPUT
+    QMAKE_CXXFLAGS_RELEASE *= -DQT_NO_WARNING_OUTPUT
 }
 
 *msvc* {
@@ -51,6 +53,8 @@ greaterThan(QT_VERSION, 5.6.0) | equals(QT_VERSION, 5.6.0) {
     QMAKE_CXXFLAGS_RELEASE *= -Ox
     QMAKE_CXXFLAGS_RELEASE -= -GS
     QMAKE_CXXFLAGS_RELEASE *= -GS-
+    QMAKE_CXXFLAGS_RELEASE *= -DQT_NO_DEBUG_OUTPUT
+    QMAKE_CXXFLAGS_RELEASE *= -DQT_NO_WARNING_OUTPUT
     DEFINES += _CRT_SECURE_NO_WARNINGS
     DEFINES += _CRT_SECURE_NO_DEPRECATE
     DEFINES += _USE_MATH_DEFINES
@@ -78,8 +82,7 @@ SOURCES += \
 
 FORMS += \
     $$files($$PWD/widgets/GraphWindowAbstract/*.ui) \
-    $$files($$PWD/widgets/HtmlWindow/*.ui) \
-    $$files($$PWD/widgets/SplashScreenWindow/*.ui)
+    $$files($$PWD/widgets/HtmlWindow/*.ui)
 
 use_swrast {
     QT -= opengl

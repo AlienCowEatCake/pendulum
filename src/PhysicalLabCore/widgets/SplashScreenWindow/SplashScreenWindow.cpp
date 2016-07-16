@@ -21,26 +21,29 @@
 */
 
 #include "SplashScreenWindow.h"
-#include "ui_SplashScreenWindow.h"
 
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QPoint>
 #include <QTimer>
 #include <QPixmap>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsRectItem>
+#include <QPaintEvent>
+#if defined (QT_SVG_LIB)
+#include <QGraphicsSvgItem>
+#endif
 
 SplashScreenWindow::SplashScreenWindow(QWidget * parent) :
-    QWidget(parent),
-    m_ui(new Ui::SplashScreenWindow)
+    QGraphicsView(parent), m_graphicsItem(NULL)
 {
-    m_ui->setupUi(this);
+    setScene(new QGraphicsScene(this));
     setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint |
                    Qt::WindowSystemMenuHint
 #if !defined (HAVE_LESS_THAN_QT45)
                    | Qt::WindowCloseButtonHint
 #endif
                    );
-//    setAttribute(Qt::WA_DeleteOnClose);
     setWindowModality(Qt::ApplicationModal);
 
     // Закрываем через 10 секунд, если еще живы
@@ -50,27 +53,48 @@ SplashScreenWindow::SplashScreenWindow(QWidget * parent) :
 
     // Перемещение в центр экрана
     moveToCenter();
+
+    // Отключение скроллбара
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    setRenderHint(QPainter::Antialiasing);
+    setRenderHint(QPainter::TextAntialiasing);
+    setRenderHint(QPainter::SmoothPixmapTransform);
 }
 
 SplashScreenWindow::~SplashScreenWindow()
+{}
+
+/// @brief setGraphicsItem - Загрузить QGraphicsItem в сцену
+void SplashScreenWindow::setGraphicsItem(QGraphicsItem * graphicsItem)
 {
-    delete m_ui;
+    scene()->clear();
+    resetTransform();
+    m_graphicsItem = graphicsItem;
+    m_graphicsItem->setFlags(QGraphicsItem::ItemClipsToShape);
+    m_graphicsItem->setCacheMode(QGraphicsItem::NoCache);
+    scene()->addItem(m_graphicsItem);
+    scene()->setSceneRect(m_graphicsItem->boundingRect());
+    setGeometry(m_graphicsItem->boundingRect().toRect());
+    setMinimumSize(m_graphicsItem->boundingRect().size().toSize());
+    setMaximumSize(m_graphicsItem->boundingRect().size().toSize());
+    moveToCenter();
 }
 
 /// @brief setPixmap - Загрузить изображение в окно
 void SplashScreenWindow::setPixmap(const QString & filename)
 {
-    QPixmap image(filename);
-    if(!image.isNull())
-    {
-        m_ui->label->setGeometry(0, 0, image.width(), image.height());
-        m_ui->label->setPixmap(image);
-        adjustSize();
-        setMinimumSize(size());
-        setMaximumSize(size());
-        moveToCenter();
-    }
+    setGraphicsItem(new QGraphicsPixmapItem(QPixmap(filename)));
 }
+
+#if defined (QT_SVG_LIB)
+/// @brief setSVG - Загрузить SVG изображение в окно
+void SplashScreenWindow::setSVG(const QString & filename)
+{
+    setGraphicsItem(new QGraphicsSvgItem(filename));
+}
+#endif
 
 /// @brief setTitle - Установить заголовок окна
 void SplashScreenWindow::setTitle(const QString & title)
