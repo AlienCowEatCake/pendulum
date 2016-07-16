@@ -37,8 +37,10 @@ public:
 
     /// @brief setPixmap - Загрузить изображение в окно
     void setPixmap(const QString & filename);
+#if defined (QT_SVG_LIB)
     /// @brief setSVG - Загрузить SVG изображение в окно
     void setSVG(const QString & filename);
+#endif
     /// @brief setTitle - Установить заголовок окна
     void setTitle(const QString & title);
 

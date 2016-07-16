@@ -77,10 +77,15 @@ RESOURCES += \
     src/Pendulum/resources-old/mres.qrc \
     src/Pendulum/resources/menuicons/menuicons.qrc \
     src/Pendulum/resources/models/m_cyllinder.qrc \
-    src/Pendulum/resources/splash/splash.qrc \
     src/Pendulum/resources/html/help/help.qrc \
     src/Pendulum/resources/html/html.qrc \
     src/Pendulum/resources/translations/translations.qrc
+
+lessThan(QT_MAJOR_VERSION, 5) | !contains(QT, svg) {
+    RESOURCES += src/Pendulum/resources/splash/splash-png.qrc
+} else {
+    RESOURCES += src/Pendulum/resources/splash/splash-svg.qrc
+}
 
 use_hipoly {
     RESOURCES += \

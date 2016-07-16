@@ -29,8 +29,10 @@
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsRectItem>
-#include <QGraphicsSvgItem>
 #include <QPaintEvent>
+#if defined (QT_SVG_LIB)
+#include <QGraphicsSvgItem>
+#endif
 
 SplashScreenWindow::SplashScreenWindow(QWidget * parent) :
     QGraphicsView(parent), m_graphicsItem(NULL)
@@ -86,11 +88,13 @@ void SplashScreenWindow::setPixmap(const QString & filename)
     setGraphicsItem(new QGraphicsPixmapItem(QPixmap(filename)));
 }
 
+#if defined (QT_SVG_LIB)
 /// @brief setSVG - Загрузить SVG изображение в окно
 void SplashScreenWindow::setSVG(const QString & filename)
 {
     setGraphicsItem(new QGraphicsSvgItem(filename));
 }
+#endif
 
 /// @brief setTitle - Установить заголовок окна
 void SplashScreenWindow::setTitle(const QString & title)
