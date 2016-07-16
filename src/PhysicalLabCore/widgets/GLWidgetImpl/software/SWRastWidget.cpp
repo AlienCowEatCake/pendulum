@@ -36,7 +36,7 @@ QVector<QImage> SWRastWidget::m_textures;
 
 namespace {
 
-const int SW_LIGHT_LAST = GL_LIGHT0 + SW_LIGHT_MAX - 1;
+const GLenum SW_LIGHT_LAST = GL_LIGHT0 + SW_LIGHT_MAX - 1;
 
 // Raster - This backend implements all rendering in pure software and is
 // always used to render into QImages. For optimal performance only use the
