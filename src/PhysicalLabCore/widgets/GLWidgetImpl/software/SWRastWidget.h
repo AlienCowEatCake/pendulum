@@ -133,6 +133,7 @@ public:
     void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
     void gluLookAt(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ, GLdouble centerX, GLdouble centerY, GLdouble centerZ, GLdouble upX, GLdouble upY, GLdouble upZ);
     void gluLookAt(SWRastInternal::vec3f eye, SWRastInternal::vec3f center, SWRastInternal::vec3f up);
+    GLboolean glIsEnabled(GLenum cap);
 };
 
 #endif // PHYSICALLABCORE_SWRASTWIDGET_H_INCLUDED

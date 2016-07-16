@@ -30,7 +30,7 @@ PhysicalController::PhysicalController(QObject * parent)
 #if !defined (USE_SWRAST)
     m_timerStep = 25;
 #else
-    m_timerStep = 40;
+    m_timerStep = 35;
 #endif
     connectToTimer(this, SLOT(actionTime()));
 }

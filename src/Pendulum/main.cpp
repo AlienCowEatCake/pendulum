@@ -24,6 +24,7 @@
 #include <QGLFormat>
 #endif
 #include <QApplication>
+#include <QIcon>
 #include "utils/Workarounds.h"
 #include "MainWindow.h"
 

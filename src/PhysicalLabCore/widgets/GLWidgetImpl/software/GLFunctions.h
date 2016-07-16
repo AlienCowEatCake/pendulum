@@ -50,10 +50,11 @@ inline void glTranslatef(GLfloat x, GLfloat y, GLfloat z)                   { g_
 inline void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)       { g_SWContext->glRotatef(angle, x, y, z); }
 inline void glOrtho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble near_val, GLdouble far_val)
                                                                             { g_SWContext->glOrtho(left, right, bottom, top, near_val, far_val); }
+inline GLboolean glIsEnabled(GLenum cap)                                    { return g_SWContext->glIsEnabled(cap); }
+
 /// @note Заглушки
 inline void glShadeModel(GLenum mode)                                       { Q_UNUSED(mode); }
 inline void glEnableClientState(GLenum cap)                                 { Q_UNUSED(cap); }
-inline GLboolean glIsEnabled(GLenum cap)                                    { Q_UNUSED(cap); return GL_TRUE; }
 inline void glClear(GLbitfield mask)                                        { Q_UNUSED(mask); }
 inline void glTexParameteri(GLenum target, GLenum pname, GLint param)       { Q_UNUSED(target); Q_UNUSED(pname); Q_UNUSED(param); }
 inline void glMaterialf(GLenum face, GLenum pname, GLfloat param)           { Q_UNUSED(face); Q_UNUSED(pname); Q_UNUSED(param); }

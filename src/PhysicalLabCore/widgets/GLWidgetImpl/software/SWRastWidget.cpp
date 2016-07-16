@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Mikhail Alexandrov  <alexandroff.m@gmail.com>
         Andrey Kurochkin    <andy-717@yandex.ru>
@@ -25,7 +25,32 @@
 #include <limits>
 #include <algorithm>
 
+//#define DEBUG_FPS_OUTPUT
+
+#if defined (DEBUG_FPS_OUTPUT)
+#include <QTime>
+#include <QFont>
+#endif
+
 QVector<QImage> SWRastWidget::m_textures;
+
+namespace {
+
+const int SW_LIGHT_LAST = GL_LIGHT0 + SW_LIGHT_MAX - 1;
+
+// Raster - This backend implements all rendering in pure software and is
+// always used to render into QImages. For optimal performance only use the
+// format types QImage::Format_ARGB32_Premultiplied, QImage::Format_RGB32 or
+// QImage::Format_RGB16. Any other format, including QImage::Format_ARGB32, has
+// significantly worse performance. This engine is used by default for QWidget
+// and QPixmap.
+
+/// @brief Предпочтительный формат изображений (текстур и буфера)
+const QImage::Format preferredFormat = QImage::Format_RGB16;
+/// @brief Количество байт на пиксель предпочтительного формата изображений
+const int preferredBytesPerPixel = 2;
+
+} // namespace
 
 namespace GLImpl {
 
@@ -39,7 +64,7 @@ SWRastWidget::SWRastWidget(QWidget * parent)
       m_is_initialized(false), m_background(Qt::white), m_sw_viewport(SWRastInternal::matrix4f::identity()),
       m_current_texture(0), m_textures_enabled(false)
 {
-    m_buffer = QImage(width(), height(), QImage::Format_RGB888);
+    m_buffer = QImage(width(), height(), preferredFormat);
     GLImpl::g_SWContext = this;
     memset(m_lights, 0, sizeof(light) * SW_LIGHT_MAX);
     this->glMatrixMode(GL_PROJECTION);
@@ -73,12 +98,12 @@ void SWRastWidget::updateGL()
     // Если буфер не того размера - создадим правильный
     if(m_buffer.width() != width() || m_buffer.height() != height())
     {
-        m_buffer = QImage(width(), height(), QImage::Format_RGB888);
+        m_buffer = QImage(width(), height(), preferredFormat);
     }
     // Сперва нужно залить фон
     m_buffer.fill(m_background);
     // И инициализировать z-буфер
-    m_zbuffer.resize(static_cast<int>(m_buffer.width() * m_buffer.height()));
+    m_zbuffer.resize(m_buffer.width() * m_buffer.height());
     for(int i = 0; i < m_zbuffer.size(); i++)
         m_zbuffer[i] = - std::numeric_limits<float>::max();
     // Ну а дальше запустим саму отрисовку
@@ -95,6 +120,32 @@ void SWRastWidget::paintEvent(QPaintEvent *)
         pb.begin(this);
         pb.setViewport(0, 0, width(), height());
         pb.drawImage(0, 0, m_buffer);
+
+#if defined (DEBUG_FPS_OUTPUT)
+        static QTime t;
+        static int counter = -1;
+        static QString fps;
+        static QFont mono(QString::fromLatin1("Monospace"), 16, QFont::Bold);
+        if(counter < 0)
+        {
+            t.start();
+            counter = 0;
+        }
+        else if(t.elapsed() >= 1000)
+        {
+            fps = QString::number(counter * 1000 / t.elapsed());
+            counter = 0;
+            t.restart();
+        }
+        else
+        {
+            counter++;
+        }
+        pb.setFont(mono);
+        pb.setPen(QPen(QColor(255 - qRed(m_background), 255 - qGreen(m_background), 255 - qBlue(m_background))));
+        pb.drawText(QRect(0, 0, width(), height()), Qt::AlignTop | Qt::AlignRight, fps);
+#endif
+
         pb.end();
     }
 }
@@ -175,7 +226,7 @@ void SWRastWidget::glMaterialfv(GLenum face, GLenum pname, const GLfloat * param
 /// @return Сконвертированное изображение
 QImage SWRastWidget::convertToGLFormat(const QImage & img)
 {
-    return img.convertToFormat(QImage::Format_RGB888).mirrored(false, true);
+    return img.convertToFormat(preferredFormat).mirrored(false, true);
 }
 
 /// @brief getContext - Получить глобальный контекст
@@ -209,8 +260,8 @@ void SWRastWidget::glTexImage2D(GLenum target, GLint level, GLint internalFormat
     Q_UNUSED(border);
     Q_UNUSED(format);
     Q_UNUSED(type);
-    m_textures[m_current_texture] = QImage(static_cast<int>(width), static_cast<int>(height), QImage::Format_RGB888);
-    memcpy(m_textures[m_current_texture].bits(), data, static_cast<std::size_t>(width * height * 3));
+    m_textures[m_current_texture] = QImage(static_cast<int>(width), static_cast<int>(height), preferredFormat);
+    memcpy(m_textures[m_current_texture].bits(), data, static_cast<std::size_t>(width * height * preferredBytesPerPixel));
 }
 
 void SWRastWidget::glNormal3fv(const GLfloat * v)
@@ -461,7 +512,7 @@ void SWRastWidget::glViewport(GLint x, GLint y, GLsizei width, GLsizei height)
 
 void SWRastWidget::glEnable(GLenum cap)
 {
-    if(cap >= GL_LIGHT0 && cap <= GL_LIGHT7)
+    if(cap >= GL_LIGHT0 && cap <= SW_LIGHT_LAST)
     {
         std::size_t index = static_cast<std::size_t>(cap - GL_LIGHT0);
         m_lights[index].is_enabled = true;
@@ -472,13 +523,27 @@ void SWRastWidget::glEnable(GLenum cap)
 
 void SWRastWidget::glDisable(GLenum cap)
 {
-    if(cap >= GL_LIGHT0 && cap <= GL_LIGHT7)
+    if(cap >= GL_LIGHT0 && cap <= SW_LIGHT_LAST)
     {
         std::size_t index = static_cast<std::size_t>(cap - GL_LIGHT0);
         m_lights[index].is_enabled = false;
     }
     if(cap == GL_TEXTURE_2D)
         m_textures_enabled = false;
+}
+
+GLboolean SWRastWidget::glIsEnabled(GLenum cap)
+{
+    if(cap >= GL_LIGHT0 && cap <= SW_LIGHT_LAST)
+    {
+        std::size_t index = static_cast<std::size_t>(cap - GL_LIGHT0);
+        return m_lights[index].is_enabled ? GL_TRUE : GL_FALSE;
+    }
+    else if(cap > SW_LIGHT_LAST && cap <= GL_MAX_LIGHTS)
+        return GL_FALSE;
+    else if(cap == GL_TEXTURE_2D)
+        return m_textures_enabled ? GL_TRUE : GL_FALSE;
+    return GL_FALSE;
 }
 
 void SWRastWidget::glScalef(GLfloat x, GLfloat y, GLfloat z)
