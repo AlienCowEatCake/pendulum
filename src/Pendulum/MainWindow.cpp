@@ -86,33 +86,33 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->lcdNumber->setDecMode();
     m_ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
     // =======
-    m_speedWindow = new GraphWindowSpeed;
+    m_speedWindow = new GraphWindowSpeed(this);
     m_speedWindow->setPhysicalController(m_physicalController);
     m_speedWindow->setHidden(true);
     // =======
-    m_offsetWindow = new GraphWindowOffset;
+    m_offsetWindow = new GraphWindowOffset(this);
     m_offsetWindow->setPhysicalController(m_physicalController);
     m_offsetWindow->setHidden(true);
     // =======
-    m_energyWindow = new GraphWindowEnergy;
+    m_energyWindow = new GraphWindowEnergy(this);
     m_energyWindow->setPhysicalController(m_physicalController);
     m_energyWindow->setHidden(true);
     // =======
-    m_helpWindow = new HtmlWindow;
+    m_helpWindow = new HtmlWindow(this);
     m_helpWindow->setHidden(true);
     m_helpWindow->setSize(880, 540);
     m_helpWindow->setScrollBarEnabled();
     // =======
-    m_authorsWindow = new HtmlWindow;
+    m_authorsWindow = new HtmlWindow(this);
     m_authorsWindow->setHidden(true);
     m_authorsWindow->setSize(670, 400);
     // =======
-    m_manualWindow = new HtmlWindow;
+    m_manualWindow = new HtmlWindow(this);
     m_manualWindow->setHidden(true);
     m_manualWindow->setSize(880, 540);
     m_manualWindow->setScrollBarEnabled();
     // =======
-    m_licenseWindow = new HtmlWindow;
+    m_licenseWindow = new HtmlWindow(this);
     m_licenseWindow->setHidden(true);
     m_licenseWindow->setSize(560, 380);
     // =======
@@ -135,7 +135,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_energyWindow, SIGNAL(settingsChanged()), m_offsetWindow, SLOT(onSettingsChanged()));
 
     // Окно-заставка
-    m_splashWindow = new SplashScreenWindow;
+    m_splashWindow = new SplashScreenWindow(this);
 
     // Переводы и подгрузка ресурсов
     updateTranslations();
@@ -228,19 +228,6 @@ void MainWindow::updateTranslations(QString language)
 MainWindow::~MainWindow()
 {
     delete m_ui;
-}
-
-/// @brief Обработчик события закрытия окна
-void MainWindow::closeEvent(QCloseEvent *)
-{
-    delete m_speedWindow;
-    delete m_offsetWindow;
-    delete m_energyWindow;
-    delete m_helpWindow;
-    delete m_authorsWindow;
-    delete m_manualWindow;
-    delete m_licenseWindow;
-    delete m_splashWindow;
 }
 
 /// @brief Слот на обновление времени на дисплее

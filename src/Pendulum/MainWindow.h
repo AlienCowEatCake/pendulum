@@ -44,11 +44,6 @@ public:
 
     explicit MainWindow(QWidget * parent = NULL);
     ~MainWindow();
-    
-protected:
-
-    /// @brief Обработчик события закрытия окна
-    void closeEvent(QCloseEvent *);
 
 private slots:
 
