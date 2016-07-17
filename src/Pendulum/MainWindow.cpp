@@ -40,7 +40,7 @@
 #include "widgets/SplashScreenWindow/SplashScreenWindow.h"
 #include "utils/Workarounds.h"
 #include "GraphWindowSpeed.h"
-#include "GraphWindowOffset.h"
+#include "GraphWindowDisplacement.h"
 #include "GraphWindowEnergy.h"
 #include "PhysicalController.h"
 
@@ -103,9 +103,9 @@ MainWindow::MainWindow(QWidget *parent) :
     m_speedWindow->setPhysicalController(m_physicalController);
     m_speedWindow->setHidden(true);
     // =======
-    m_offsetWindow = new GraphWindowOffset(this);
-    m_offsetWindow->setPhysicalController(m_physicalController);
-    m_offsetWindow->setHidden(true);
+    m_displacementWindow = new GraphWindowDisplacement(this);
+    m_displacementWindow->setPhysicalController(m_physicalController);
+    m_displacementWindow->setHidden(true);
     // =======
     m_energyWindow = new GraphWindowEnergy(this);
     m_energyWindow->setPhysicalController(m_physicalController);
@@ -141,12 +141,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Соединяем графики друг с другом, чтобы они могли сообщать об изменении настроек
     /// @todo Сделать более разумный способ соединения графиков
-    connect(m_speedWindow, SIGNAL(settingsChanged()), m_offsetWindow, SLOT(onSettingsChanged()));
+    connect(m_speedWindow, SIGNAL(settingsChanged()), m_displacementWindow, SLOT(onSettingsChanged()));
     connect(m_speedWindow, SIGNAL(settingsChanged()), m_energyWindow, SLOT(onSettingsChanged()));
-    connect(m_offsetWindow, SIGNAL(settingsChanged()), m_speedWindow, SLOT(onSettingsChanged()));
-    connect(m_offsetWindow, SIGNAL(settingsChanged()), m_energyWindow, SLOT(onSettingsChanged()));
+    connect(m_displacementWindow, SIGNAL(settingsChanged()), m_speedWindow, SLOT(onSettingsChanged()));
+    connect(m_displacementWindow, SIGNAL(settingsChanged()), m_energyWindow, SLOT(onSettingsChanged()));
     connect(m_energyWindow, SIGNAL(settingsChanged()), m_speedWindow, SLOT(onSettingsChanged()));
-    connect(m_energyWindow, SIGNAL(settingsChanged()), m_offsetWindow, SLOT(onSettingsChanged()));
+    connect(m_energyWindow, SIGNAL(settingsChanged()), m_displacementWindow, SLOT(onSettingsChanged()));
 
     // Окно-заставка
     m_splashWindow = new SplashScreenWindow(this);
@@ -231,10 +231,6 @@ void MainWindow::updateTranslations(QString language)
 #endif
     m_splashWindow->setTitle(tr("Mass Spring Damper System"));
 
-    m_speedWindow->setLabels(tr("Speed"), tr("t, s"), tr("v, m/s"));
-    m_offsetWindow->setLabels(tr("Displacement"), tr("t, s"), tr("x, m"));
-    m_energyWindow->setLabels(tr("Mechanical Energy"), tr("t, s"), tr("E, J"));
-
     // Также следует пересчитать геометрию виждетов
     QApplication::postEvent(this, new QResizeEvent(size(), size()));
 }
@@ -307,7 +303,7 @@ void MainWindow::on_actionSpeed_triggered()
 /// @brief Слот на открытие графика смещения из меню
 void MainWindow::on_actionOffset_triggered()
 {
-    m_offsetWindow->setHidden(!m_offsetWindow->isHidden());
+    m_displacementWindow->setHidden(!m_displacementWindow->isHidden());
 }
 
 /// @brief Слот на открытие графика энергии из меню
@@ -324,7 +320,7 @@ void MainWindow::on_horizontalSliderMass_valueChanged(int value)
     m_ui->labelMass->setText(QString::number(v1));
     m_physicalController->resetPhysicalEngine();
     m_speedWindow->update();
-    m_offsetWindow->update();
+    m_displacementWindow->update();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
@@ -339,7 +335,7 @@ void MainWindow::on_horizontalSliderDisplacement_valueChanged(int value)
     m_physicalController->resetPhysicalEngine();
     m_ui->labelAmplitude->setText(QString::number(v1));
     m_speedWindow->update();
-    m_offsetWindow->update();
+    m_displacementWindow->update();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
@@ -351,7 +347,7 @@ void MainWindow::on_horizontalSliderSpringConstant_valueChanged(int value)
     m_physicalController->resetPhysicalEngine();
     m_ui->labelRestitution->setText(QString::number(value));
     m_speedWindow->update();
-    m_offsetWindow->update();
+    m_displacementWindow->update();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
@@ -365,7 +361,7 @@ void MainWindow::on_horizontalSliderDamping_valueChanged(int value)
     m_physicalController->resetPhysicalEngine();
     m_ui->labelDamping->setText(QString::number(n1));
     m_speedWindow->update();
-    m_offsetWindow->update();
+    m_displacementWindow->update();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }

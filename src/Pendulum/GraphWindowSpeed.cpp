@@ -23,12 +23,14 @@
 #include "GraphWindowSpeed.h"
 
 #include <cmath>
+#include <QEvent>
 #include "PhysicalController.h"
 
 GraphWindowSpeed::GraphWindowSpeed(QWidget * parent) :
     GraphWindowAbstract(true, parent), m_physicalController(NULL)
 {
     m_numT = 3;
+    updateTitle();
 }
 
 void GraphWindowSpeed::setPhysicalController(const PhysicalController * physicalController)
@@ -86,5 +88,17 @@ void GraphWindowSpeed::update()
     }
 
     repaint();
+}
+
+void GraphWindowSpeed::changeEvent(QEvent * event)
+{
+    GraphWindowAbstract::changeEvent(event);
+    if(event->type() == QEvent::LanguageChange)
+        updateTitle();
+}
+
+void GraphWindowSpeed::updateTitle()
+{
+    setLabels(tr("Speed"), tr("t, s"), tr("v, m/s"));
 }
 

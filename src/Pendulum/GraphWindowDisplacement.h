@@ -27,15 +27,19 @@
 
 class PhysicalController;
 
-class GraphWindowOffset : public GraphWindowAbstract
+class GraphWindowDisplacement : public GraphWindowAbstract
 {
     Q_OBJECT
     
 public:
-    explicit GraphWindowOffset(QWidget * parent = NULL);
+    explicit GraphWindowDisplacement(QWidget * parent = NULL);
     void update();
     
     void setPhysicalController(const PhysicalController * physicalController);
+
+protected:
+    void changeEvent(QEvent * event);
+    void updateTitle();
 
 private:
     int m_numT;

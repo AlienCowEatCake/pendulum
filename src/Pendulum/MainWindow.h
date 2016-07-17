@@ -32,7 +32,7 @@ class MainWindow;
 class HtmlWindow;
 class SplashScreenWindow;
 class GraphWindowSpeed;
-class GraphWindowOffset;
+class GraphWindowDisplacement;
 class GraphWindowEnergy;
 class PhysicalController;
 
@@ -98,7 +98,7 @@ private:
 
     SplashScreenWindow *m_splashWindow;
     GraphWindowSpeed *m_speedWindow;
-    GraphWindowOffset *m_offsetWindow;
+    GraphWindowDisplacement *m_displacementWindow;
     GraphWindowEnergy *m_energyWindow;
     HtmlWindow *m_helpWindow;
     HtmlWindow *m_authorsWindow;

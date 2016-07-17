@@ -34,49 +34,103 @@
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="75"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="76"/>
         <source>Select Graph Color</source>
         <translation>Выберите цвет графика</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="90"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="91"/>
         <source>Width</source>
         <translation>Толщина</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="90"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="91"/>
         <source>Select Graph Width:</source>
         <translation>Укажите толщину графика:</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="111"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="112"/>
         <source>Images</source>
         <translation>Изображения</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="114"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="115"/>
         <source>All Images</source>
         <translation>Все изображения</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="120"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="121"/>
         <source>Graph</source>
         <translation>График</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="123"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="124"/>
         <source>Save Image File</source>
         <translation>Сохранить изображение</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="151"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="152"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="151"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="152"/>
         <source>Error: Can&apos;t save file</source>
         <translation>Ошибка: Не удалось сохранить файл</translation>
+    </message>
+</context>
+<context>
+    <name>GraphWindowDisplacement</name>
+    <message>
+        <location filename="../../GraphWindowDisplacement.cpp" line="93"/>
+        <source>Displacement</source>
+        <translation>Смещение</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowDisplacement.cpp" line="93"/>
+        <source>t, s</source>
+        <translation>t, c</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowDisplacement.cpp" line="93"/>
+        <source>x, m</source>
+        <translation>x, м</translation>
+    </message>
+</context>
+<context>
+    <name>GraphWindowEnergy</name>
+    <message>
+        <location filename="../../GraphWindowEnergy.cpp" line="79"/>
+        <source>Mechanical Energy</source>
+        <translation>Механическая энергия</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowEnergy.cpp" line="79"/>
+        <source>t, s</source>
+        <translation>t, c</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowEnergy.cpp" line="79"/>
+        <source>E, J</source>
+        <translation>E, Дж</translation>
+    </message>
+</context>
+<context>
+    <name>GraphWindowSpeed</name>
+    <message>
+        <location filename="../../GraphWindowSpeed.cpp" line="102"/>
+        <source>Speed</source>
+        <translation>Скорость</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowSpeed.cpp" line="102"/>
+        <source>t, s</source>
+        <translation>t, c</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowSpeed.cpp" line="102"/>
+        <source>v, m/s</source>
+        <translation>v, м/с</translation>
     </message>
 </context>
 <context>
@@ -122,12 +176,12 @@
         <translation>Коэфф. сопротивления [кг/с]</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="232"/>
+        <location filename="../../MainWindow.ui" line="244"/>
         <source>Time [s]</source>
         <translation>Время [c]</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="281"/>
+        <location filename="../../MainWindow.ui" line="235"/>
         <source>Control Panel</source>
         <translation>Панель управления</translation>
     </message>
@@ -153,116 +207,83 @@
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="381"/>
-        <location filename="../../MainWindow.cpp" line="228"/>
-        <location filename="../../MainWindow.cpp" line="295"/>
-        <location filename="../../MainWindow.cpp" line="314"/>
+        <location filename="../../MainWindow.cpp" line="215"/>
+        <location filename="../../MainWindow.cpp" line="269"/>
+        <location filename="../../MainWindow.cpp" line="288"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="394"/>
+        <location filename="../../MainWindow.ui" line="410"/>
         <source>Reset</source>
         <translation>Сброс</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="424"/>
-        <location filename="../../MainWindow.cpp" line="243"/>
+        <location filename="../../MainWindow.ui" line="440"/>
         <source>Speed</source>
         <translation>Скорость</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="432"/>
-        <location filename="../../MainWindow.cpp" line="244"/>
+        <location filename="../../MainWindow.ui" line="448"/>
         <source>Displacement</source>
         <translation>Смещение</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="440"/>
+        <location filename="../../MainWindow.ui" line="456"/>
         <source>Energy</source>
         <translation>Энергия</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="448"/>
-        <location filename="../../MainWindow.cpp" line="233"/>
+        <location filename="../../MainWindow.ui" line="464"/>
+        <location filename="../../MainWindow.cpp" line="220"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="456"/>
-        <location filename="../../MainWindow.cpp" line="235"/>
+        <location filename="../../MainWindow.ui" line="475"/>
+        <location filename="../../MainWindow.cpp" line="222"/>
         <source>Credits</source>
         <translation>Разработчики</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="464"/>
-        <location filename="../../MainWindow.cpp" line="237"/>
+        <location filename="../../MainWindow.ui" line="483"/>
+        <location filename="../../MainWindow.cpp" line="224"/>
         <source>User Manual</source>
         <translation>Руководство пользователя</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="472"/>
-        <location filename="../../MainWindow.cpp" line="239"/>
+        <location filename="../../MainWindow.ui" line="491"/>
+        <location filename="../../MainWindow.cpp" line="226"/>
         <source>License</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="480"/>
+        <location filename="../../MainWindow.ui" line="499"/>
         <source>About Qt</source>
         <translation>О Qt</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="488"/>
+        <location filename="../../MainWindow.ui" line="510"/>
         <source>English</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.ui" line="496"/>
+        <location filename="../../MainWindow.ui" line="518"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="226"/>
-        <location filename="../../MainWindow.cpp" line="287"/>
-        <location filename="../../MainWindow.cpp" line="291"/>
+        <location filename="../../MainWindow.cpp" line="213"/>
+        <location filename="../../MainWindow.cpp" line="261"/>
+        <location filename="../../MainWindow.cpp" line="265"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="231"/>
-        <location filename="../../MainWindow.cpp" line="241"/>
+        <location filename="../../MainWindow.cpp" line="218"/>
+        <location filename="../../MainWindow.cpp" line="232"/>
         <source>Mass Spring Damper System</source>
         <translation>Пружинный маятник в среде с сопротивлением</translation>
-    </message>
-    <message>
-        <source>Авторы</source>
-        <translation type="vanished">Авторы</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="243"/>
-        <location filename="../../MainWindow.cpp" line="244"/>
-        <location filename="../../MainWindow.cpp" line="245"/>
-        <source>t, s</source>
-        <translation>t, c</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="243"/>
-        <source>v, m/s</source>
-        <translation>v, м/с</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="244"/>
-        <source>x, m</source>
-        <translation>x, м</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="245"/>
-        <source>Mechanical Energy</source>
-        <translation>Механическая энергия</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="245"/>
-        <source>E, J</source>
-        <translation>E, Дж</translation>
     </message>
 </context>
 <context>

@@ -37,6 +37,10 @@ public:
 
     void setPhysicalController(const PhysicalController * physicalController);
 
+protected:
+    void changeEvent(QEvent * event);
+    void updateTitle();
+
 private:
     int m_numT;
     const PhysicalController * m_physicalController;
