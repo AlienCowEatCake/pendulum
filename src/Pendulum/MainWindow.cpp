@@ -211,9 +211,9 @@ void MainWindow::updateTranslations(QString language)
     m_licenseWindow->loadHtml(QString::fromLatin1(":/html/license_%1.html").arg(language));
     m_licenseWindow->setTitle(tr("License"));
 #if defined (QT_SVG_LIB) && defined (HAVE_QT5)
-    m_splashWindow->setSVG(QString::fromLatin1(":/splash/splash_ru.svg"));
+    m_splashWindow->setSVG(QString::fromLatin1(":/splash/splash_%1.svg").arg(language));
 #else
-    m_splashWindow->setPixmap(QString::fromLatin1(":/splash/splash_ru.png"));
+    m_splashWindow->setPixmap(QString::fromLatin1(":/splash/splash_%1.png").arg(language));
 #endif
     m_splashWindow->setTitle(tr("Mass Spring Damper System"));
 

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/splash">
         <file>splash_ru.png</file>
+        <file>splash_en.png</file>
     </qresource>
 </RCC>

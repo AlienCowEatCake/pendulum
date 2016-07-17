@@ -1,6 +1,6 @@
 #!/bin/bash
 
-names="splash_ru"
+names="splash_ru splash_en"
 
 for name in ${names} ; do
 	inkscape -z -e ${name}.png ${name}.svg
