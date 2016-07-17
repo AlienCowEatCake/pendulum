@@ -135,7 +135,7 @@
          </widget>
         </item>
         <item row="3" column="0">
-         <widget class="QSlider" name="horizontalSliderAmplitude">
+         <widget class="QSlider" name="horizontalSliderDisplacement">
           <property name="minimum">
            <number>0</number>
           </property>
@@ -168,7 +168,7 @@
          </widget>
         </item>
         <item row="5" column="0">
-         <widget class="QSlider" name="horizontalSliderRestitution">
+         <widget class="QSlider" name="horizontalSliderSpringConstant">
           <property name="minimum">
            <number>25</number>
           </property>
@@ -531,8 +531,8 @@
  <tabstops>
   <tabstop>centralWidget</tabstop>
   <tabstop>horizontalSliderMass</tabstop>
-  <tabstop>horizontalSliderAmplitude</tabstop>
-  <tabstop>horizontalSliderRestitution</tabstop>
+  <tabstop>horizontalSliderDisplacement</tabstop>
+  <tabstop>horizontalSliderSpringConstant</tabstop>
   <tabstop>horizontalSliderDamping</tabstop>
   <tabstop>horizontalSliderSpeed</tabstop>
   <tabstop>horizontalSliderQuality</tabstop>

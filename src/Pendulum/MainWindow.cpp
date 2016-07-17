@@ -23,10 +23,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#if defined (Q_OS_WIN) && defined (USE_WIN98_WORKAROUNDS)
-#include <windows.h>
-#endif
-
 #include <cmath>
 #if defined (HAVE_QT5)
 #include <QtWidgets>
@@ -47,6 +43,23 @@
 #include "GraphWindowOffset.h"
 #include "GraphWindowEnergy.h"
 #include "PhysicalController.h"
+
+namespace {
+
+const int helpWindowWidth     = 880;
+const int helpWindowHeight    = 540;
+const int authorsWindowWidth  = 670;
+const int authorsWindowHeight = 400;
+const int licenseWindowWidth  = 560;
+const int licenseWindowHeight = 380;
+
+const int sliderMassDefaultPosition           = 10;  ///< Ползунок массы груза m
+const int sliderDisplacementDefaultPosition   = 50;  ///< Ползунок начального смещения
+const int sliderSpringConstantDefaultPosition = 50;  ///< Ползунок коэффициента жесткости k
+const int sliderDampingDefaultPosition        = 3;   ///< Ползунок коэффициента трения r
+const int sliderSpeedDefaultPosition          = 100; ///< Ползунок скорости эксперимента
+
+} // namespace
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -100,33 +113,34 @@ MainWindow::MainWindow(QWidget *parent) :
     // =======
     m_helpWindow = new HtmlWindow(this);
     m_helpWindow->setHidden(true);
-    m_helpWindow->setSize(880, 540);
+    m_helpWindow->setSize(helpWindowWidth, helpWindowHeight);
     m_helpWindow->setScrollBarEnabled();
     // =======
     m_authorsWindow = new HtmlWindow(this);
     m_authorsWindow->setHidden(true);
-    m_authorsWindow->setSize(670, 400);
+    m_authorsWindow->setSize(authorsWindowWidth, authorsWindowHeight);
     // =======
     m_manualWindow = new HtmlWindow(this);
     m_manualWindow->setHidden(true);
-    m_manualWindow->setSize(880, 540);
+    m_manualWindow->setSize(helpWindowWidth, helpWindowHeight);
     m_manualWindow->setScrollBarEnabled();
     // =======
     m_licenseWindow = new HtmlWindow(this);
     m_licenseWindow->setHidden(true);
-    m_licenseWindow->setSize(560, 380);
+    m_licenseWindow->setSize(licenseWindowWidth, licenseWindowHeight);
     // =======
-    m_ui->horizontalSliderMass->setValue(10);           // масса груза m
-    m_ui->horizontalSliderAmplitude->setValue(50);      // начальное смещение
-    m_ui->horizontalSliderRestitution->setValue(50);    // коэффициент жесткости k
-    m_ui->horizontalSliderDamping->setValue(3);         // коэффициент трения r
-    m_ui->horizontalSliderSpeed->setValue(100);         // скорость эксперимента
+    m_ui->horizontalSliderMass->setValue(sliderMassDefaultPosition);                     // масса груза m
+    m_ui->horizontalSliderDisplacement->setValue(sliderDisplacementDefaultPosition);     // начальное смещение
+    m_ui->horizontalSliderSpringConstant->setValue(sliderSpringConstantDefaultPosition); // коэффициент жесткости k
+    m_ui->horizontalSliderDamping->setValue(sliderDampingDefaultPosition);               // коэффициент трения r
+    m_ui->horizontalSliderSpeed->setValue(sliderSpeedDefaultPosition);                   // скорость эксперимента
     m_ui->horizontalSliderQuality->setValue(m_physicalController->timerStep());
 
     // О Qt
     connect(m_ui->actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
     // Соединяем графики друг с другом, чтобы они могли сообщать об изменении настроек
+    /// @todo Сделать более разумный способ соединения графиков
     connect(m_speedWindow, SIGNAL(settingsChanged()), m_offsetWindow, SLOT(onSettingsChanged()));
     connect(m_speedWindow, SIGNAL(settingsChanged()), m_energyWindow, SLOT(onSettingsChanged()));
     connect(m_offsetWindow, SIGNAL(settingsChanged()), m_speedWindow, SLOT(onSettingsChanged()));
@@ -245,8 +259,8 @@ void MainWindow::on_pushButtonStart_clicked()
     {
     case PhysicalController::SimulationNotRunning:
         m_ui->horizontalSliderMass->setEnabled(false);
-        m_ui->horizontalSliderAmplitude->setEnabled(false);
-        m_ui->horizontalSliderRestitution->setEnabled(false);
+        m_ui->horizontalSliderDisplacement->setEnabled(false);
+        m_ui->horizontalSliderSpringConstant->setEnabled(false);
         m_ui->horizontalSliderDamping->setEnabled(false);
         m_ui->pushButtonStart->setText(tr("Stop"));
         m_physicalController->startSimulation();
@@ -271,8 +285,8 @@ void MainWindow::on_pushButtonStop_clicked()
     case PhysicalController::SimulationPaused:
         m_physicalController->stopSimulation();
         m_ui->horizontalSliderMass->setEnabled(true);
-        m_ui->horizontalSliderAmplitude->setEnabled(true);
-        m_ui->horizontalSliderRestitution->setEnabled(true);
+        m_ui->horizontalSliderDisplacement->setEnabled(true);
+        m_ui->horizontalSliderSpringConstant->setEnabled(true);
         m_ui->horizontalSliderDamping->setEnabled(true);
         m_ui->pushButtonStart->setEnabled(true);
         m_ui->pushButtonStart->setText(tr("Start"));
@@ -316,7 +330,7 @@ void MainWindow::on_horizontalSliderMass_valueChanged(int value)
 }
 
 /// @brief Слот на изменение ползунка начального смещения
-void MainWindow::on_horizontalSliderAmplitude_valueChanged(int value)
+void MainWindow::on_horizontalSliderDisplacement_valueChanged(int value)
 {
     double v1 = value / 100.0 - 0.8;
     if(std::fabs(v1) < 0.001)
@@ -331,7 +345,7 @@ void MainWindow::on_horizontalSliderAmplitude_valueChanged(int value)
 }
 
 /// @brief Слот на изменение ползунка коэффициента жесткости k
-void MainWindow::on_horizontalSliderRestitution_valueChanged(int value)
+void MainWindow::on_horizontalSliderSpringConstant_valueChanged(int value)
 {
     m_physicalController->action().set_k(value);
     m_physicalController->resetPhysicalEngine();
