@@ -145,10 +145,6 @@ void Scene3DAbstract::keyPressEvent(QKeyEvent* pe)
     case Qt::Key_Space:
         defaultScene();
         break;
-
-    case Qt::Key_Escape:
-        this->close();
-        break;
     }
 
     updateGL();

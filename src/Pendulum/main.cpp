@@ -49,6 +49,8 @@ int main(int argc, char *argv[])
 #if defined (USE_FORCE_GL)
     app.setAttribute(Qt::AA_UseDesktopOpenGL);
 #endif
+    // Костыль по мотивам QTBUG-30790, QTBUG-28872, QTBUG-28872
+    app.setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
     MainWindow w;// главное окно
     w.show();
     return app.exec();
