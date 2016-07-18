@@ -23,11 +23,13 @@
 #include "GraphWindowEnergy.h"
 
 #include <cmath>
+#include <QEvent>
 #include "PhysicalController.h"
 
 GraphWindowEnergy::GraphWindowEnergy(QWidget * parent) :
     GraphWindowAbstract(false, parent), m_physicalController(NULL)
 {
+    updateTitle();
 }
 
 void GraphWindowEnergy::setPhysicalController(const PhysicalController * physicalController)
@@ -63,5 +65,17 @@ void GraphWindowEnergy::update()
     }
 
     repaint();
+}
+
+void GraphWindowEnergy::changeEvent(QEvent * event)
+{
+    GraphWindowAbstract::changeEvent(event);
+    if(event->type() == QEvent::LanguageChange)
+        updateTitle();
+}
+
+void GraphWindowEnergy::updateTitle()
+{
+    setLabels(tr("Mechanical Energy"), tr("t, s"), tr("E, J"));
 }
 

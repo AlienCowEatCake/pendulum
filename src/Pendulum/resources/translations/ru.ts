@@ -90,6 +90,60 @@
     </message>
 </context>
 <context>
+    <name>GraphWindowDisplacement</name>
+    <message>
+        <location filename="../../GraphWindowDisplacement.cpp" line="93"/>
+        <source>Displacement</source>
+        <translation>Смещение</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowDisplacement.cpp" line="93"/>
+        <source>t, s</source>
+        <translation>t, c</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowDisplacement.cpp" line="93"/>
+        <source>x, m</source>
+        <translation>x, м</translation>
+    </message>
+</context>
+<context>
+    <name>GraphWindowEnergy</name>
+    <message>
+        <location filename="../../GraphWindowEnergy.cpp" line="79"/>
+        <source>Mechanical Energy</source>
+        <translation>Механическая энергия</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowEnergy.cpp" line="79"/>
+        <source>t, s</source>
+        <translation>t, c</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowEnergy.cpp" line="79"/>
+        <source>E, J</source>
+        <translation>E, Дж</translation>
+    </message>
+</context>
+<context>
+    <name>GraphWindowSpeed</name>
+    <message>
+        <location filename="../../GraphWindowSpeed.cpp" line="102"/>
+        <source>Speed</source>
+        <translation>Скорость</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowSpeed.cpp" line="102"/>
+        <source>t, s</source>
+        <translation>t, c</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowSpeed.cpp" line="102"/>
+        <source>v, m/s</source>
+        <translation>v, м/с</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../../MainWindow.ui" line="91"/>
@@ -213,9 +267,9 @@
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="381"/>
-        <location filename="../../MainWindow.cpp" line="201"/>
-        <location filename="../../MainWindow.cpp" line="272"/>
-        <location filename="../../MainWindow.cpp" line="291"/>
+        <location filename="../../MainWindow.cpp" line="215"/>
+        <location filename="../../MainWindow.cpp" line="269"/>
+        <location filename="../../MainWindow.cpp" line="288"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
@@ -226,73 +280,36 @@
     </message>
     <message>
         <location filename="../../MainWindow.cpp" line="220"/>
-        <source>Speed</source>
-        <translation>Скорость</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="221"/>
-        <source>Displacement</source>
-        <translation>Смещение</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="206"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="208"/>
+        <location filename="../../MainWindow.cpp" line="222"/>
         <source>Credits</source>
         <translation>Разработчики</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="210"/>
+        <location filename="../../MainWindow.cpp" line="224"/>
         <source>User Manual</source>
         <translation>Руководство пользователя</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="212"/>
+        <location filename="../../MainWindow.cpp" line="226"/>
         <source>License</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="199"/>
-        <location filename="../../MainWindow.cpp" line="264"/>
-        <location filename="../../MainWindow.cpp" line="268"/>
+        <location filename="../../MainWindow.cpp" line="213"/>
+        <location filename="../../MainWindow.cpp" line="261"/>
+        <location filename="../../MainWindow.cpp" line="265"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="204"/>
         <location filename="../../MainWindow.cpp" line="218"/>
+        <location filename="../../MainWindow.cpp" line="232"/>
         <source>Mass Spring Damper System</source>
         <translation>Пружинный маятник в среде с сопротивлением</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="220"/>
-        <location filename="../../MainWindow.cpp" line="221"/>
-        <location filename="../../MainWindow.cpp" line="222"/>
-        <source>t, s</source>
-        <translation>t, c</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="220"/>
-        <source>v, m/s</source>
-        <translation>v, м/с</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="221"/>
-        <source>x, m</source>
-        <translation>x, м</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="222"/>
-        <source>Mechanical Energy</source>
-        <translation>Механическая энергия</translation>
-    </message>
-    <message>
-        <location filename="../../MainWindow.cpp" line="222"/>
-        <source>E, J</source>
-        <translation>E, Дж</translation>
     </message>
 </context>
 <context>

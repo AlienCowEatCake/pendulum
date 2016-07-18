@@ -28,7 +28,7 @@ SOURCES += \
     src/Pendulum/ModelSpring.cpp \
     src/Pendulum/Scene3D.cpp \
     src/Pendulum/GraphWindowSpeed.cpp \
-    src/Pendulum/GraphWindowOffset.cpp \
+    src/Pendulum/GraphWindowDisplacement.cpp \
     src/Pendulum/GraphWindowEnergy.cpp \
     src/Pendulum/MainWindow.cpp \
     src/Pendulum/main.cpp \
@@ -39,7 +39,7 @@ HEADERS += \
     src/Pendulum/ModelSpring.h \
     src/Pendulum/Scene3D.h \
     src/Pendulum/GraphWindowSpeed.h \
-    src/Pendulum/GraphWindowOffset.h \
+    src/Pendulum/GraphWindowDisplacement.h \
     src/Pendulum/GraphWindowEnergy.h \
     src/Pendulum/MainWindow.h
 

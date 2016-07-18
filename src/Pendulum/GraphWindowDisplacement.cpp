@@ -20,23 +20,24 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "GraphWindowOffset.h"
+#include "GraphWindowDisplacement.h"
 
 #include <cmath>
+#include <QEvent>
 #include "PhysicalController.h"
 
-GraphWindowOffset::GraphWindowOffset(QWidget * parent) :
+GraphWindowDisplacement::GraphWindowDisplacement(QWidget * parent) :
     GraphWindowAbstract(true, parent), m_physicalController(NULL)
 {
     m_numT = 3;
 }
 
-void GraphWindowOffset::setPhysicalController(const PhysicalController * physicalController)
+void GraphWindowDisplacement::setPhysicalController(const PhysicalController * physicalController)
 {
     m_physicalController = physicalController;
 }
 
-void GraphWindowOffset::update()
+void GraphWindowDisplacement::update()
 {   
     if(!m_physicalController)
         return;
@@ -78,5 +79,17 @@ void GraphWindowOffset::update()
     }
 
     repaint();
+}
+
+void GraphWindowDisplacement::changeEvent(QEvent * event)
+{
+    GraphWindowAbstract::changeEvent(event);
+    if(event->type() == QEvent::LanguageChange)
+        updateTitle();
+}
+
+void GraphWindowDisplacement::updateTitle()
+{
+    setLabels(tr("Displacement"), tr("t, s"), tr("x, m"));
 }
 

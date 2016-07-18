@@ -23,10 +23,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#if defined (Q_OS_WIN) && defined (USE_WIN98_WORKAROUNDS)
-#include <windows.h>
-#endif
-
 #include <cmath>
 #if defined (HAVE_QT5)
 #include <QtWidgets>
@@ -44,9 +40,26 @@
 #include "widgets/SplashScreenWindow/SplashScreenWindow.h"
 #include "utils/Workarounds.h"
 #include "GraphWindowSpeed.h"
-#include "GraphWindowOffset.h"
+#include "GraphWindowDisplacement.h"
 #include "GraphWindowEnergy.h"
 #include "PhysicalController.h"
+
+namespace {
+
+const int helpWindowWidth     = 880;
+const int helpWindowHeight    = 540;
+const int authorsWindowWidth  = 670;
+const int authorsWindowHeight = 400;
+const int licenseWindowWidth  = 560;
+const int licenseWindowHeight = 380;
+
+const int sliderMassDefaultPosition           = 10;  ///< Ползунок массы груза m
+const int sliderDisplacementDefaultPosition   = 50;  ///< Ползунок начального смещения
+const int sliderSpringConstantDefaultPosition = 50;  ///< Ползунок коэффициента жесткости k
+const int sliderDampingDefaultPosition        = 3;   ///< Ползунок коэффициента трения r
+const int sliderSpeedDefaultPosition          = 100; ///< Ползунок скорости эксперимента
+
+} // namespace
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -86,56 +99,57 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->lcdNumber->setDecMode();
     m_ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
     // =======
-    m_speedWindow = new GraphWindowSpeed;
+    m_speedWindow = new GraphWindowSpeed(this);
     m_speedWindow->setPhysicalController(m_physicalController);
     m_speedWindow->setHidden(true);
     // =======
-    m_offsetWindow = new GraphWindowOffset;
-    m_offsetWindow->setPhysicalController(m_physicalController);
-    m_offsetWindow->setHidden(true);
+    m_displacementWindow = new GraphWindowDisplacement(this);
+    m_displacementWindow->setPhysicalController(m_physicalController);
+    m_displacementWindow->setHidden(true);
     // =======
-    m_energyWindow = new GraphWindowEnergy;
+    m_energyWindow = new GraphWindowEnergy(this);
     m_energyWindow->setPhysicalController(m_physicalController);
     m_energyWindow->setHidden(true);
     // =======
-    m_helpWindow = new HtmlWindow;
+    m_helpWindow = new HtmlWindow(this);
     m_helpWindow->setHidden(true);
-    m_helpWindow->setSize(880, 540);
+    m_helpWindow->setSize(helpWindowWidth, helpWindowHeight);
     m_helpWindow->setScrollBarEnabled();
     // =======
-    m_authorsWindow = new HtmlWindow;
+    m_authorsWindow = new HtmlWindow(this);
     m_authorsWindow->setHidden(true);
-    m_authorsWindow->setSize(670, 400);
+    m_authorsWindow->setSize(authorsWindowWidth, authorsWindowHeight);
     // =======
-    m_manualWindow = new HtmlWindow;
+    m_manualWindow = new HtmlWindow(this);
     m_manualWindow->setHidden(true);
-    m_manualWindow->setSize(880, 540);
+    m_manualWindow->setSize(helpWindowWidth, helpWindowHeight);
     m_manualWindow->setScrollBarEnabled();
     // =======
-    m_licenseWindow = new HtmlWindow;
+    m_licenseWindow = new HtmlWindow(this);
     m_licenseWindow->setHidden(true);
-    m_licenseWindow->setSize(560, 380);
+    m_licenseWindow->setSize(licenseWindowWidth, licenseWindowHeight);
     // =======
-    m_ui->horizontalSliderMass->setValue(10);           // масса груза m
-    m_ui->horizontalSliderAmplitude->setValue(50);      // начальное смещение
-    m_ui->horizontalSliderRestitution->setValue(50);    // коэффициент жесткости k
-    m_ui->horizontalSliderDamping->setValue(3);         // коэффициент трения r
-    m_ui->horizontalSliderSpeed->setValue(100);         // скорость эксперимента
+    m_ui->horizontalSliderMass->setValue(sliderMassDefaultPosition);                     // масса груза m
+    m_ui->horizontalSliderDisplacement->setValue(sliderDisplacementDefaultPosition);     // начальное смещение
+    m_ui->horizontalSliderSpringConstant->setValue(sliderSpringConstantDefaultPosition); // коэффициент жесткости k
+    m_ui->horizontalSliderDamping->setValue(sliderDampingDefaultPosition);               // коэффициент трения r
+    m_ui->horizontalSliderSpeed->setValue(sliderSpeedDefaultPosition);                   // скорость эксперимента
     m_ui->horizontalSliderQuality->setValue(m_physicalController->timerStep());
 
     // О Qt
     connect(m_ui->actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
     // Соединяем графики друг с другом, чтобы они могли сообщать об изменении настроек
-    connect(m_speedWindow, SIGNAL(settingsChanged()), m_offsetWindow, SLOT(onSettingsChanged()));
+    /// @todo Сделать более разумный способ соединения графиков
+    connect(m_speedWindow, SIGNAL(settingsChanged()), m_displacementWindow, SLOT(onSettingsChanged()));
     connect(m_speedWindow, SIGNAL(settingsChanged()), m_energyWindow, SLOT(onSettingsChanged()));
-    connect(m_offsetWindow, SIGNAL(settingsChanged()), m_speedWindow, SLOT(onSettingsChanged()));
-    connect(m_offsetWindow, SIGNAL(settingsChanged()), m_energyWindow, SLOT(onSettingsChanged()));
+    connect(m_displacementWindow, SIGNAL(settingsChanged()), m_speedWindow, SLOT(onSettingsChanged()));
+    connect(m_displacementWindow, SIGNAL(settingsChanged()), m_energyWindow, SLOT(onSettingsChanged()));
     connect(m_energyWindow, SIGNAL(settingsChanged()), m_speedWindow, SLOT(onSettingsChanged()));
-    connect(m_energyWindow, SIGNAL(settingsChanged()), m_offsetWindow, SLOT(onSettingsChanged()));
+    connect(m_energyWindow, SIGNAL(settingsChanged()), m_displacementWindow, SLOT(onSettingsChanged()));
 
     // Окно-заставка
-    m_splashWindow = new SplashScreenWindow;
+    m_splashWindow = new SplashScreenWindow(this);
 
     // Переводы и подгрузка ресурсов
     updateTranslations();
@@ -217,10 +231,6 @@ void MainWindow::updateTranslations(QString language)
 #endif
     m_splashWindow->setTitle(tr("Mass Spring Damper System"));
 
-    m_speedWindow->setLabels(tr("Speed"), tr("t, s"), tr("v, m/s"));
-    m_offsetWindow->setLabels(tr("Displacement"), tr("t, s"), tr("x, m"));
-    m_energyWindow->setLabels(tr("Mechanical Energy"), tr("t, s"), tr("E, J"));
-
     // Также следует пересчитать геометрию виждетов
     QApplication::postEvent(this, new QResizeEvent(size(), size()));
 }
@@ -228,19 +238,6 @@ void MainWindow::updateTranslations(QString language)
 MainWindow::~MainWindow()
 {
     delete m_ui;
-}
-
-/// @brief Обработчик события закрытия окна
-void MainWindow::closeEvent(QCloseEvent *)
-{
-    delete m_speedWindow;
-    delete m_offsetWindow;
-    delete m_energyWindow;
-    delete m_helpWindow;
-    delete m_authorsWindow;
-    delete m_manualWindow;
-    delete m_licenseWindow;
-    delete m_splashWindow;
 }
 
 /// @brief Слот на обновление времени на дисплее
@@ -258,8 +255,8 @@ void MainWindow::on_pushButtonStart_clicked()
     {
     case PhysicalController::SimulationNotRunning:
         m_ui->horizontalSliderMass->setEnabled(false);
-        m_ui->horizontalSliderAmplitude->setEnabled(false);
-        m_ui->horizontalSliderRestitution->setEnabled(false);
+        m_ui->horizontalSliderDisplacement->setEnabled(false);
+        m_ui->horizontalSliderSpringConstant->setEnabled(false);
         m_ui->horizontalSliderDamping->setEnabled(false);
         m_ui->pushButtonStart->setText(tr("Stop"));
         m_physicalController->startSimulation();
@@ -284,8 +281,8 @@ void MainWindow::on_pushButtonStop_clicked()
     case PhysicalController::SimulationPaused:
         m_physicalController->stopSimulation();
         m_ui->horizontalSliderMass->setEnabled(true);
-        m_ui->horizontalSliderAmplitude->setEnabled(true);
-        m_ui->horizontalSliderRestitution->setEnabled(true);
+        m_ui->horizontalSliderDisplacement->setEnabled(true);
+        m_ui->horizontalSliderSpringConstant->setEnabled(true);
         m_ui->horizontalSliderDamping->setEnabled(true);
         m_ui->pushButtonStart->setEnabled(true);
         m_ui->pushButtonStart->setText(tr("Start"));
@@ -306,7 +303,7 @@ void MainWindow::on_actionSpeed_triggered()
 /// @brief Слот на открытие графика смещения из меню
 void MainWindow::on_actionOffset_triggered()
 {
-    m_offsetWindow->setHidden(!m_offsetWindow->isHidden());
+    m_displacementWindow->setHidden(!m_displacementWindow->isHidden());
 }
 
 /// @brief Слот на открытие графика энергии из меню
@@ -323,13 +320,13 @@ void MainWindow::on_horizontalSliderMass_valueChanged(int value)
     m_ui->labelMass->setText(QString::number(v1));
     m_physicalController->resetPhysicalEngine();
     m_speedWindow->update();
-    m_offsetWindow->update();
+    m_displacementWindow->update();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
 
 /// @brief Слот на изменение ползунка начального смещения
-void MainWindow::on_horizontalSliderAmplitude_valueChanged(int value)
+void MainWindow::on_horizontalSliderDisplacement_valueChanged(int value)
 {
     double v1 = value / 100.0 - 0.8;
     if(std::fabs(v1) < 0.001)
@@ -338,19 +335,19 @@ void MainWindow::on_horizontalSliderAmplitude_valueChanged(int value)
     m_physicalController->resetPhysicalEngine();
     m_ui->labelAmplitude->setText(QString::number(v1));
     m_speedWindow->update();
-    m_offsetWindow->update();
+    m_displacementWindow->update();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
 
 /// @brief Слот на изменение ползунка коэффициента жесткости k
-void MainWindow::on_horizontalSliderRestitution_valueChanged(int value)
+void MainWindow::on_horizontalSliderSpringConstant_valueChanged(int value)
 {
     m_physicalController->action().set_k(value);
     m_physicalController->resetPhysicalEngine();
     m_ui->labelRestitution->setText(QString::number(value));
     m_speedWindow->update();
-    m_offsetWindow->update();
+    m_displacementWindow->update();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
@@ -364,7 +361,7 @@ void MainWindow::on_horizontalSliderDamping_valueChanged(int value)
     m_physicalController->resetPhysicalEngine();
     m_ui->labelDamping->setText(QString::number(n1));
     m_speedWindow->update();
-    m_offsetWindow->update();
+    m_displacementWindow->update();
     m_energyWindow->update();
     m_ui->widget->updateGL();
 }
