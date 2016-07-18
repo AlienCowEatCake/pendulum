@@ -88,7 +88,7 @@ void GraphWindowAbstract::on_actionGraphWidth_triggered()
 {
     bool ok = false;
     qreal oldValue = m_scene2D->plotWidth();
-    double value = QInputDialog::getDouble(this, tr("Width"), tr("Select Graph Width:"), static_cast<double>(oldValue), 1.0, 10.0, 1, &ok);
+    double value = QInputDialog::getDouble(this, tr("Width"), tr("Enter Graph Width:"), static_cast<double>(oldValue), 1.0, 10.0, 1, &ok);
     qreal newValue = static_cast<qreal>(value);
     if(ok && std::fabs(oldValue - newValue) > 1e-5)
     {

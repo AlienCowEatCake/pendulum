@@ -28,7 +28,7 @@
   <widget class="QMenuBar" name="menuBar">
    <widget class="QMenu" name="menuGraphs">
     <property name="title">
-     <string>Graphs</string>
+     <string>&amp;Graphs</string>
     </property>
     <addaction name="actionSpeed"/>
     <addaction name="actionOffset"/>
@@ -36,7 +36,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
     <addaction name="actionManual"/>
@@ -46,7 +46,7 @@
    </widget>
    <widget class="QMenu" name="menuLanguage">
     <property name="title">
-     <string>Language</string>
+     <string>&amp;Language</string>
     </property>
     <addaction name="actionEnglish"/>
     <addaction name="actionRussian"/>
@@ -437,7 +437,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/speed.png</iconset>
    </property>
    <property name="text">
-    <string>Speed</string>
+    <string>&amp;Speed</string>
    </property>
   </action>
   <action name="actionOffset">
@@ -445,7 +445,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/position.png</iconset>
    </property>
    <property name="text">
-    <string>Displacement</string>
+    <string>&amp;Displacement</string>
    </property>
   </action>
   <action name="actionEnergy">
@@ -453,7 +453,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/energy.png</iconset>
    </property>
    <property name="text">
-    <string>Energy</string>
+    <string>&amp;Energy</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -461,7 +461,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/about.png</iconset>
    </property>
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>
@@ -472,7 +472,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/people.png</iconset>
    </property>
    <property name="text">
-    <string>Credits</string>
+    <string>&amp;Credits</string>
    </property>
   </action>
   <action name="actionManual">
@@ -480,7 +480,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/manual.png</iconset>
    </property>
    <property name="text">
-    <string>User Manual</string>
+    <string>User &amp;Manual</string>
    </property>
   </action>
   <action name="actionLicense">
@@ -488,7 +488,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/license.png</iconset>
    </property>
    <property name="text">
-    <string>License</string>
+    <string>&amp;License</string>
    </property>
   </action>
   <action name="actionAboutQt">
@@ -496,7 +496,7 @@
     <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/qt.png</iconset>
    </property>
    <property name="text">
-    <string>About Qt</string>
+    <string>About &amp;Qt</string>
    </property>
    <property name="menuRole">
     <enum>QAction::AboutQtRole</enum>
@@ -507,7 +507,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>English</string>
+    <string>&amp;English</string>
    </property>
   </action>
   <action name="actionRussian">
@@ -515,7 +515,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Russian</string>
+    <string>&amp;Russian</string>
    </property>
   </action>
  </widget>
