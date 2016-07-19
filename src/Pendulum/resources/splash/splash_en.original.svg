@@ -314,7 +314,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="359.5188"
+     inkscape:cx="274.81264"
      inkscape:cy="216.91131"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -1071,7 +1071,7 @@
          id="tspan4727"
          x="171.87794"
          y="796.11218"
-         style="font-size:15.62500095px;letter-spacing:0px">Авторы:</tspan></text>
+         style="font-size:15.62500095px;letter-spacing:-0.50000004px">Авторы:</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1083,7 +1083,7 @@
          id="tspan4731"
          x="170.46651"
          y="896.11218"
-         style="font-size:15.62500095px;letter-spacing:0px">Руководитель:</tspan></text>
+         style="font-size:15.62500095px;letter-spacing:-0.50000004px">Руководитель:</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1095,7 +1095,7 @@
          id="tspan4735"
          x="199.87796"
          y="816.11218"
-         style="font-size:15.62500095px;letter-spacing:0px">Александров Михаил Евгеньевич, ПМ-01</tspan></text>
+         style="font-size:15.62500095px;letter-spacing:-0.50000004px">Александров Михаил Евгеньевич, ПМ-01</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1107,7 +1107,7 @@
          id="tspan4739"
          x="199.69485"
          y="836.11218"
-         style="font-size:15.62500095px;letter-spacing:0px">Жигалов Петр Сергеевич, ПМ-01</tspan></text>
+         style="font-size:15.62500095px;letter-spacing:-0.50000004px">Жигалов Петр Сергеевич, ПМ-01</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1119,7 +1119,7 @@
          id="tspan4743"
          x="198.46652"
          y="856.11218"
-         style="font-size:15.62500095px;letter-spacing:0px">Курочкин Андрей Викторович, ПМ-01</tspan></text>
+         style="font-size:15.62500095px;letter-spacing:-0.50000004px">Курочкин Андрей Викторович, ПМ-01</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1131,7 +1131,7 @@
          id="tspan4747"
          x="198.46652"
          y="916.11218"
-         style="font-size:15.62500095px;letter-spacing:0px">Баранов Александр Викторович, к.ф.-м.н., доц.</tspan></text>
+         style="font-size:15.62500095px;letter-spacing:-0.50000004px">Баранов Александр Викторович, к.ф.-м.н., доц.</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -1143,19 +1143,19 @@
          id="tspan4751"
          x="262.46652"
          y="1003.9822"
-         style="font-size:15.62500095px">Novosibirsk</tspan></text>
+         style="font-size:15.62500095px;letter-spacing:-0.50000004px">Novosibirsk</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="288.85562"
+       x="286.85562"
        y="1024.1322"
        id="text4753"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4755"
-         x="288.85562"
+         x="286.85562"
          y="1024.1322"
-         style="font-size:15.62500095px">2012</tspan></text>
+         style="font-size:15.62500095px;letter-spacing:-0.50000006px">2012</tspan></text>
     <g
        style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
        id="Layer_x0020_1-3"
