@@ -2,6 +2,7 @@
     <qresource prefix="/html">
         <file>author_ru.html</file>
         <file>help_ru.html</file>
+        <file>help_en.html</file>
         <file>license_ru.html</file>
         <file>manual_ru.html</file>
     </qresource>
