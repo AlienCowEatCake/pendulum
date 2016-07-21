@@ -22,7 +22,9 @@
 
 #include "Model.h"
 
+#include <algorithm>
 #include <QImage>
+#include <QMap>
 
 namespace {
 
@@ -31,18 +33,43 @@ namespace {
 /// @return идентификатор текстуры
 GLuint LoadGLTextures(const char * name)
 {
-    QImage texImage;
-    GLuint texPtr;
-    texImage.load(QString::fromUtf8(name));
-    texImage = GLWidgetImpl::convertToGLFormat(texImage);
-    GLImpl::glGenTextures(1, &texPtr);
-    GLImpl::glBindTexture(GL_TEXTURE_2D, texPtr);
-    GLsizei texWidth = static_cast<GLsizei>(texImage.width());
-    GLsizei texHeight = static_cast<GLsizei>(texImage.height());
-    GLImpl::glTexImage2D(GL_TEXTURE_2D, 0, 3, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, texImage.bits());
-    GLImpl::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    GLImpl::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    return texPtr;
+    static QMap<QString, GLuint> texturesCache;
+    QString qName = QString::fromUtf8(name);
+    QMap<QString, GLuint>::ConstIterator it = texturesCache.find(qName);
+    if(it == texturesCache.end())
+    {
+        QImage texImage;
+        GLuint texPtr;
+        texImage.load(qName);
+#if !defined (USE_SWRAST)
+        // Некоторые железные реализации OpenGL не поддерживают не квадратные текстуры. Другие же
+        // не поддерживают текстуры, размерами не равные степеням двойки. У третьих сильно
+        // ограничен максимальный размер текстуры. Поэтому для них всех отресайзим текстуру до
+        // квадрата, размером в степень двойки, но в пределах максимального размера. Для софтверной
+        // реализации это только навредит, поэтому для нее этого делать не будем.
+        int imgSize = std::max(texImage.height(), texImage.width()), texSize = 1;
+        while(texSize < imgSize)
+            texSize *= 2;
+        GLint maxTexSize = texSize;
+        glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
+        maxTexSize = std::max(maxTexSize, 64);
+        if(texSize > maxTexSize)
+            texSize = maxTexSize;
+        if(texImage.height() != texSize || texImage.width() != texSize)
+            texImage = texImage.scaled(texSize, texSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+#endif
+        texImage = GLWidgetImpl::convertToGLFormat(texImage);
+        GLImpl::glGenTextures(1, &texPtr);
+        GLImpl::glBindTexture(GL_TEXTURE_2D, texPtr);
+        GLsizei texWidth = static_cast<GLsizei>(texImage.width());
+        GLsizei texHeight = static_cast<GLsizei>(texImage.height());
+        GLImpl::glTexImage2D(GL_TEXTURE_2D, 0, 3, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, texImage.bits());
+        GLImpl::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        GLImpl::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        texturesCache[qName] = texPtr;
+        return texPtr;
+    }
+    return it.value();
 }
 
 } // namespace
