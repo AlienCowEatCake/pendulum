@@ -53,7 +53,8 @@ win32 {
     RESOURCES += \
         src/Pendulum/resources-old/manual/win32/manual.qrc \
         src/Pendulum/resources/html/stylesheet/stylesheet-windows.qrc
-    RC_FILE += src/Pendulum/resources-old/icon.rc
+    RC_FILE += src/Pendulum/resources/platform/windows/resources.rc
+    CONFIG -= embed_manifest_exe
 }
 
 unix:!macx {
@@ -74,7 +75,7 @@ macx {
 }
 
 RESOURCES += \
-    src/Pendulum/resources-old/mres.qrc \
+    src/Pendulum/resources/icon/icon.qrc \
     src/Pendulum/resources/menuicons/menuicons.qrc \
     src/Pendulum/resources/models/m_cyllinder.qrc \
     src/Pendulum/resources/html/help/help.qrc \

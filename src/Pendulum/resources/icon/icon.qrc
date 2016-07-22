@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/mres">
+    <qresource prefix="/icon">
         <file>ball.ico</file>
     </qresource>
 </RCC>
