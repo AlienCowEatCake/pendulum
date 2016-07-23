@@ -21,9 +21,11 @@
 */
 
 #include "Workarounds.h"
+#include <QtGlobal>
 
-#if defined (Q_OS_WIN) && defined (USE_WIN98_WORKAROUNDS)
+#if defined (Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(4, 5, 0)) && ((defined (_MSC_VER) && (_MSC_VER) <= 1400) || defined (__GNUC__) || defined (__MINGW32__))
 #include <windows.h>
+#define USE_WIN98_WORKAROUNDS
 #endif
 #include <cstdlib>
 
@@ -97,11 +99,11 @@ void FontsFix(const QString & language)
 /// @attention Актуально только для Qt 5.4+
 void HighDPIFix()
 {
-#if defined (HAVE_GREATER_THAN_OR_EQUALS_QT56)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
     static char newEnv [] = "QT_AUTO_SCREEN_SCALE_FACTOR=1";
     if(!getenv("QT_AUTO_SCREEN_SCALE_FACTOR") && !getenv("QT_DEVICE_PIXEL_RATIO"))
         putenv(newEnv);
-#elif defined (HAVE_GREATER_THAN_OR_EQUALS_QT54)
+#elif (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
     static char newEnv [] = "QT_DEVICE_PIXEL_RATIO=auto";
     if(!getenv("QT_DEVICE_PIXEL_RATIO"))
         putenv(newEnv);

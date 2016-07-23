@@ -13,14 +13,6 @@ IDI_ICON1 ICON DISCARDABLE "../../icon/ball.ico"
 #define VER_PRODUCTNAME_STR         "Pendulum"
 #define VER_COMPANYNAME_STR         "FAMI Net Team"
 
-#if defined (USE_HIGHDPI)
-#define MANIFESTNAME dpiaware.manifest
-#else
-#define MANIFESTNAME classic.manifest
-#endif
-#define RT_MANIFEST 24
-1 RT_MANIFEST MANIFESTNAME
-
 VS_VERSION_INFO VERSIONINFO
 FILEVERSION     VER_FILEVERSION
 PRODUCTVERSION  VER_PRODUCTVERSION

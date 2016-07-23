@@ -24,11 +24,7 @@
 #include "ui_MainWindow.h"
 
 #include <cmath>
-#if defined (HAVE_QT5)
-#include <QtWidgets>
-#else
-#include <QtGui>
-#endif
+#include <QtGlobal>
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QPair>
@@ -97,7 +93,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_physicalController->connectToTimer(m_ui->widget, SLOT(updateGL()));
     m_physicalController->connectToTimer(this, SLOT(updateLcdDisplay()));
     // =======
-#if defined (HAVE_QT5)
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 6, 0))
     m_ui->lcdNumber->setDigitCount(6);  // Qt 4.6+
 #else
     m_ui->lcdNumber->setNumDigits(6);   // Deprecated
@@ -230,7 +226,7 @@ void MainWindow::updateTranslations(QString language)
     m_manualWindow->setTitle(tr("User Manual"));
     m_licenseWindow->loadHtml(QString::fromLatin1(":/html/license_%1.html").arg(language));
     m_licenseWindow->setTitle(tr("License"));
-#if defined (QT_SVG_LIB) && defined (HAVE_QT5)
+#if defined (QT_SVG_LIB) && (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
     m_splashWindow->setSVG(QString::fromLatin1(":/splash/splash_%1.svg").arg(language));
 #else
     m_splashWindow->setPixmap(QString::fromLatin1(":/splash/splash_%1.png").arg(language));

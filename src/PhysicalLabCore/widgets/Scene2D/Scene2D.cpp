@@ -23,11 +23,8 @@
 #include "Scene2D.h"
 
 #include <cmath>
-#if defined (HAVE_QT5)
-#include <QtWidgets>
-#else
-#include <QtGui>
-#endif
+#include <QtGlobal>
+#include <QPainter>
 #include <QString>
 
 Scene2D::Scene2D(bool haveNegativeY, QWidget* parent)
@@ -168,7 +165,7 @@ void Scene2D::drawGraph(QPaintDevice * device)
     painter.drawLine(toWindow(0.0f, 0.0f), toWindow(m_maxX_local, 0.0f));
 
     // Отрисовка шкалы
-#if defined (Q_OS_WIN) && defined (HAVE_QT5) // Почему-то в Qt5 под Win гигантские шрифты
+#if defined (Q_OS_WIN) && (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)) // Почему-то в Qt5 под Win гигантские шрифты
     QFont serifFont(tr("Times"), 9);
 #elif defined (Q_OS_MAC)
     QFont serifFont(tr("Times"), 15);

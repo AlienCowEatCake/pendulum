@@ -23,6 +23,7 @@
 #include "HtmlWindow.h"
 #include "ui_HtmlWindow.h"
 
+#include <QtGlobal>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QPoint>
@@ -42,7 +43,7 @@ HtmlWindow::HtmlWindow(QWidget * parent) :
     m_ui->setupUi(this);
     setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint |
                    Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint
-#if !defined (HAVE_LESS_THAN_QT45)
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
                    | Qt::WindowCloseButtonHint
 #endif
                    );

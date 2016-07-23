@@ -22,6 +22,7 @@
 
 #include "SplashScreenWindow.h"
 
+#include <QtGlobal>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QPoint>
@@ -40,7 +41,7 @@ SplashScreenWindow::SplashScreenWindow(QWidget * parent) :
     setScene(new QGraphicsScene(this));
     setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint |
                    Qt::WindowSystemMenuHint
-#if !defined (HAVE_LESS_THAN_QT45)
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
                    | Qt::WindowCloseButtonHint
 #endif
                    );

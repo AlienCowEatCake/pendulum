@@ -79,7 +79,7 @@ void GraphWindowAbstract::on_actionGraphColor_triggered()
 {
     QColor oldColor = m_scene2D->plotColor();
     QColor newColor = QColorDialog::getColor(oldColor, this
-#if !defined (HAVE_LESS_THAN_QT45)
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
         , tr("Select Graph Color")
 #endif
         );

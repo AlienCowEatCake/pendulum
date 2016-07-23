@@ -54,9 +54,7 @@ win32 {
         src/Pendulum/resources/html/manual/windows/screens.qrc \
         src/Pendulum/resources/html/stylesheet/stylesheet-windows.qrc
     RC_FILE += src/Pendulum/resources/platform/windows/resources.rc
-    CONFIG -= embed_manifest_exe
     DEFINES += NOMINMAX
-    *msvc* : QMAKE_LFLAGS_EXE =
 }
 
 unix:!macx {
@@ -86,9 +84,10 @@ RESOURCES += \
     src/Pendulum/resources/html/html.qrc \
     src/Pendulum/resources/translations/translations.qrc
 
-lessThan(QT_MAJOR_VERSION, 5) | !contains(QT, svg) {
+lessThan(QT_VERSION, 5.4.0) {
     RESOURCES += src/Pendulum/resources/splash/splash-png.qrc
 } else {
+    QT += svg
     RESOURCES += src/Pendulum/resources/splash/splash-svg.qrc
 }
 
