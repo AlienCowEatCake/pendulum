@@ -55,6 +55,7 @@ win32 {
         src/Pendulum/resources/html/stylesheet/stylesheet-windows.qrc
     RC_FILE += src/Pendulum/resources/platform/windows/resources.rc
     CONFIG -= embed_manifest_exe
+    DEFINES += NOMINMAX
 }
 
 unix:!macx {
