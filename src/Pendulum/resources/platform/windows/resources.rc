@@ -10,7 +10,7 @@ IDI_ICON1 ICON DISCARDABLE "../../icon/ball.ico"
 #define VER_INTERNALNAME_STR        "pendulum"
 #define VER_LEGALCOPYRIGHT_STR      "(c) FAMI Net Team, 2011-2016"
 #define VER_ORIGINALFILENAME_STR    "pendulum.exe"
-#define VER_PRODUCTNAME_STR         "Mass Spring Damper System"
+#define VER_PRODUCTNAME_STR         "Pendulum"
 #define VER_COMPANYNAME_STR         "FAMI Net Team"
 
 #if defined (USE_HIGHDPI)
