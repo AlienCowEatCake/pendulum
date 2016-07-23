@@ -51,7 +51,7 @@ TRANSLATIONS += \
 
 win32 {
     RESOURCES += \
-        src/Pendulum/resources-old/manual/win32/manual.qrc \
+        src/Pendulum/resources/html/manual/windows/screens.qrc \
         src/Pendulum/resources/html/stylesheet/stylesheet-windows.qrc
     RC_FILE += src/Pendulum/resources/platform/windows/resources.rc
     CONFIG -= embed_manifest_exe
@@ -60,12 +60,12 @@ win32 {
 
 unix:!macx {
     RESOURCES += \
-        src/Pendulum/resources-old/manual/linux/manual.qrc \
+        src/Pendulum/resources/html/manual/linux/screens.qrc \
         src/Pendulum/resources/html/stylesheet/stylesheet-linux.qrc
 }
 
 macx {
-    RESOURCES += src/Pendulum/resources-old/manual/linux/manual.qrc
+    RESOURCES += src/Pendulum/resources/html/manual/macosx/screens.qrc
     lessThan(QT_MAJOR_VERSION, 5) {
         RESOURCES += src/Pendulum/resources/html/stylesheet/stylesheet-macosx-qt4.qrc
     } else {

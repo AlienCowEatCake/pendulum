@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/html/manual.files">
+        <file alias="screen1-en.png">screen1-macosx-en.png</file>
+        <file alias="screen1-ru.png">screen1-macosx-ru.png</file>
+        <file alias="screen2-en.png">screen2-macosx-en.png</file>
+        <file alias="screen2-ru.png">screen2-macosx-ru.png</file>
+    </qresource>
+</RCC>

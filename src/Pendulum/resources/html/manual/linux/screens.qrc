@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/html/manual.files">
+        <file alias="screen1-en.png">screen1-linux-en.png</file>
+        <file alias="screen1-ru.png">screen1-linux-ru.png</file>
+        <file alias="screen2-en.png">screen2-linux-en.png</file>
+        <file alias="screen2-ru.png">screen2-linux-ru.png</file>
+    </qresource>
+</RCC>
