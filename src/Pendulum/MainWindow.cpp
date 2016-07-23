@@ -158,7 +158,6 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 /// @brief Функция для применения локализации
-/// @todo Это не особо рабочая заготовка, надо переписать
 void MainWindow::updateTranslations(QString language)
 {
     // Отображение название языка -> соответствующая ему менюшка

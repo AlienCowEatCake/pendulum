@@ -88,7 +88,6 @@ private slots:
     void on_actionRussian_triggered();
 
     /// @brief Функция для применения локализации
-    /// @todo Это не особо рабочая заготовка, надо переписать
     void updateTranslations(QString language = QString());
 
 private:
