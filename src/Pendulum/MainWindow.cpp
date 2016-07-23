@@ -153,7 +153,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_splashWindow = new SplashScreenWindow(this);
 
     // Переводы и подгрузка ресурсов
-    updateTranslations();
+    // По причине некоторых багов (особенно под маком), надо показать окно до того, как выполнять перевод
+    QTimer::singleShot(0, this, SLOT(updateTranslations()));
 }
 
 /// @brief Функция для применения локализации
