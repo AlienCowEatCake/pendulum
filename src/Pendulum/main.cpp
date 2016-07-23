@@ -24,9 +24,20 @@
 #include <QGLFormat>
 #endif
 #include <QApplication>
+#include <QtPlugin>
 #include <QIcon>
 #include "utils/Workarounds.h"
 #include "MainWindow.h"
+
+#if defined (USE_STATIC_QJPEG)
+Q_IMPORT_PLUGIN(qjpeg)
+#endif
+#if defined (USE_STATIC_QTIFF)
+Q_IMPORT_PLUGIN(qtiff)
+#endif
+#if defined (USE_STATIC_QICO)
+Q_IMPORT_PLUGIN(qico)
+#endif
 
 int main(int argc, char *argv[])
 {

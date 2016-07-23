@@ -106,8 +106,7 @@ use_hipoly {
         src/Pendulum/resources/models/hipoly/t_red.qrc \
         src/Pendulum/resources/models/hipoly/t_wood.qrc \
         src/Pendulum/resources/models/hipoly/t_yellow.qrc
-}
-else {
+} else {
     RESOURCES += \
         src/Pendulum/resources/models/lowpoly/m_mass.qrc \
         src/Pendulum/resources/models/lowpoly/m_scale.qrc \
@@ -121,6 +120,24 @@ else {
         src/Pendulum/resources/models/lowpoly/t_red.qrc \
         src/Pendulum/resources/models/lowpoly/t_wood.qrc \
         src/Pendulum/resources/models/lowpoly/t_yellow.qrc
+}
+
+# qmake CONFIG+=use_static_qjpeg
+use_static_qjpeg {
+    QTPLUGIN += qjpeg
+    DEFINES += USE_STATIC_QJPEG
+}
+
+# qmake CONFIG+=use_static_qtiff
+use_static_qtiff {
+    QTPLUGIN += qtiff
+    DEFINES += USE_STATIC_QTIFF
+}
+
+# qmake CONFIG+=use_static_qico
+use_static_qico {
+    QTPLUGIN += qico
+    DEFINES += USE_STATIC_QICO
 }
 
 # === Сборочные директории =====================================================
