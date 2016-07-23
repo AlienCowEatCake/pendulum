@@ -75,10 +75,10 @@ void SplashScreenWindow::setGraphicsItem(QGraphicsItem * graphicsItem)
     m_graphicsItem->setFlags(QGraphicsItem::ItemClipsToShape);
     m_graphicsItem->setCacheMode(QGraphicsItem::NoCache);
     scene()->addItem(m_graphicsItem);
-    scene()->setSceneRect(m_graphicsItem->boundingRect());
-    setGeometry(m_graphicsItem->boundingRect().toRect());
-    setMinimumSize(m_graphicsItem->boundingRect().size().toSize());
-    setMaximumSize(m_graphicsItem->boundingRect().size().toSize());
+    QRectF boundingRect = m_graphicsItem->boundingRect();
+    scene()->setSceneRect(boundingRect);
+    setGeometry(boundingRect.toRect());
+    setFixedSize(boundingRect.size().toSize());
     moveToCenter();
 }
 

@@ -168,7 +168,7 @@ void Model::reloadTextures()
 {
     for(int i = 0; i < m_numMaterials; i++)
     {
-        if(strlen(m_pMaterials[i].m_pTextureFilename) > 0)
+        if(m_pMaterials[i].m_pTextureFilename[0] != '\0')
             m_pMaterials[i].m_texture = LoadGLTextures(m_pMaterials[i].m_pTextureFilename);
         else
             m_pMaterials[i].m_texture = 0;

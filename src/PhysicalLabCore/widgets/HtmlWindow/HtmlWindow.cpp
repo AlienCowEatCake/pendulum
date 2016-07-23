@@ -90,8 +90,7 @@ void HtmlWindow::setSize(int width, int height)
 {
     m_ui->textBrowser->setGeometry(0, 0, width, height);
     adjustSize();
-    setMinimumSize(size());
-    setMaximumSize(size());
+    setFixedSize(size());
     moveToCenter();
 }
 

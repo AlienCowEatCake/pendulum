@@ -90,8 +90,9 @@ void Scene3D::paintGL()
     GLImpl::glRotatef(90.0f, 1.0f, 0.0f,0.0f);
     GLImpl::glTranslatef(0.0f, 0.75f, 0.0f);
 
-    float balance = static_cast<float>(- 0.2 - 0.8 - (m_physicalController->action().get_m() * 9.81 / m_physicalController->action().get_k()));
-    float offset = static_cast<float>(m_physicalController->action().get_x()) + balance;
+    const Action & action = m_physicalController->action();
+    float balance = static_cast<float>(- 0.2 - 0.8 - (action.get_m() * 9.81 / action.get_k()));
+    float offset = static_cast<float>(action.get_x()) + balance;
 
     GLImpl::glTranslatef(0.0f, balance, 0.0f);
     m_scale.draw();
