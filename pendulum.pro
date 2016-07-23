@@ -70,6 +70,8 @@ macx {
     } else {
         RESOURCES += src/Pendulum/resources/html/stylesheet/stylesheet-macosx.qrc
     }
+    QMAKE_INFO_PLIST = src/Pendulum/resources/platform/macosx/Info.plist
+    ICON = src/Pendulum/resources/icon/ball.icns
     TARGET = "Pendulum"
     QMAKE_CXXFLAGS += -Wno-invalid-constexpr
 }
