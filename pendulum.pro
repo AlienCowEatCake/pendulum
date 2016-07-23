@@ -56,6 +56,7 @@ win32 {
     RC_FILE += src/Pendulum/resources/platform/windows/resources.rc
     CONFIG -= embed_manifest_exe
     DEFINES += NOMINMAX
+    *msvc* : QMAKE_LFLAGS_EXE =
 }
 
 unix:!macx {

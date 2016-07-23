@@ -97,6 +97,11 @@ MainWindow::MainWindow(QWidget *parent) :
     m_physicalController->connectToTimer(m_ui->widget, SLOT(updateGL()));
     m_physicalController->connectToTimer(this, SLOT(updateLcdDisplay()));
     // =======
+#if defined (HAVE_QT5)
+    m_ui->lcdNumber->setDigitCount(6);  // Qt 4.6+
+#else
+    m_ui->lcdNumber->setNumDigits(6);   // Deprecated
+#endif
     m_ui->lcdNumber->setDecMode();
     m_ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
     // =======
