@@ -68,6 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     m_ui->setupUi(this);
     setCentralWidget(m_ui->widget);
+    setAttribute(Qt::WA_DeleteOnClose);
 
 #if defined (Q_OS_MAC)
     // В Mac OS X картинок в меню быть не должно
