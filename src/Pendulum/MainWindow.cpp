@@ -73,6 +73,8 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         QAction * action = * it;
         action->setIcon(QIcon());
+        if(action->menuRole() == QAction::TextHeuristicRole)
+            action->setMenuRole(QAction::NoRole);
     }
     // Под Mac OS X из коробки выглядит настолько страшно, что приходится немного стилизовать
     QList<QGroupBox*> allGroupBoxes = findChildren<QGroupBox*>();
@@ -152,6 +154,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Окно-заставка
     m_splashWindow = new SplashScreenWindow(this);
+
+#if defined(Q_OS_MAC)
+    // Диалог About, используемый в проекте, ни разу не подходит на роль того About, что есть обычно под OS X.
+    // Поэтому сделаем для такого случая отдельный пункт меню, который будет выполнять роль About.
+    QAction * fakeAboutAction = new QAction(this);
+    fakeAboutAction->setMenuRole(QAction::AboutRole);
+    connect(fakeAboutAction, SIGNAL(triggered()), m_splashWindow, SLOT(show()));
+    m_ui->menuHelp->addAction(fakeAboutAction);
+#endif
 
     // Переводы и подгрузка ресурсов
     updateTranslations();
