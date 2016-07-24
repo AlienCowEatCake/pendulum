@@ -87,10 +87,10 @@ private slots:
     /// @brief Слот на включение русского языка из меню
     void on_actionRussian_triggered();
 
+private:
     /// @brief Функция для применения локализации
     void updateTranslations(QString language = QString());
 
-private:
     Ui::MainWindow *m_ui;
 
     PhysicalController *m_physicalController;
