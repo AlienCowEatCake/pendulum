@@ -71,8 +71,7 @@ Makefile*
 
 # Binaries
 /pendulum
-/pendulum-*_qt4
-/pendulum-*_qt5
+/pendulum_*.dmg
 
 # OS X garbage
 .DS_Store
