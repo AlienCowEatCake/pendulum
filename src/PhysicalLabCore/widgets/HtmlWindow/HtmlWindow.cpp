@@ -33,13 +33,6 @@ HtmlWindow::HtmlWindow(QWidget * parent) :
     QWidget(parent),
     m_ui(new Ui::HtmlWindow)
 {
-    if(parent)
-    {
-        // Окно не должно быть поверх родительского окна, оно должно уметь уходить на
-        // задний план, но при этом должно уничтожиться при уничтожении родителя.
-        connect(parent, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
-        setParent(NULL);
-    }
     m_ui->setupUi(this);
     setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint |
                    Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint
