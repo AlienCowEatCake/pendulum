@@ -2,7 +2,7 @@
 set PROJECT=pendulum
 set QTDIR=C:\Qt\4.4.3\mingw342_32_static
 set MINGWDIR=C:\Qt\Tools\mingw342_32
-set BUILDDIR=build_win_qt4.4.3_mingw342
+set BUILDDIR=build_win_qt4.4_mingw342
 set SUFFIX=_swrast_qt4.4_mingw32
 
 set PATH=%QTDIR%\bin;%MINGWDIR%\bin;%MINGWDIR%\libexec\gcc\mingw32\3.4.2;%WINDIR%;%WINDIR%\System32

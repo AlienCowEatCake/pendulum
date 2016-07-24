@@ -3,7 +3,7 @@ set PROJECT=pendulum
 set ARCH=x86
 set VCVARS="C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
 set QTDIR=C:\Qt\5.5.0\msvc2015_static
-set BUILDDIR=build_win_qt5.5.0_msvc2015_%ARCH%
+set BUILDDIR=build_win_qt5.5_msvc2015_%ARCH%
 set SUFFIX=_qt5.5_msvc2015_%ARCH%
 
 call %VCVARS% %ARCH%
