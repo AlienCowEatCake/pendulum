@@ -101,12 +101,23 @@ void GraphWindowAbstract::on_actionGraphWidth_triggered()
 /// @brief on_actionSaveGraphFile_triggered - Слот на событие сохранения графика в файл
 void GraphWindowAbstract::on_actionSaveGraphFile_triggered()
 {
+    // Белый список форматов, чтобы в предлагаемых форматах не было всяких ico, webp и прочих
+    static QStringList whiteList = QStringList()
+            << QString::fromLatin1("bmp")
+            << QString::fromLatin1("jpg")
+            << QString::fromLatin1("jpeg")
+            << QString::fromLatin1("png")
+            << QString::fromLatin1("tif")
+            << QString::fromLatin1("tiff");
+
     QList<QByteArray> supported = QImageWriter::supportedImageFormats();
     QString formats, formatsAll;
     for(QList<QByteArray>::iterator it = supported.begin(); it != supported.end(); ++it)
     {
         *it = (*it).toLower();
         QString format = QString::fromLatin1(*it);
+        if(!whiteList.contains(format, Qt::CaseInsensitive))
+            continue;
         formatsAll.append(formatsAll.length() > 0 ? QString::fromLatin1(" *.") : QString::fromLatin1("*.")).append(format);
         if(formats.length() > 0)
             formats.append(QString::fromLatin1(";;"));
