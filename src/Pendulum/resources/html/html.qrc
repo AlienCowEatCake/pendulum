@@ -7,5 +7,6 @@
         <file>license_ru.html</file>
         <file>license_en.html</file>
         <file>manual_ru.html</file>
+        <file>manual_en.html</file>
     </qresource>
 </RCC>
