@@ -221,10 +221,18 @@ void MainWindow::updateTranslations(QString language)
         it->second->setChecked(it->first == language);
 
     // У кнопки старт/пауза текст зависит от состояния
-    if(m_physicalController->currentState() == PhysicalController::SimulationRunning)
-        m_ui->pushButtonStart->setText(tr("Stop"));
-    else
+    switch(m_physicalController->currentState())
+    {
+    case PhysicalController::SimulationNotRunning:
         m_ui->pushButtonStart->setText(tr("Start"));
+        break;
+    case PhysicalController::SimulationRunning:
+        m_ui->pushButtonStart->setText(tr("Pause"));
+        break;
+    case PhysicalController::SimulationPaused:
+        m_ui->pushButtonStart->setText(tr("Resume"));
+        break;
+    }
 
     // Перегрузим ресурсы в окнах
     setWindowTitle(tr("Mass Spring Damper System"));
@@ -276,15 +284,15 @@ void MainWindow::on_pushButtonStart_clicked()
         m_ui->horizontalSliderDisplacement->setEnabled(false);
         m_ui->horizontalSliderSpringConstant->setEnabled(false);
         m_ui->horizontalSliderDamping->setEnabled(false);
-        m_ui->pushButtonStart->setText(tr("Stop"));
+        m_ui->pushButtonStart->setText(tr("Pause"));
         m_physicalController->startSimulation();
         break;
     case PhysicalController::SimulationPaused:
-        m_ui->pushButtonStart->setText(tr("Stop"));
+        m_ui->pushButtonStart->setText(tr("Pause"));
         m_physicalController->resumeSimulation();
         break;
     case PhysicalController::SimulationRunning:
-        m_ui->pushButtonStart->setText(tr("Start"));
+        m_ui->pushButtonStart->setText(tr("Resume"));
         m_physicalController->pauseSimulation();
         break;
     }
