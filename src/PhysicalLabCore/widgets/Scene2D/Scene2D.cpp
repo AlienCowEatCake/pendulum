@@ -28,7 +28,7 @@
 #include <QString>
 
 Scene2D::Scene2D(bool haveNegativeY, QWidget* parent)
-    : QWidget(parent), m_haveNegativeY(haveNegativeY)
+    : QWidget(parent), m_haveNegativeY(haveNegativeY), m_settings(QString::fromLatin1("Scene2D"))
 {
     // Мин/макс значения рисуемой области в локальных координатах
     m_minX_local = 0.0f;
@@ -38,9 +38,6 @@ Scene2D::Scene2D(bool haveNegativeY, QWidget* parent)
     // Локальный размер рисуемой области без учета осей, подписей и прочего
     m_sizeX_local = m_maxX_local - m_minX_local;
     m_sizeY_local = m_maxY_local - m_minY_local;
-
-    // Группа настроек для графиков
-    m_settings.beginGroup(QString::fromLatin1("Scene2D"));
 }
 
 // Подгонка минимальных/максимальных значений и числа линий, для нормальной рисовки сетки
@@ -99,6 +96,17 @@ QPoint Scene2D::toWindow(float x, float y) const
     int xl = static_cast<int>((x - gl_x0) / gl_hx * static_cast<float>(width()));
     int yl = height() - static_cast<int>((y - gl_y0) / gl_hy * static_cast<float>(height()));
     return QPoint(xl, yl);
+}
+
+/// @brief settings - Получить SettingsWrapper
+SettingsWrapper & Scene2D::settings()
+{
+    return m_settings;
+}
+
+const SettingsWrapper & Scene2D::settings() const
+{
+    return m_settings;
 }
 
 /// @brief paintEvent - Событие рисования
@@ -268,116 +276,102 @@ void Scene2D::setLabelY(const QString &labelY)
     m_labelY = labelY;
 }
 
-// Функция для записи в настройки графиков
-void Scene2D::saveSetting(const QString &name, const QVariant &value)
-{
-    m_settings.setValue(name, value);
-    m_settings.sync();
-}
-
 /// @brief setGridBigColor - Установить цвет основных линий сетки
 void Scene2D::setGridBigColor(const QColor &color)
 {
-    saveSetting(QString::fromLatin1("GridBigColor"), color);
+    m_settings.setValue(QString::fromLatin1("GridBigColor"), color);
 }
 
 /// @brief setGridSmallColor - Установить цвет дополнительных линий сетки
 void Scene2D::setGridSmallColor(const QColor &color)
 {
-    saveSetting(QString::fromLatin1("GridSmallColor"), color);
+    m_settings.setValue(QString::fromLatin1("GridSmallColor"), color);
 }
 
 /// @brief setAxisColor - Установить цвет осей
 void Scene2D::setAxisColor(const QColor &color)
 {
-    saveSetting(QString::fromLatin1("AxisColor"), color);
+    m_settings.setValue(QString::fromLatin1("AxisColor"), color);
 }
 
 /// @brief setPlotColor - Установить цвет графика
 void Scene2D::setPlotColor(const QColor &color)
 {
-    saveSetting(QString::fromLatin1("PlotColor"), color);
+    m_settings.setValue(QString::fromLatin1("PlotColor"), color);
 }
 
 /// @brief setGridSmallWidth - Установить толщину основных линий сетки
 void Scene2D::setGridSmallWidth(qreal width)
 {
-    saveSetting(QString::fromLatin1("GridSmallWidth"), width);
+    m_settings.setValue(QString::fromLatin1("GridSmallWidth"), width);
 }
 
 /// @brief setGridBigWidth - Установить толщину дополнительных линий сетки
 void Scene2D::setGridBigWidth(qreal width)
 {
-    saveSetting(QString::fromLatin1("GridBigWidth"), width);
+    m_settings.setValue(QString::fromLatin1("GridBigWidth"), width);
 }
 
 /// @brief setAxisWidth - Установить толщину осей
 void Scene2D::setAxisWidth(qreal width)
 {
-    saveSetting(QString::fromLatin1("AxisWidth"), width);
+    m_settings.setValue(QString::fromLatin1("AxisWidth"), width);
 }
 
 /// @brief setPlotWidth - Установить толщину графика
 void Scene2D::setPlotWidth(qreal width)
 {
-    saveSetting(QString::fromLatin1("PlotWidth"), width);
-}
-
-// Функция для чтения из настроек графиков
-QVariant Scene2D::loadSetting(const QString &name, const QVariant &defaultValue)
-{
-    m_settings.sync();
-    return m_settings.value(name, defaultValue);
+    m_settings.setValue(QString::fromLatin1("PlotWidth"), width);
 }
 
 /// @brief gridBigColor - Получить цвет основных линий сетки
 QColor Scene2D::gridBigColor()
 {
     static QColor defaultValue(Qt::gray);
-    return loadSetting(QString::fromLatin1("GridBigColor"), defaultValue).value<QColor>();
+    return m_settings.value(QString::fromLatin1("GridBigColor"), defaultValue).value<QColor>();
 }
 
 /// @brief gridSmallColor - Получить цвет дополнительных линий сетки
 QColor Scene2D::gridSmallColor()
 {
     static QColor defaultValue(Qt::lightGray);
-    return loadSetting(QString::fromLatin1("GridSmallColor"), defaultValue).value<QColor>();
+    return m_settings.value(QString::fromLatin1("GridSmallColor"), defaultValue).value<QColor>();
 }
 
 /// @brief axisColor - Получить цвет осей
 QColor Scene2D::axisColor()
 {
     static QColor defaultValue(Qt::black);
-    return loadSetting(QString::fromLatin1("AxisColor"), defaultValue).value<QColor>();
+    return m_settings.value(QString::fromLatin1("AxisColor"), defaultValue).value<QColor>();
 }
 
 /// @brief plotColor - Получить цвет графика
 QColor Scene2D::plotColor()
 {
     static QColor defaultValue(Qt::darkRed);
-    return loadSetting(QString::fromLatin1("PlotColor"), defaultValue).value<QColor>();
+    return m_settings.value(QString::fromLatin1("PlotColor"), defaultValue).value<QColor>();
 }
 
 /// @brief gridSmallWidth - Получить толщину основных линий сетки
 qreal Scene2D::gridSmallWidth()
 {
-    return static_cast<qreal>(loadSetting(QString::fromLatin1("GridSmallWidth"), 1.0f).toDouble());
+    return static_cast<qreal>(m_settings.value(QString::fromLatin1("GridSmallWidth"), 1.0f).toDouble());
 }
 
 /// @brief gridBigWidth - Получить толщину дополнительных линий сетки
 qreal Scene2D::gridBigWidth()
 {
-    return static_cast<qreal>(loadSetting(QString::fromLatin1("GridBigWidth"), 1.5f).toDouble());
+    return static_cast<qreal>(m_settings.value(QString::fromLatin1("GridBigWidth"), 1.5f).toDouble());
 }
 
 /// @brief axisWidth - Получить толщину осей
 qreal Scene2D::axisWidth()
 {
-    return static_cast<qreal>(loadSetting(QString::fromLatin1("AxisWidth"), 3.0f).toDouble());
+    return static_cast<qreal>(m_settings.value(QString::fromLatin1("AxisWidth"), 3.0f).toDouble());
 }
 
 /// @brief plotWidth - Получить толщину графика
 qreal Scene2D::plotWidth()
 {
-    return static_cast<qreal>(loadSetting(QString::fromLatin1("PlotWidth"), 2.0f).toDouble());
+    return static_cast<qreal>(m_settings.value(QString::fromLatin1("PlotWidth"), 2.0f).toDouble());
 }

@@ -40,9 +40,16 @@ public:
 protected:
     void changeEvent(QEvent * event);
     void updateTitle();
+    void updateActions();
+
+private slots:
+    void onSetNumPeriodsTriggered();
 
 private:
-    int m_numT;
+    void setNumPerionds(int value);
+    int numPeriods() const;
+
+    QAction * m_actionSetNumPeriods;
     const PhysicalController * m_physicalController;
 };
 

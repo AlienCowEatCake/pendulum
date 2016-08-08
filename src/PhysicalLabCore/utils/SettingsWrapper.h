@@ -1,10 +1,10 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Mikhail Alexandrov  <alexandroff.m@gmail.com>
         Andrey Kurochkin    <andy-717@yandex.ru>
         Peter Zhigalov      <peter.zhigalov@gmail.com>
 
-   This file is part of the `pendulum' program.
+   This file is part of the `PhysicalLabCore' library.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,38 +20,30 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#if !defined (GRAPHWINDOWSPEED_H_INCLUDED)
-#define GRAPHWINDOWSPEED_H_INCLUDED
+#if !defined (PHYSICALLABCORE_SETTINGSWRAPPER_H_INCLUDED)
+#define PHYSICALLABCORE_SETTINGSWRAPPER_H_INCLUDED
 
-#include "widgets/GraphWindowAbstract/GraphWindowAbstract.h"
+#include <QMap>
+#include <QString>
+#include <QVariant>
+#include <QSettings>
 
-class PhysicalController;
-
-class GraphWindowSpeed : public GraphWindowAbstract
+/// @brief Класс-обертка над настройками, хранит в себе локальную копию настроек
+class SettingsWrapper
 {
-    Q_OBJECT
-    
 public:
-    explicit GraphWindowSpeed(QWidget * parent = NULL);
-    void update();
+    SettingsWrapper(const QString &settingsGroup = QString());
+    ~SettingsWrapper();
 
-    void setPhysicalController(const PhysicalController * physicalController);
-
-protected:
-    void changeEvent(QEvent * event);
-    void updateTitle();
-    void updateActions();
-
-private slots:
-    void onSetNumPeriodsTriggered();
+    void setValue(const QString &name, const QVariant &value);
+    QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
+    void saveAll();
+    void reloadAll();
 
 private:
-    void setNumPerionds(int value);
-    int numPeriods() const;
-
-    QAction * m_actionSetNumPeriods;
-    const PhysicalController * m_physicalController;
+    mutable QSettings m_settings;
+    mutable QMap<QString, QVariant> m_settingsCache;
 };
 
-#endif // GRAPHWINDOWSPEED_H_INCLUDED
+#endif // PHYSICALLABCORE_SETTINGSWRAPPER_H_INCLUDED
 

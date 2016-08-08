@@ -44,47 +44,47 @@
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="77"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="88"/>
         <source>Select Graph Color</source>
         <translation>Выберите цвет графика</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="92"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="104"/>
         <source>Width</source>
         <translation>Толщина</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="92"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="104"/>
         <source>Enter Graph Width:</source>
         <translation>Укажите толщину графика:</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="124"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="137"/>
         <source>Images</source>
         <translation>Изображения</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="127"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="140"/>
         <source>All Images</source>
         <translation>Все изображения</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="133"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="146"/>
         <source>Graph</source>
         <translation>График</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="136"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="149"/>
         <source>Save Image File</source>
         <translation>Сохранить изображение</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="164"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="177"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="164"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="177"/>
         <source>Error: Can&apos;t save file</source>
         <translation>Ошибка: Не удалось сохранить файл</translation>
     </message>
@@ -92,19 +92,34 @@
 <context>
     <name>GraphWindowDisplacement</name>
     <message>
-        <location filename="../../GraphWindowDisplacement.cpp" line="93"/>
+        <location filename="../../GraphWindowDisplacement.cpp" line="114"/>
+        <source>Number of &amp;Periods...</source>
+        <translation>Количество &amp;периодов...</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowDisplacement.cpp" line="109"/>
         <source>Displacement</source>
         <translation>Смещение</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowDisplacement.cpp" line="93"/>
+        <location filename="../../GraphWindowDisplacement.cpp" line="109"/>
         <source>t, s</source>
         <translation>t, c</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowDisplacement.cpp" line="93"/>
+        <location filename="../../GraphWindowDisplacement.cpp" line="109"/>
         <source>x, m</source>
         <translation>x, м</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowDisplacement.cpp" line="120"/>
+        <source>Number of Periods</source>
+        <translation>Количество периодов</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowDisplacement.cpp" line="120"/>
+        <source>Enter Number of Periods:</source>
+        <translation>Введите количество периодов:</translation>
     </message>
 </context>
 <context>
@@ -128,19 +143,34 @@
 <context>
     <name>GraphWindowSpeed</name>
     <message>
-        <location filename="../../GraphWindowSpeed.cpp" line="102"/>
+        <location filename="../../GraphWindowSpeed.cpp" line="117"/>
         <source>Speed</source>
         <translation>Скорость</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowSpeed.cpp" line="102"/>
+        <location filename="../../GraphWindowSpeed.cpp" line="117"/>
         <source>t, s</source>
         <translation>t, c</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowSpeed.cpp" line="102"/>
+        <location filename="../../GraphWindowSpeed.cpp" line="117"/>
         <source>v, m/s</source>
         <translation>v, м/с</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowSpeed.cpp" line="122"/>
+        <source>Number of &amp;Periods...</source>
+        <translation>Количество &amp;периодов...</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowSpeed.cpp" line="128"/>
+        <source>Number of Periods</source>
+        <translation>Количество периодов</translation>
+    </message>
+    <message>
+        <location filename="../../GraphWindowSpeed.cpp" line="128"/>
+        <source>Enter Number of Periods:</source>
+        <translation>Введите количество периодов:</translation>
     </message>
 </context>
 <context>
@@ -321,9 +351,9 @@
 <context>
     <name>Scene2D</name>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="169"/>
-        <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="171"/>
-        <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="173"/>
+        <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="177"/>
+        <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="179"/>
+        <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="181"/>
         <source>Times</source>
         <translation>Times</translation>
     </message>

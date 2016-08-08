@@ -68,6 +68,17 @@ void GraphWindowAbstract::setLabels(const QString & title, const QString & label
     update();
 }
 
+/// @brief settings - Получить SettingsWrapper
+SettingsWrapper & GraphWindowAbstract::settings()
+{
+    return m_scene2D->settings();
+}
+
+const SettingsWrapper & GraphWindowAbstract::settings() const
+{
+    return m_scene2D->settings();
+}
+
 /// @brief on_actionGraphColor_triggered - Слот на событие изменения цвета графика
 void GraphWindowAbstract::on_actionGraphColor_triggered()
 {
@@ -80,6 +91,7 @@ void GraphWindowAbstract::on_actionGraphColor_triggered()
     if(newColor.isValid() && newColor != oldColor)
     {
         m_scene2D->setPlotColor(newColor);
+        m_scene2D->settings().saveAll();
         emit settingsChanged();
     }
 }
@@ -94,6 +106,7 @@ void GraphWindowAbstract::on_actionGraphWidth_triggered()
     if(ok && std::fabs(oldValue - newValue) > 1e-5)
     {
         m_scene2D->setPlotWidth(newValue);
+        m_scene2D->settings().saveAll();
         emit settingsChanged();
     }
 }
@@ -167,7 +180,8 @@ void GraphWindowAbstract::on_actionSaveGraphFile_triggered()
 /// @brief onSettingsChanged - Слот на изменение настроек
 void GraphWindowAbstract::onSettingsChanged()
 {
-    repaint();
+    m_scene2D->settings().reloadAll();
+    update();
 }
 
 /// @brief arrX - Получить ссылку на вектор из значений по оси абсцисс
@@ -210,6 +224,12 @@ float GraphWindowAbstract::scaleX() const
 float GraphWindowAbstract::scaleY() const
 {
     return m_scene2D->scaleY();
+}
+
+/// @brief settingsMenu - Получить меню с настройками окна для возможности добавления новых настроек
+QMenu * GraphWindowAbstract::settingsMenu() const
+{
+    return m_ui->menuSettings;
 }
 
 /// @brief changeEvent - событие при изменении чего-либо (например, языка)

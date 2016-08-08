@@ -24,12 +24,23 @@
 
 #include <cmath>
 #include <QEvent>
+#include <QAction>
+#include <QMenu>
+#include <QInputDialog>
+#include "utils/SettingsWrapper.h"
 #include "PhysicalController.h"
 
 GraphWindowDisplacement::GraphWindowDisplacement(QWidget * parent) :
     GraphWindowAbstract(true, parent), m_physicalController(NULL)
 {
-    m_numT = 3;
+    setNumPerionds(3);
+    m_actionSetNumPeriods = new QAction(this);
+    connect(m_actionSetNumPeriods, SIGNAL(triggered()), this, SLOT(onSetNumPeriodsTriggered()));
+    QAction * oldFirstAction = settingsMenu()->actions().first();
+    settingsMenu()->insertAction(oldFirstAction, m_actionSetNumPeriods);
+    settingsMenu()->insertSeparator(oldFirstAction);
+    updateActions();
+    updateTitle();
 }
 
 void GraphWindowDisplacement::setPhysicalController(const PhysicalController * physicalController)
@@ -58,19 +69,21 @@ void GraphWindowDisplacement::update()
     }
     else
     {
+        int numT = numPeriods();
+
         double mactiont;
         if(action.get_w0() <= action.get_sigma())
-            mactiont = -std::log(std::fabs(0.0000001 / action.get_A0())) / (m_numT * action.get_sigma());
+            mactiont = -std::log(std::fabs(0.0000001 / action.get_A0())) / (numT * action.get_sigma());
         else
             mactiont = action.get_T();
 
         float maxoffset = static_cast<float>(std::fabs(action.get_A0()));
-        resizeGraph(0.0f, static_cast<float>(mactiont) * static_cast<float>(m_numT), -maxoffset, maxoffset);
+        resizeGraph(0.0f, static_cast<float>(mactiont) * static_cast<float>(numT), -maxoffset, maxoffset);
 
         action.InitBall();
 
         double di = mactiont / 50.0 * 1000.0;
-        for(double i = 0.0; i <= mactiont * m_numT * 1000.0; i += di)
+        for(double i = 0.0; i <= mactiont * numT * 1000.0; i += di)
         {
             action.Refresh(i);
             arrX.push_back(static_cast<float>(i / 1000.0) * scaleX());
@@ -85,11 +98,40 @@ void GraphWindowDisplacement::changeEvent(QEvent * event)
 {
     GraphWindowAbstract::changeEvent(event);
     if(event->type() == QEvent::LanguageChange)
+    {
         updateTitle();
+        updateActions();
+    }
 }
 
 void GraphWindowDisplacement::updateTitle()
 {
     setLabels(tr("Displacement"), tr("t, s"), tr("x, m"));
+}
+
+void GraphWindowDisplacement::updateActions()
+{
+    m_actionSetNumPeriods->setText(tr("Number of &Periods..."));
+}
+
+void GraphWindowDisplacement::onSetNumPeriodsTriggered()
+{
+    bool ok = false;
+    int value = QInputDialog::getInt(this, tr("Number of Periods"), tr("Enter Number of Periods:"), numPeriods(), 1, 1999, 1, &ok);
+    if(ok)
+    {
+        setNumPerionds(value);
+        emit settingsChanged();
+    }
+}
+
+void GraphWindowDisplacement::setNumPerionds(int value)
+{
+    settings().setValue(QString::fromLatin1("NumT"), value);
+}
+
+int GraphWindowDisplacement::numPeriods() const
+{
+    return settings().value(QString::fromLatin1("NumT"), 3).toInt();
 }
 

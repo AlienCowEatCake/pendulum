@@ -31,6 +31,7 @@ class GraphWindowAbstract;
 }
 
 class Scene2D;
+class SettingsWrapper;
 
 /// @brief Абстрактный класс окно с виджетом для отрисовки графика
 /// @note Потомок должен определить метод update(), в котором нужно заполнить arrX и arrY
@@ -47,6 +48,9 @@ public:
     void clear();
     /// @brief setLabels - Установка заголовка окна и подписей осей
     void setLabels(const QString & title, const QString & labelX, const QString & labelY);
+    /// @brief settings - Получить SettingsWrapper
+    SettingsWrapper & settings();
+    const SettingsWrapper & settings() const;
 
 private slots:
     /// @brief on_actionGraphColor_triggered - Слот на событие изменения цвета графика
@@ -80,6 +84,9 @@ protected:
     float scaleX() const;
     /// @brief scaleY - Получить коэффициент масштабирования по оси Y
     float scaleY() const;
+
+    /// @brief settingsMenu - Получить меню с настройками окна для возможности добавления новых настроек
+    QMenu * settingsMenu() const;
 
     /// @brief changeEvent - событие при изменении чего-либо (например, языка)
     void changeEvent(QEvent *event);
