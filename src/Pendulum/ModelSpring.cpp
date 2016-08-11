@@ -1,8 +1,8 @@
 /*
    Copyright (C) 2011-2016,
-        Mikhail Alexandrov  <alexandroff.m@gmail.com>
-        Andrey Kurochkin    <andy-717@yandex.ru>
-        Peter Zhigalov      <peter.zhigalov@gmail.com>
+        Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
+        Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
+        Peter S. Zhigalov       <peter.zhigalov@gmail.com>
 
    This file is part of the `pendulum' program.
 
