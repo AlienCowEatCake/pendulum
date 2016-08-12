@@ -21,6 +21,7 @@
 */
 
 #include "SettingsWrapper.h"
+#include <QStringList>
 
 SettingsWrapper::SettingsWrapper(const QString &settingsGroup)
 {

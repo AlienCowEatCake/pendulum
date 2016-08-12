@@ -125,7 +125,13 @@ void GraphWindowSpeed::updateActions()
 void GraphWindowSpeed::onSetNumPeriodsTriggered()
 {
     bool ok = false;
-    int value = QInputDialog::getInt(this, tr("Number of Periods"), tr("Enter Number of Periods:"), numPeriods(), 1, 1999, 1, &ok);
+    int value =
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
+            QInputDialog::getInt
+#else
+            QInputDialog::getInteger
+#endif
+            (this, tr("Number of Periods"), tr("Enter Number of Periods:"), numPeriods(), 1, 1999, 1, &ok);
     if(ok)
     {
         setNumPerionds(value);
