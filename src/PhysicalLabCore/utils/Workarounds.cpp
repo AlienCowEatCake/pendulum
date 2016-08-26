@@ -108,6 +108,12 @@ void HighDPIFix()
     if(!getenv("QT_DEVICE_PIXEL_RATIO"))
         putenv(newEnv);
 #endif
+
+    // Qt::AA_UseHighDpiPixmaps доступен и в более ранних версиях,
+    // однако без поддержки HighDPI его применение нецелесообразно
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
 }
 
 } // Workarounds

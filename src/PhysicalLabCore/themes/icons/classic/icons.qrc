@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/icons/classic">
+        <file alias="about.png">stock_about.png</file>
+        <file alias="authors.png">stock_people.png</file>
+        <file alias="text.png">gnome-mime-application-x-applix-word.png</file>
+        <file alias="help.png">stock_help-book.png</file>
+        <file alias="save.png">stock_save.png</file>
+        <file alias="save-as.png">stock_save-as.png</file>
+        <file alias="close.png">stock_close.png</file>
+        <file alias="exit.png">stock_exit.png</file>
+        <file>qt.png</file>
+    </qresource>
+</RCC>

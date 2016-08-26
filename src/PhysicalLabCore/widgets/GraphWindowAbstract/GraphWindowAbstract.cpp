@@ -35,6 +35,7 @@
 #include <QMessageBox>
 
 #include "widgets/Scene2D/Scene2D.h"
+#include "themes/ThemeUtils.h"
 
 GraphWindowAbstract::GraphWindowAbstract(bool haveNegativeY, QWidget *parent)
     : QMainWindow(parent),
@@ -45,6 +46,9 @@ GraphWindowAbstract::GraphWindowAbstract(bool haveNegativeY, QWidget *parent)
     setCentralWidget(m_scene2D);
     connect(this, SIGNAL(settingsChanged()), this, SLOT(onSettingsChanged()));
     connect(m_ui->actionClose, SIGNAL(triggered()), this, SLOT(close()));
+    bool darkBackground = ThemeUtils::MenuHasDarkTheme(m_ui->menuFile);
+    m_ui->actionSaveGraphFile->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_SAVE_AS, darkBackground));
+    m_ui->actionClose->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_CLOSE, darkBackground));
 }
 
 GraphWindowAbstract::~GraphWindowAbstract()

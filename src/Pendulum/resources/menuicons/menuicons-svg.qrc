@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/menuicons">
+        <file>energy_black.svg</file>
+        <file>energy_white.svg</file>
+        <file>displacement_black.svg</file>
+        <file>displacement_white.svg</file>
+        <file>speed_black.svg</file>
+        <file>speed_white.svg</file>
+    </qresource>
+</RCC>
