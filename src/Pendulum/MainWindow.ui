@@ -31,7 +31,7 @@
      <string>&amp;Graphs</string>
     </property>
     <addaction name="actionSpeed"/>
-    <addaction name="actionOffset"/>
+    <addaction name="actionDisplacement"/>
     <addaction name="actionEnergy"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -430,65 +430,62 @@
    </widget>
   </widget>
   <action name="actionSpeed">
-   <property name="icon">
-    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/speed.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Speed</string>
    </property>
-  </action>
-  <action name="actionOffset">
-   <property name="icon">
-    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/position.png</iconset>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
+  </action>
+  <action name="actionDisplacement">
    <property name="text">
     <string>&amp;Displacement</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionEnergy">
-   <property name="icon">
-    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/energy.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Energy</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionAbout">
-   <property name="icon">
-    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/about.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;About</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionAuthors">
-   <property name="icon">
-    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/people.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;Credits</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionManual">
-   <property name="icon">
-    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/manual.png</iconset>
-   </property>
    <property name="text">
     <string>User &amp;Manual</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionLicense">
-   <property name="icon">
-    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/license.png</iconset>
-   </property>
    <property name="text">
     <string>&amp;License</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionAboutQt">
-   <property name="icon">
-    <iconset resource="./resources/menuicons/menuicons.qrc">:/menuicons/qt.png</iconset>
-   </property>
    <property name="text">
     <string>About &amp;Qt</string>
    </property>
@@ -503,6 +500,9 @@
    <property name="text">
     <string>&amp;English</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionRussian">
    <property name="checkable">
@@ -510,6 +510,9 @@
    </property>
    <property name="text">
     <string>&amp;Russian</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>
@@ -533,8 +536,6 @@
   <tabstop>pushButtonStart</tabstop>
   <tabstop>pushButtonStop</tabstop>
  </tabstops>
- <resources>
-  <include location="./resources/menuicons/menuicons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

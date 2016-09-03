@@ -34,6 +34,7 @@
 
 #include "widgets/HtmlWindow/HtmlWindow.h"
 #include "widgets/SplashScreenWindow/SplashScreenWindow.h"
+#include "themes/ThemeUtils.h"
 #include "utils/Workarounds.h"
 #include "GraphWindowSpeed.h"
 #include "GraphWindowDisplacement.h"
@@ -67,15 +68,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
 
 #if defined (Q_OS_MAC)
-    // В Mac OS X картинок в меню быть не должно
-    QList<QAction*> allActions = findChildren<QAction*>();
-    for(QList<QAction*>::ConstIterator it = allActions.begin(); it != allActions.end(); ++it)
-    {
-        QAction * action = * it;
-        action->setIcon(QIcon());
-        if(action->menuRole() == QAction::TextHeuristicRole)
-            action->setMenuRole(QAction::NoRole);
-    }
     // Под Mac OS X из коробки выглядит настолько страшно, что приходится немного стилизовать
     QList<QGroupBox*> allGroupBoxes = findChildren<QGroupBox*>();
     for(QList<QGroupBox*>::ConstIterator it = allGroupBoxes.begin(); it != allGroupBoxes.end(); ++it)
@@ -155,7 +147,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Окно-заставка
     m_splashWindow = new SplashScreenWindow(this);
 
-#if defined(Q_OS_MAC)
+#if defined (Q_OS_MAC)
     // Диалог About, используемый в проекте, ни разу не подходит на роль того About, что есть обычно под OS X.
     // Поэтому сделаем для такого случая отдельный пункт меню, который будет выполнять роль About.
     QAction * fakeAboutAction = new QAction(this);
@@ -163,6 +155,31 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(fakeAboutAction, SIGNAL(triggered()), m_splashWindow, SLOT(show()));
     m_ui->menuHelp->addAction(fakeAboutAction);
 #endif
+
+    // Подгрузим иконки для меню
+    bool darkBackground = ThemeUtils::MenuHasDarkTheme(m_ui->menuGraphs);
+    const QString iconNameTemplate = QString::fromLatin1(":/menuicons/%2_%1.%3")
+            .arg(darkBackground ? QString::fromLatin1("white") : QString::fromLatin1("black"));
+#if defined (QT_SVG_LIB) && (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
+    const QString defaultExt = QString::fromLatin1("svg");
+#else
+    const QString defaultExt = QString::fromLatin1("png");
+#endif
+    const QString pixmapExt = QString::fromLatin1("png");
+    m_ui->actionEnergy->setIcon(ThemeUtils::CreateScalableIcon(
+        iconNameTemplate.arg(QString::fromLatin1("energy")).arg(defaultExt),
+        QStringList(iconNameTemplate.arg(QString::fromLatin1("energy")).arg(pixmapExt))));
+    m_ui->actionDisplacement->setIcon(ThemeUtils::CreateScalableIcon(
+        iconNameTemplate.arg(QString::fromLatin1("displacement")).arg(defaultExt),
+        QStringList(iconNameTemplate.arg(QString::fromLatin1("displacement")).arg(pixmapExt))));
+    m_ui->actionSpeed->setIcon(ThemeUtils::CreateScalableIcon(
+        iconNameTemplate.arg(QString::fromLatin1("speed")).arg(defaultExt),
+        QStringList(iconNameTemplate.arg(QString::fromLatin1("speed")).arg(pixmapExt))));
+    m_ui->actionAbout->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_ABOUT, darkBackground));
+    m_ui->actionAuthors->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_AUTHORS, darkBackground));
+    m_ui->actionManual->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_HELP, darkBackground));
+    m_ui->actionLicense->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_TEXT, darkBackground));
+    m_ui->actionAboutQt->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_QT, darkBackground));
 
     // Переводы и подгрузка ресурсов
     updateTranslations();
@@ -327,7 +344,7 @@ void MainWindow::on_actionSpeed_triggered()
 }
 
 /// @brief Слот на открытие графика смещения из меню
-void MainWindow::on_actionOffset_triggered()
+void MainWindow::on_actionDisplacement_triggered()
 {
     m_displacementWindow->setHidden(!m_displacementWindow->isHidden());
 }

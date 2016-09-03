@@ -56,7 +56,7 @@ private slots:
     /// @brief Слот на открытие графика скорости из меню
     void on_actionSpeed_triggered();
     /// @brief Слот на открытие графика смещения из меню
-    void on_actionOffset_triggered();
+    void on_actionDisplacement_triggered();
     /// @brief Слот на открытие графика энергии из меню
     void on_actionEnergy_triggered();
 

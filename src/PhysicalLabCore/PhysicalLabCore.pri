@@ -5,7 +5,7 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 CONFIG += object_with_source object_parallel_to_source no_batch warn_on
 
-QT += core gui opengl
+QT += core gui opengl svg
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
@@ -21,6 +21,14 @@ greaterThan(QT_MAJOR_VERSION, 4) {
             }
             DEFINES += USE_FORCE_GL
         }
+    }
+}
+
+win32 {
+    *g++*|*clang* {
+        QMAKE_LIBS += -lgdi32
+    } else {
+        QMAKE_LIBS += gdi32.lib
     }
 }
 
@@ -44,6 +52,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
 HEADERS += \
     $$files($$PWD/models/*.h) \
+    $$files($$PWD/themes/*.h) \
     $$files($$PWD/utils/*.h) \
     $$files($$PWD/widgets/GLWidgetImpl/*.h) \
     $$files($$PWD/widgets/GLWidgetImpl/native/*.h) \
@@ -55,6 +64,7 @@ HEADERS += \
 
 SOURCES += \
     $$files($$PWD/models/*.cpp) \
+    $$files($$PWD/themes/*.cpp) \
     $$files($$PWD/utils/*.cpp) \
     $$files($$PWD/widgets/GraphWindowAbstract/*.cpp) \
     $$files($$PWD/widgets/HtmlWindow/*.cpp) \
@@ -65,6 +75,9 @@ SOURCES += \
 FORMS += \
     $$files($$PWD/widgets/GraphWindowAbstract/*.ui) \
     $$files($$PWD/widgets/HtmlWindow/*.ui)
+
+RESOURCES += \
+    $$files($$PWD/themes/icons/*.qrc)
 
 use_swrast {
     QT -= opengl

@@ -55,9 +55,12 @@ int main(int argc, char *argv[])
     app.setApplicationVersion(QString::fromLatin1("1.0"));
 #if !defined (Q_OS_MAC)
     app.setWindowIcon(QIcon(QString::fromLatin1(":/icon/ball.ico")));
+#else
+    app.setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 #if defined (USE_FORCE_GL)
-    app.setAttribute(Qt::AA_UseDesktopOpenGL);
+     /// @todo
+//    app.setAttribute(Qt::AA_UseDesktopOpenGL);
 #endif
     // Костыль по мотивам QTBUG-30790, QTBUG-28872, QTBUG-28872
     app.setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
