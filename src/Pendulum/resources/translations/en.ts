@@ -330,52 +330,52 @@
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="387"/>
-        <location filename="../../MainWindow.cpp" line="248"/>
-        <location filename="../../MainWindow.cpp" line="338"/>
+        <location filename="../../MainWindow.cpp" line="249"/>
+        <location filename="../../MainWindow.cpp" line="339"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="251"/>
-        <location filename="../../MainWindow.cpp" line="311"/>
-        <location filename="../../MainWindow.cpp" line="315"/>
+        <location filename="../../MainWindow.cpp" line="252"/>
+        <location filename="../../MainWindow.cpp" line="312"/>
+        <location filename="../../MainWindow.cpp" line="316"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="254"/>
-        <location filename="../../MainWindow.cpp" line="319"/>
+        <location filename="../../MainWindow.cpp" line="255"/>
+        <location filename="../../MainWindow.cpp" line="320"/>
         <source>Resume</source>
         <translation>Resume</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="261"/>
+        <location filename="../../MainWindow.cpp" line="262"/>
         <source>About</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="263"/>
+        <location filename="../../MainWindow.cpp" line="264"/>
         <source>Credits</source>
         <translation>Credits</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="265"/>
+        <location filename="../../MainWindow.cpp" line="266"/>
         <source>User Manual</source>
         <translation>User Manual</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="267"/>
+        <location filename="../../MainWindow.cpp" line="268"/>
         <source>License</source>
         <translation>License</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="279"/>
+        <location filename="../../MainWindow.cpp" line="280"/>
         <source>Screenshot.png</source>
         <translation>Screenshot.png</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="259"/>
-        <location filename="../../MainWindow.cpp" line="273"/>
+        <location filename="../../MainWindow.cpp" line="260"/>
+        <location filename="../../MainWindow.cpp" line="274"/>
         <source>Mass Spring Damper System</source>
         <translation>Mass Spring Damper System</translation>
     </message>

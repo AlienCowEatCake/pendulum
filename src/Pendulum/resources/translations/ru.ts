@@ -330,53 +330,53 @@
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="387"/>
-        <location filename="../../MainWindow.cpp" line="248"/>
-        <location filename="../../MainWindow.cpp" line="338"/>
+        <location filename="../../MainWindow.cpp" line="249"/>
+        <location filename="../../MainWindow.cpp" line="339"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="251"/>
-        <location filename="../../MainWindow.cpp" line="311"/>
-        <location filename="../../MainWindow.cpp" line="315"/>
+        <location filename="../../MainWindow.cpp" line="252"/>
+        <location filename="../../MainWindow.cpp" line="312"/>
+        <location filename="../../MainWindow.cpp" line="316"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="254"/>
-        <location filename="../../MainWindow.cpp" line="319"/>
+        <location filename="../../MainWindow.cpp" line="255"/>
+        <location filename="../../MainWindow.cpp" line="320"/>
         <source>Resume</source>
         <translatorcomment>Вообще надо возобновить или продолжить, но кнопка слишком маленькой ширины</translatorcomment>
         <translation type="unfinished">Старт</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="261"/>
+        <location filename="../../MainWindow.cpp" line="262"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="263"/>
+        <location filename="../../MainWindow.cpp" line="264"/>
         <source>Credits</source>
         <translation>Разработчики</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="265"/>
+        <location filename="../../MainWindow.cpp" line="266"/>
         <source>User Manual</source>
         <translation>Руководство пользователя</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="267"/>
+        <location filename="../../MainWindow.cpp" line="268"/>
         <source>License</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="279"/>
+        <location filename="../../MainWindow.cpp" line="280"/>
         <source>Screenshot.png</source>
         <translation>Скриншот.png</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="259"/>
-        <location filename="../../MainWindow.cpp" line="273"/>
+        <location filename="../../MainWindow.cpp" line="260"/>
+        <location filename="../../MainWindow.cpp" line="274"/>
         <source>Mass Spring Damper System</source>
         <translation>Пружинный маятник в среде с сопротивлением</translation>
     </message>

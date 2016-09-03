@@ -81,9 +81,9 @@ RESOURCES += \
     src/Pendulum/resources/models/m_cyllinder.qrc \
     src/Pendulum/resources/html/help/help.qrc \
     src/Pendulum/resources/html/html.qrc \
-    src/Pendulum/resources/translations/translations.qrc \
     src/Pendulum/resources/menuicons/menuicons-png.qrc \
-    src/Pendulum/resources/menuicons/menuicons-svg.qrc
+    src/Pendulum/resources/menuicons/menuicons-svg.qrc \
+    src/Pendulum/resources/translations/translations.qrc
 
 lessThan(QT_VERSION, 5.4.0) {
     RESOURCES += \
