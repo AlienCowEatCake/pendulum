@@ -49,6 +49,12 @@ protected:
     void keyPressEvent(QKeyEvent *);
     /// @brief mousePressEvent - Реакция на нажатие мыши (закрытие)
     void mousePressEvent(QMouseEvent *);
+    /// @brief closeEvent - Перехват закрытия окна
+    void closeEvent(QCloseEvent *);
+
+private slots:
+    /// @brief tryFirstClose - Закрыть окно, если оно не было закрыто ранее
+    void tryFirstClose();
 
 private:
     /// @brief moveToCenter - Перемещение окна в центр экрана
@@ -58,6 +64,7 @@ private:
     void setGraphicsItem(QGraphicsItem * graphicsItem);
 
     QGraphicsItem * m_graphicsItem;
+    bool m_wasClosed;
 };
 
 #endif // PHYSICALLABCORE_SPLASHSCREENWINDOW_H_INCLUDED

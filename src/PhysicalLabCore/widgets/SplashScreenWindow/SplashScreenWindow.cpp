@@ -36,7 +36,7 @@
 #endif
 
 SplashScreenWindow::SplashScreenWindow(QWidget * parent) :
-    QGraphicsView(parent), m_graphicsItem(NULL)
+    QGraphicsView(parent), m_graphicsItem(NULL), m_wasClosed(false)
 {
     setScene(new QGraphicsScene(this));
     setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint |
@@ -48,7 +48,7 @@ SplashScreenWindow::SplashScreenWindow(QWidget * parent) :
     setWindowModality(Qt::ApplicationModal);
 
     // Закрываем через 10 секунд, если еще живы
-    QTimer::singleShot(10000, this, SLOT(close()));
+    QTimer::singleShot(10000, this, SLOT(tryFirstClose()));
     // Показываем при следующей обработке сообщений
     QTimer::singleShot(0, this, SLOT(show()));
 
@@ -117,6 +117,19 @@ void SplashScreenWindow::keyPressEvent(QKeyEvent *)
 void SplashScreenWindow::mousePressEvent(QMouseEvent *)
 {
     close();
+}
+
+/// @brief closeEvent - Перехват закрытия окна
+void SplashScreenWindow::closeEvent(QCloseEvent *)
+{
+    m_wasClosed = true;
+}
+
+/// @brief tryFirstClose - Закрыть окно, если оно не было закрыто ранее
+void SplashScreenWindow::tryFirstClose()
+{
+    if(!m_wasClosed)
+        close();
 }
 
 /// @brief moveToCenter - Перемещение окна в центр экрана
