@@ -238,6 +238,7 @@ void MainWindow::updateTranslations(QString language)
     Workarounds::FontsFix(language);
 
     // Пробежим по меню и проставим галочку на нужном нам языке и снимем с остальных
+    /// @todo Неудачное решение, стоит посмотреть в сторону QActionGroup::setExclusive
     for(QList<QPair<QString, QAction *> >::Iterator it = languagesMap.begin(); it != languagesMap.end(); ++it)
         it->second->setChecked(it->first == language);
 

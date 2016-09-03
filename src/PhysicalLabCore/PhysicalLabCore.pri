@@ -19,7 +19,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
             } else {
                 QMAKE_LIBS += opengl32.lib
             }
-            DEFINES += USE_FORCE_GL
         }
     }
 }

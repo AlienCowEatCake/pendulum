@@ -46,6 +46,9 @@ int main(int argc, char *argv[])
     QGLFormat fmt;
     fmt.setSampleBuffers(true);
     QGLFormat::setDefaultFormat(fmt);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 0))
+    QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
+#endif
 #endif
 
     QApplication app(argc, argv);
@@ -57,10 +60,6 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(QString::fromLatin1(":/icon/ball.ico")));
 #else
     app.setAttribute(Qt::AA_DontShowIconsInMenus);
-#endif
-#if defined (USE_FORCE_GL)
-     /// @todo
-//    app.setAttribute(Qt::AA_UseDesktopOpenGL);
 #endif
     // Костыль по мотивам QTBUG-30790, QTBUG-28872, QTBUG-28872
     app.setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);

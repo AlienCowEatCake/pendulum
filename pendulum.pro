@@ -87,7 +87,7 @@ RESOURCES += \
 
 lessThan(QT_VERSION, 5.4.0) {
     RESOURCES += \
-        src/Pendulum/resources/splash/splash-png.qrc \
+        src/Pendulum/resources/splash/splash-png.qrc
 } else {
     RESOURCES += \
         src/Pendulum/resources/splash/splash-svg.qrc
