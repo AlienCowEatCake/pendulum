@@ -53,7 +53,6 @@ win32 {
 HEADERS += \
     $$files($$PWD/models/*.h) \
     $$files($$PWD/themes/*.h) \
-    $$files($$PWD/themes/private/*.h) \
     $$files($$PWD/utils/*.h) \
     $$files($$PWD/widgets/GLWidgetImpl/*.h) \
     $$files($$PWD/widgets/GLWidgetImpl/native/*.h) \
@@ -66,7 +65,6 @@ HEADERS += \
 SOURCES += \
     $$files($$PWD/models/*.cpp) \
     $$files($$PWD/themes/*.cpp) \
-    $$files($$PWD/themes/private/*.cpp) \
     $$files($$PWD/utils/*.cpp) \
     $$files($$PWD/widgets/GraphWindowAbstract/*.cpp) \
     $$files($$PWD/widgets/HtmlWindow/*.cpp) \
@@ -79,8 +77,7 @@ FORMS += \
     $$files($$PWD/widgets/HtmlWindow/*.ui)
 
 RESOURCES += \
-    $$files($$PWD/themes/icons/classic/*.qrc) \
-    $$files($$PWD/themes/icons/modern/*.qrc)
+    $$files($$PWD/themes/icons/*.qrc)
 
 use_swrast {
     QT -= opengl

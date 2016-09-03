@@ -40,7 +40,7 @@ bool MenuHasDarkTheme(const QMenu * menu);
 /// @return Масштабируемая иконка
 QIcon CreateScalableIcon(const QString& defaultImagePath, const QStringList& scaledImagePaths);
 
-/// @brief Типы иконок, для которых написаны правила подстановки
+/// @brief Типы иконок
 enum IconTypes
 {
     ICON_QT,
@@ -57,20 +57,10 @@ enum IconTypes
     ICON_OPEN
 };
 
-/// @brief Темы иконок
-enum IconThemes
-{
-    THEME_SYSTEM,
-    THEME_QT,
-    THEME_CLASSIC,
-    THEME_MODERN
-};
-
 /// @brief Функция для получения иконки
 /// @param[in] type - Тип иконки (см. enum IconTypes)
 /// @param[in] darkBackground - true, если иконка располагается на темном фоне
-/// @param[in] theme - Тема иконки (см. enum IconThemes)
-QIcon GetIcon(IconTypes type, bool darkBackground = false, IconThemes theme = THEME_MODERN);
+QIcon GetIcon(IconTypes type, bool darkBackground = false);
 
 } // namespace ThemeUtils
 
