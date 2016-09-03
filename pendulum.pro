@@ -81,16 +81,16 @@ RESOURCES += \
     src/Pendulum/resources/models/m_cyllinder.qrc \
     src/Pendulum/resources/html/help/help.qrc \
     src/Pendulum/resources/html/html.qrc \
-    src/Pendulum/resources/translations/translations.qrc
+    src/Pendulum/resources/translations/translations.qrc \
+    src/Pendulum/resources/menuicons/menuicons-png.qrc \
+    src/Pendulum/resources/menuicons/menuicons-svg.qrc
 
 lessThan(QT_VERSION, 5.4.0) {
     RESOURCES += \
         src/Pendulum/resources/splash/splash-png.qrc \
-        src/Pendulum/resources/menuicons/menuicons-png.qrc
 } else {
     RESOURCES += \
-        src/Pendulum/resources/splash/splash-svg.qrc \
-        src/Pendulum/resources/menuicons/menuicons-svg.qrc
+        src/Pendulum/resources/splash/splash-svg.qrc
 }
 
 use_hipoly {

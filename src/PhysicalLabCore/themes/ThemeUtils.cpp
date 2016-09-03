@@ -22,6 +22,7 @@
 
 #include "ThemeUtils.h"
 #include <QPixmap>
+#include <QDebug>
 
 namespace ThemeUtils {
 
@@ -41,10 +42,18 @@ QIcon CreateScalableIcon(const QString& defaultImagePath, const QStringList& sca
     QIcon result(defaultImagePath);
     for(QStringList::ConstIterator it = scaledImagePaths.begin(); it != scaledImagePaths.end(); ++it)
     {
-        result.addPixmap(QPixmap(*it), QIcon::Normal);
-        result.addPixmap(QPixmap(*it), QIcon::Disabled);
-        result.addPixmap(QPixmap(*it), QIcon::Active);
-        result.addPixmap(QPixmap(*it), QIcon::Selected);
+        QPixmap pixmap(*it);
+        if(!pixmap.isNull())
+        {
+            result.addPixmap(QPixmap(*it), QIcon::Normal);
+            result.addPixmap(QPixmap(*it), QIcon::Disabled);
+            result.addPixmap(QPixmap(*it), QIcon::Active);
+            result.addPixmap(QPixmap(*it), QIcon::Selected);
+        }
+        else
+        {
+            qWarning() << "[ThemeUtils::CreateScalableIcon]: Unable to load pixmap" << *it;
+        }
     }
     return result;
 }
