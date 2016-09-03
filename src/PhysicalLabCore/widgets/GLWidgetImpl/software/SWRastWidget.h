@@ -67,6 +67,11 @@ public:
     /// @return Сконвертированное изображение
     static QImage convertToGLFormat(const QImage & img);
 
+    /// @brief grabFrameBuffer - Получить текущее изображение из буфера
+    /// @param[in] withAlpha - Параметр для совместимости с QGLWidget, игнорируется
+    /// @return Текущее изображение из буфера
+    QImage grabFrameBuffer(bool withAlpha = false);
+
     /// @brief getContext - Получить глобальный контекст
     static SWRastWidget * getContext();
 

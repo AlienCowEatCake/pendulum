@@ -36,10 +36,12 @@
 
 #include "widgets/Scene2D/Scene2D.h"
 #include "themes/ThemeUtils.h"
+#include "utils/ImageSaver.h"
 
 GraphWindowAbstract::GraphWindowAbstract(bool haveNegativeY, QWidget *parent)
     : QMainWindow(parent),
-      m_ui(new Ui::GraphWindowAbstract)
+      m_ui(new Ui::GraphWindowAbstract),
+      m_imageSaver(new ImageSaver(this))
 {
     m_ui->setupUi(this);
     m_scene2D = new Scene2D(haveNegativeY, m_ui->centralwidget);
@@ -118,67 +120,11 @@ void GraphWindowAbstract::on_actionGraphWidth_triggered()
 /// @brief on_actionSaveGraphFile_triggered - Слот на событие сохранения графика в файл
 void GraphWindowAbstract::on_actionSaveGraphFile_triggered()
 {
-    // Белый список форматов, чтобы в предлагаемых форматах не было всяких ico, webp и прочих
-    static QStringList whiteList = QStringList()
-            << QString::fromLatin1("bmp")
-            << QString::fromLatin1("jpg")
-            << QString::fromLatin1("jpeg")
-            << QString::fromLatin1("png")
-            << QString::fromLatin1("tif")
-            << QString::fromLatin1("tiff");
-
-    QList<QByteArray> supported = QImageWriter::supportedImageFormats();
-    QString formats, formatsAll;
-    for(QList<QByteArray>::iterator it = supported.begin(); it != supported.end(); ++it)
-    {
-        *it = (*it).toLower();
-        QString format = QString::fromLatin1(*it);
-        if(!whiteList.contains(format, Qt::CaseInsensitive))
-            continue;
-        formatsAll.append(formatsAll.length() > 0 ? QString::fromLatin1(" *.") : QString::fromLatin1("*.")).append(format);
-        if(formats.length() > 0)
-            formats.append(QString::fromLatin1(";;"));
-        formats.append(format.toUpper()).append(QString::fromLatin1(" ")).append(tr("Images"))
-               .append(QString::fromLatin1(" (*.")).append(format).append(QString::fromLatin1(")"));
-    }
-    formatsAll.prepend(tr("All Images").append(QString::fromLatin1(" ("))).append(QString::fromLatin1(");;"));
-    formats.prepend(formatsAll);
-
-    const QByteArray extensionDefault("png");
-    if(m_lastSaved.isEmpty())
-    {
-        QString title = (windowTitle().isEmpty() ? tr("Graph") : windowTitle());
-        m_lastSaved = title.append(QString::fromLatin1(".")).append(QString::fromLatin1(extensionDefault));
-    }
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image File"), m_lastSaved, formats);
-    if(filename.length() == 0) return;
-
-    QByteArray extension;
-    int found = filename.lastIndexOf(QChar::fromLatin1('.'));
-    if(found == -1)
-    {
-        filename.append(QString::fromLatin1(".")).append(QString::fromLatin1(extensionDefault));
-        extension = extensionDefault;
-    }
-    else
-    {
-        extension = filename.right(filename.length() - found - 1).toLower().toLocal8Bit();
-        if(std::find(supported.begin(), supported.end(), extension) == supported.end())
-        {
-            filename.append(QString::fromLatin1(".")).append(QString::fromLatin1(extensionDefault));
-            extension = extensionDefault;
-        }
-    }
-    m_lastSaved = filename;
-
-    bool saved = false;
-
+    QString title = (windowTitle().isEmpty() ? tr("Graph") : windowTitle());
+    m_imageSaver->setDefaultName(title.append(QString::fromLatin1(".png")));
     QImage image(m_scene2D->width(), m_scene2D->height(), QImage::Format_ARGB32_Premultiplied);
     m_scene2D->drawGraph(& image);
-    saved = image.save(filename);
-
-    if(!saved)
-        QMessageBox::critical(this, tr("Error"), tr("Error: Can't save file"), QMessageBox::Ok, QMessageBox::Ok);
+    m_imageSaver->save(image);
 }
 
 /// @brief onSettingsChanged - Слот на изменение настроек

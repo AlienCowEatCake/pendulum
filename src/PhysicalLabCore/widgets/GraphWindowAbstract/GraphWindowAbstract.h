@@ -32,6 +32,7 @@ class GraphWindowAbstract;
 
 class Scene2D;
 class SettingsWrapper;
+class ImageSaver;
 
 /// @brief Абстрактный класс окно с виджетом для отрисовки графика
 /// @note Потомок должен определить метод update(), в котором нужно заполнить arrX и arrY
@@ -96,7 +97,7 @@ private:
 
     Scene2D * m_scene2D;
     
-    QString m_lastSaved;
+    ImageSaver * m_imageSaver;
 };
 
 #endif // PHYSICALLABCORE_GRAPHWINDOWABSTRACT_H_INCLUDED

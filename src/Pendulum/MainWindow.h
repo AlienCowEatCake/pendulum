@@ -35,6 +35,7 @@ class GraphWindowSpeed;
 class GraphWindowDisplacement;
 class GraphWindowEnergy;
 class PhysicalController;
+class ImageSaver;
 
 class MainWindow : public QMainWindow
 {
@@ -73,6 +74,10 @@ private slots:
     /// @brief Слот на изменение ползунка качества картинки
     void on_horizontalSliderQuality_valueChanged(int value);
 
+    /// @brief Слот на запрос сохранения скриншота из меню
+    void on_actionSaveScreenshot_triggered();
+    /// @brief Слот на запрос выхода из меню
+    void on_actionExit_triggered();
     /// @brief Слот на открытие окна "О программе" из меню
     void on_actionAbout_triggered();
     /// @brief Слот на открытие окна "Разработчики" из меню
@@ -103,6 +108,8 @@ private:
     HtmlWindow *m_authorsWindow;
     HtmlWindow *m_manualWindow;
     HtmlWindow *m_licenseWindow;
+
+    ImageSaver *m_imageSaver;
 };
 
 #endif // MAINWINDOW_H_INCLUDED

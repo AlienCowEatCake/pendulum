@@ -229,6 +229,15 @@ QImage SWRastWidget::convertToGLFormat(const QImage & img)
     return img.convertToFormat(preferredFormat).mirrored(false, true);
 }
 
+/// @brief grabFrameBuffer - Получить текущее изображение из буфера
+/// @param[in] withAlpha - Параметр для совместимости с QGLWidget, игнорируется
+/// @return Текущее изображение из буфера
+QImage SWRastWidget::grabFrameBuffer(bool withAlpha)
+{
+    Q_UNUSED(withAlpha);
+    return m_buffer;
+}
+
 /// @brief getContext - Получить глобальный контекст
 SWRastWidget * SWRastWidget::getContext()
 {

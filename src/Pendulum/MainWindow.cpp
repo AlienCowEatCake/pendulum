@@ -36,6 +36,7 @@
 #include "widgets/SplashScreenWindow/SplashScreenWindow.h"
 #include "themes/ThemeUtils.h"
 #include "utils/Workarounds.h"
+#include "utils/ImageSaver.h"
 #include "GraphWindowSpeed.h"
 #include "GraphWindowDisplacement.h"
 #include "GraphWindowEnergy.h"
@@ -61,7 +62,8 @@ const int sliderSpeedDefaultPosition          = 100; ///< Ползунок ск�
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow),
-    m_physicalController(new PhysicalController(this))
+    m_physicalController(new PhysicalController(this)),
+    m_imageSaver(new ImageSaver(this))
 {
     m_ui->setupUi(this);
     setCentralWidget(m_ui->widget);
@@ -175,6 +177,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->actionSpeed->setIcon(ThemeUtils::CreateScalableIcon(
         iconNameTemplate.arg(QString::fromLatin1("speed")).arg(defaultExt),
         QStringList(iconNameTemplate.arg(QString::fromLatin1("speed")).arg(pixmapExt))));
+    m_ui->actionSaveScreenshot->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_SAVE_AS, darkBackground));
+    m_ui->actionExit->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_EXIT, darkBackground));
     m_ui->actionAbout->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_ABOUT, darkBackground));
     m_ui->actionAuthors->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_AUTHORS, darkBackground));
     m_ui->actionManual->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_HELP, darkBackground));
@@ -270,6 +274,9 @@ void MainWindow::updateTranslations(QString language)
 
     // Также следует пересчитать геометрию виждетов
     QApplication::postEvent(this, new QResizeEvent(size(), size()));
+
+    // Зададим дефолтное имя файла сохранялке скриншотов
+    m_imageSaver->setDefaultName(tr("Screenshot.png"));
 }
 
 MainWindow::~MainWindow()
@@ -421,6 +428,19 @@ void MainWindow::on_horizontalSliderSpeed_valueChanged(int value)
 void MainWindow::on_horizontalSliderQuality_valueChanged(int value)
 {
     m_physicalController->setTimerStep(value);
+}
+
+/// @brief Слот на запрос сохранения скриншота из меню
+void MainWindow::on_actionSaveScreenshot_triggered()
+{
+    QImage screenshot = m_ui->widget->grabFrameBuffer();
+    m_imageSaver->save(screenshot);
+}
+
+/// @brief Слот на запрос выхода из меню
+void MainWindow::on_actionExit_triggered()
+{
+    this->close();
 }
 
 /// @brief Слот на открытие окна "О программе" из меню
