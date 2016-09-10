@@ -81,7 +81,10 @@ RESOURCES += \
 use_swrast {
     QT -= opengl
     DEFINES += USE_SWRAST
-    SOURCES += $$files($$PWD/widgets/GLWidgetImpl/software/*.cpp)
-    HEADERS += $$files($$PWD/widgets/GLWidgetImpl/software/*.h)
+    HEADERS += \
+        $$files($$PWD/widgets/GLWidgetImpl/software/*.h) \
+        $$files($$PWD/widgets/GLWidgetImpl/software/private/*.h)
+    SOURCES += \
+        $$files($$PWD/widgets/GLWidgetImpl/software/private/*.cpp)
 }
 

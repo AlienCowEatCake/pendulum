@@ -25,50 +25,51 @@
 
 #include <cmath>
 #include <cstring>
-#include <cassert>
+#include "SWRastConfig.h"
 
-namespace SWRastInternal {
-
-/// @brief Тип числа с плавающей точкой
-typedef float       real_type;
-/// @brief Тип числа целого со знаком
-typedef int         int_type;
-/// @brief Тип индексов (memsize-тип)
-typedef std::size_t size_type;
-
+namespace SWRastPrivate {
 
 /// @brief Базовый класс вектора, от него потом отнаследуемся
 /// (это поможет обойти некоторые ограничения шаблонов)
-template <size_type D, typename T> class VectorBase
+template <Memsize D, typename T> class VectorBase
 {
 public:
     VectorBase()
     {
-        for(size_type i = 0; i < D; i++)
-            m_values[i] = T();
+//        for(Memsize i = 0; i < D; i++)
+//            m_values[i] = T();
+        memset(m_values, 0, sizeof(T) * D);
     }
-    T & operator [] (const size_type i)
+    T & operator [] (const Memsize i)
     {
-        assert(i < D);
+        SWRAST_RANGE_ASSERT(i < D);
         return m_values[i];
     }
-    const T & operator [] (const size_type i) const
+    const T & operator [] (const Memsize i) const
     {
-        assert(i < D);
+        SWRAST_RANGE_ASSERT(i < D);
         return m_values[i];
     }
-    real_type norm() const
+    Real norm() const
     {
-        real_type result = static_cast<real_type>(0);
-        for(size_type i = 0; i < D; i++)
+        Real result = static_cast<Real>(0);
+        for(Memsize i = 0; i < D; i++)
             result += m_values[i] * m_values[i];
-        return static_cast<real_type>(std::sqrt(result));
+        return static_cast<Real>(std::sqrt(result));
     }
     void normalize()
     {
-        real_type nr = static_cast<real_type>(1) / norm();
-        for(size_type i = 0; i < D; i++)
+        Real nr = static_cast<Real>(1) / norm();
+        for(Memsize i = 0; i < D; i++)
             m_values[i] = static_cast<T>(m_values[i] * nr);
+    }
+    const T * data() const
+    {
+        return m_values;
+    }
+    T * data()
+    {
+        return m_values;
     }
 protected:
     T m_values[D];
@@ -76,57 +77,57 @@ protected:
 
 /// @brief Фиктивный класс-наследник, в частично специализированных
 /// классах тоже, тогда будет доступно все то, что и в базовом классе
-template <size_type D, typename T> class Vector : public VectorBase<D, T>
+template <Memsize D, typename T> class Vector : public VectorBase<D, T>
 {
 public:
 };
 
 /// @brief Скалярное произведение векторов
-template<size_type D, typename T>
+template<Memsize D, typename T>
 T operator * (const Vector<D, T> & left, const Vector<D, T> & right)
 {
     T result = static_cast<T>(0);
-    for(size_type i = 0; i < D; i++)
+    for(Memsize i = 0; i < D; i++)
         result += left[i] * right[i];
     return result;
 }
 
 /// @brief Сложение векторов
-template<size_type D, typename T>
+template<Memsize D, typename T>
 Vector<D, T> operator + (const Vector<D, T> & left, const Vector<D, T> & right)
 {
     Vector<D, T> result;
-    for(size_type i = 0; i < D; i++)
+    for(Memsize i = 0; i < D; i++)
         result[i] = left[i] + right[i];
     return result;
 }
 
 /// @brief Вычитание векторов
-template<size_type D, typename T>
+template<Memsize D, typename T>
 Vector<D, T> operator - (const Vector<D, T> & left, const Vector<D, T> & right)
 {
     Vector<D, T> result;
-    for(size_type i = 0; i < D; i++)
+    for(Memsize i = 0; i < D; i++)
         result[i] = left[i] - right[i];
     return result;
 }
 
 /// @brief Умножение вектора на число
-template<size_type D, typename T, typename U>
+template<Memsize D, typename T, typename U>
 Vector<D, T> operator * (const Vector<D, T> & left, const U & right)
 {
     Vector<D, T> result;
-    for(size_type i = 0; i < D; i++)
+    for(Memsize i = 0; i < D; i++)
         result[i] += static_cast<T>(left[i] * right);
     return result;
 }
 
 /// @brief Деление вектора на число
-template<size_type D, typename T, typename U>
+template<Memsize D, typename T, typename U>
 Vector<D, T> operator / (const Vector<D, T> & left, const U & right)
 {
     Vector<D, T> result;
-    for(size_type i = 0; i < D; i++)
+    for(Memsize i = 0; i < D; i++)
         result[i] += static_cast<T>(left[i] / right);
     return result;
 }
@@ -139,136 +140,138 @@ Vector<3, T> cross(const Vector<3, T> & v1, const Vector<3, T> & v2)
 }
 
 /// @brief Копирование векторов различной длины с заполнением оставшихся компонент числом fill
-template<size_type U, size_type D, typename T>
+template<Memsize U, Memsize D, typename T>
 Vector<U, T> embed(const Vector<D, T> & v, T fill = static_cast<T>(1))
 {
     Vector<U, T> result;
-    for(size_type i = 0; i < D; i++)
-        result[i] = v[i];
-    for(size_type i = D; i < U; i++)
+//    for(Memsize i = 0; i < D; i++)
+//        result[i] = v[i];
+    memcpy(result.data(), v.data(), sizeof(T) * D);
+    for(Memsize i = D; i < U; i++)
         result[i] = fill;
     return result;
 }
 
 /// @brief Копирование векторов разной длины с отбрасыванием оставшихся компонент
-template<size_type U, size_type D, typename T>
+template<Memsize U, Memsize D, typename T>
 Vector<U, T> proj(const Vector<D, T> & v)
 {
     Vector<U, T> result;
-    for(size_type i = 0; i < U; i++)
-        result[i] = v[i];
+//    for(Memsize i = 0; i < U; i++)
+//        result[i] = v[i];
+    memcpy(result.data(), v.data(), sizeof(T) * U);
     return result;
 }
 
 /// @brief Двумерный вектор (вещественный)
-template<> class Vector<2, real_type> : public VectorBase<2, real_type>
+template<> class Vector<2, Real> : public VectorBase<2, Real>
 {
 public:
-    Vector(real_type x = 0.0f, real_type y = 0.0f)
+    Vector(Real x = static_cast<Real>(0), Real y = static_cast<Real>(0))
     {
         m_values[0] = x;
         m_values[1] = y;
     }
-    Vector(const Vector<2, real_type> & other) : VectorBase<2, real_type>(other)
+    Vector(const Vector<2, Real> & other) : VectorBase<2, Real>(other)
     {
-        for(size_type i = 0; i < 2; i++)
-            m_values[i] = other.m_values[i];
+//        for(Memsize i = 0; i < 2; i++)
+//            m_values[i] = other.m_values[i];
+        memcpy(m_values, other.m_values, sizeof(Real) * 2);
     }
     template<typename U>
     Vector(const Vector<2, U> & other)
     {
-        for(size_type i = 0; i < 2; i++)
-            m_values[i] = static_cast<real_type>(other[i]);
+        for(Memsize i = 0; i < 2; i++)
+            m_values[i] = static_cast<Real>(other[i]);
     }
 };
 
 /// @brief Двумерный вектор (целочисленный)
-template<> class Vector<2, int_type> : public VectorBase<2, int_type>
+template<> class Vector<2, Integer> : public VectorBase<2, Integer>
 {
 public:
-    Vector(int_type x = 0, int_type y = 0)
+    Vector(Integer x = static_cast<Integer>(0), Integer y = static_cast<Integer>(0))
     {
         m_values[0] = x;
         m_values[1] = y;
     }
-    Vector(const Vector<2, int_type> & other) : VectorBase<2, int_type>(other)
+    Vector(const Vector<2, Integer> & other) : VectorBase<2, Integer>(other)
     {
-        for(size_type i = 0; i < 2; i++)
-            m_values[i] = other.m_values[i];
+//        for(Memsize i = 0; i < 2; i++)
+//            m_values[i] = other.m_values[i];
+        memcpy(m_values, other.m_values, sizeof(Integer) * 2);
     }
-    Vector(const Vector<2, real_type> & other)
+    Vector(const Vector<2, Real> & other)
     {
-        for(size_type i = 0; i < 2; i++)
-            m_values[i] = static_cast<int_type>(other[i] + 0.5f);
+        for(Memsize i = 0; i < 2; i++)
+            m_values[i] = static_cast<Integer>(other[i] + static_cast<Real>(0.5f));
     }
 };
 
 /// @brief Трехмерный вектор (вещественный)
-template<> class Vector<3, real_type> : public VectorBase<3, real_type>
+template<> class Vector<3, Real> : public VectorBase<3, Real>
 {
 public:
-    Vector(real_type x = 0.0f, real_type y = 0.0f, real_type z = 0.0f)
+    Vector(Real x = static_cast<Real>(0), Real y = static_cast<Real>(0), Real z = static_cast<Real>(0))
     {
         m_values[0] = x;
         m_values[1] = y;
         m_values[2] = z;
     }
-    Vector(const Vector<3, real_type> & other) : VectorBase<3, real_type>(other)
+    Vector(const Vector<3, Real> & other) : VectorBase<3, Real>(other)
     {
-        for(size_type i = 0; i < 3; i++)
-            m_values[i] = other.m_values[i];
+//        for(Memsize i = 0; i < 3; i++)
+//            m_values[i] = other.m_values[i];
+        memcpy(m_values, other.m_values, sizeof(Real) * 3);
     }
     template<typename U>
     Vector(const Vector<3, U> & other)
     {
-        for(size_type i = 0; i < 3; i++)
-            m_values[i] = static_cast<real_type>(other[i]);
+        for(Memsize i = 0; i < 3; i++)
+            m_values[i] = static_cast<Real>(other[i]);
     }
-    Vector<3, real_type> & normalize()
+    Vector<3, Real> & normalize()
     {
-        real_type nr = static_cast<real_type>(1) / norm();
-        for(size_type i = 0; i < 3; i++)
-            m_values[i] *= static_cast<real_type>(nr);
+        VectorBase::normalize();
         return * this;
     }
 };
 
 /// @brief Трехмерный вектор (целочисленный)
-template<> class Vector<3, int_type> : public VectorBase<3, int_type>
+template<> class Vector<3, Integer> : public VectorBase<3, Integer>
 {
 public:
-    Vector(int_type x = 0, int_type y = 0, int_type z = 0)
+    Vector(Integer x = static_cast<Integer>(0), Integer y = static_cast<Integer>(0), Integer z = static_cast<Integer>(0))
     {
         m_values[0] = x;
         m_values[1] = y;
         m_values[2] = z;
     }
-    Vector(const Vector<3, int_type> & other) : VectorBase<3, int_type>(other)
+    Vector(const Vector<3, Integer> & other) : VectorBase<3, Integer>(other)
     {
-        for(size_type i = 0; i < 3; i++)
-            m_values[i] = other.m_values[i];
+//        for(Memsize i = 0; i < 3; i++)
+//            m_values[i] = other.m_values[i];
+        memcpy(m_values, other.m_values, sizeof(Integer) * 3);
     }
-    Vector(const Vector<3, real_type> & other)
+    Vector(const Vector<3, Real> & other)
     {
-        for(size_type i = 0; i < 3; i++)
-            m_values[i] = static_cast<int_type>(other[i] + 0.5f);
+        for(Memsize i = 0; i < 3; i++)
+            m_values[i] = static_cast<Integer>(other[i] + static_cast<Real>(0.5f));
     }
-    Vector<3, int_type> & normalize()
+    Vector<3, Integer> & normalize()
     {
-        real_type nr = static_cast<real_type>(1) / norm();
-        for(size_type i = 0; i < 3; i++)
-            m_values[i] = static_cast<int_type>(m_values[i] * nr);
+        VectorBase::normalize();
         return * this;
     }
 };
 
-typedef Vector<2, real_type> vec2f;
-typedef Vector<2, int_type>  vec2i;
-typedef Vector<3, real_type> vec3f;
-typedef Vector<3, int_type>  vec3i;
-typedef Vector<4, real_type> vec4f;
+typedef Vector<2, Real>     vec2f;
+typedef Vector<2, Integer>  vec2i;
+typedef Vector<3, Real>     vec3f;
+typedef Vector<3, Integer>  vec3i;
+typedef Vector<4, Real>     vec4f;
 
-} // SWRastInternal
+} // SWRastPrivate
 
 #endif // PHYSICALLABCORE_SWRASTVECTOR_H_INCLUDED
 

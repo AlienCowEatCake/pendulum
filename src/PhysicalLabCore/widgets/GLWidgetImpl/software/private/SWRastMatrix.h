@@ -25,49 +25,49 @@
 
 #include "SWRastVector.h"
 
-namespace SWRastInternal {
+namespace SWRastPrivate {
 
 /// @brief Класс матрицы
-template<size_type DR, size_type DC, typename T> class Matrix
+template<Memsize DR, Memsize DC, typename T> class Matrix
 {
 public:
-    Vector<DC, T> & operator [] (size_type i)
+    Vector<DC, T> & operator [] (Memsize i)
     {
-        assert(i < DR);
+        SWRAST_RANGE_ASSERT(i < DR);
         return m_values[i];
     }
-    const Vector<DC, T> & operator [] (size_type i) const
+    const Vector<DC, T> & operator [] (Memsize i) const
     {
-        assert(i < DR);
+        SWRAST_RANGE_ASSERT(i < DR);
         return m_values[i];
     }
-    Vector<DR, T> col(size_type i) const
+    Vector<DR, T> col(Memsize i) const
     {
-        assert(i < DC);
+        SWRAST_RANGE_ASSERT(i < DC);
         Vector<DR, T> result;
-        for(size_type j = 0; j < DR; j++)
+        for(Memsize j = 0; j < DR; j++)
             result[j] = m_values[j][i];
         return result;
     }
-    void set_col(size_type i, const Vector<DR, T> & v)
+    void set_col(Memsize i, const Vector<DR, T> & v)
     {
-        assert(i < DC);
-        for(size_type j = 0; j < DR; j++)
+        SWRAST_RANGE_ASSERT(i < DC);
+        for(Memsize j = 0; j < DR; j++)
             m_values[j][i] = v[j];
     }
     static Matrix<DR, DC, T> identity()
     {
         Matrix<DR, DC, T> result;
-        for(size_type i = 0; i < DR; i++)
-            for(size_type j = 0; j < DC; j++)
-                result[i][j] = (i == j);
+        for(Memsize i = 0; i < DR; i++)
+            for(Memsize j = 0; j < DC; j++)
+                result[i][j] = static_cast<T>(i == j);
         return result;
     }
     Matrix<DC, DR, T> transpose() const
     {
         Matrix<DC, DR, T> result;
-        for(size_type i = 0; i < DR; i++)
-            for(size_type j = 0; j < DC; j++)
+        for(Memsize i = 0; i < DR; i++)
+            for(Memsize j = 0; j < DC; j++)
                 result[j][i] = m_values[i][j];
         return result;
     }
@@ -76,34 +76,34 @@ public:
     Vector<DR, T> operator * (const Vector<DC, T> & other) const
     {
         Vector<DR, T> result;
-        for(size_type i = 0; i < DR; i++)
-            for(size_type j = 0; j < DC; j++)
+        for(Memsize i = 0; i < DR; i++)
+            for(Memsize j = 0; j < DC; j++)
                 result[i] += m_values[i][j] * other[j];
         return result;
     }
-    template<size_type U>
+    template<Memsize U>
     Matrix<DR, U, T> operator * (const Matrix<DC, U, T> & other) const
     {
         Matrix<DR, U, T> result;
-        for(size_type i = 0; i < DR; i++)
-            for(size_type j = 0; j < DC; j++)
-                for(size_type k = 0; k < U; k++)
+        for(Memsize i = 0; i < DR; i++)
+            for(Memsize j = 0; j < DC; j++)
+                for(Memsize k = 0; k < U; k++)
                     result[i][k] += m_values[i][j] * other[j][k];
         return result;
     }
     Matrix<DR, DC, T> operator * (const T other) const
     {
         Matrix<DR, DC, T> result;
-        for(size_type i = 0; i < DR; i++)
-            for(size_type j = 0; j < DC; j++)
+        for(Memsize i = 0; i < DR; i++)
+            for(Memsize j = 0; j < DC; j++)
                 result[i][j] *= other;
         return result;
     }
     Matrix<DR, DC, T> operator / (const T other) const
     {
         Matrix<DR, DC, T> result;
-        for(size_type i = 0; i < DR; i++)
-            for(size_type j = 0; j < DC; j++)
+        for(Memsize i = 0; i < DR; i++)
+            for(Memsize j = 0; j < DC; j++)
                 result[i][j] /= other;
         return result;
     }
@@ -229,23 +229,23 @@ Matrix<4, 4, T> inverse(const Matrix<4, 4, T> & A, T & detA)
 }
 
 /// @brief Вычисление определителя как метод матрицы
-template<size_type DR, size_type DC, typename T>
+template<Memsize DR, Memsize DC, typename T>
 T Matrix<DR, DC, T>::determenant() const
 {
-    return SWRastInternal::determenant(* this);
+    return SWRastPrivate::determenant(* this);
 }
 
 /// @brief Обращение матрицы как метод матрицы
-template<size_type DR, size_type DC, typename T>
+template<Memsize DR, Memsize DC, typename T>
 Matrix<DR, DC, T> Matrix<DR, DC, T>::inverse() const
 {
     T d;
-    return SWRastInternal::inverse(* this, d);
+    return SWRastPrivate::inverse(* this, d);
 }
 
-typedef Matrix<4, 4, real_type> matrix4f;
+typedef Matrix<4, 4, Real> matrix4f;
 
-} // SWRastInternal
+} // SWRastPrivate
 
 #endif // PHYSICALLABCORE_SWRASTMATRIX_H_INCLUDED
 

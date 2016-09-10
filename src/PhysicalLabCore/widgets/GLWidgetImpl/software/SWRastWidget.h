@@ -25,30 +25,14 @@
 
 #include <QWidget>
 #include <QPoint>
-#include <QPaintEngine>
-#include <QPaintDevice>
 #include <QColor>
-#include <QVector>
 #include <QResizeEvent>
 #include "GLDefines.h"
-#include "SWRastMatrix.h"
-
-#define SW_LIGHT_MAX 1
 
 /// @brief Класс виджет с софтверным растеризатором
 class SWRastWidget : public QWidget
 {
     Q_OBJECT
-
-public:
-    /// @brief Источник света
-    struct light
-    {
-        GLboolean is_enabled;
-        SWRastInternal::vec4f position;
-        GLfloat ambient[4];
-        GLfloat diffuse[4];
-    };
 
 public:
     SWRastWidget(QWidget * parent = 0);
@@ -84,36 +68,6 @@ protected:
     void paintEvent(QPaintEvent *);
     /// @brief Изменение размеров окна
     void resizeEvent(QResizeEvent * event);
-    /// @brief triangle - Отрисовка одного треугольника
-    /// @param[in] verts - Вершинные координаты
-    /// @param[in] texs - Текстурные координаты
-    /// @param[in] light_intensity - Интенсивность освещения
-    void triangle(const SWRastInternal::Matrix<4, 3, float> & verts,
-                  const SWRastInternal::Matrix<2, 3, float> & texs,
-                  const SWRastInternal::Matrix<3, 3, float> light_intensity);
-
-    light m_lights[SW_LIGHT_MAX];   ///< Источники света
-    light m_material;               ///< Материал
-
-    bool m_is_initialized;  ///< Инициализировано ли?
-    QImage m_buffer;        ///< Буфер изображения
-    QPainter m_painter;     ///< На чем рисуем в данный момент
-    QRgb m_background;      ///< Фоновый цвет
-
-    QVector<SWRastInternal::vec3f> m_vertex;    ///< Вектор из вершин
-    QVector<SWRastInternal::vec3f> m_normal;    ///< Вектор из нормалей
-    QVector<SWRastInternal::vec2f> m_texcoord;  ///< Вектор из координат в текстуре
-
-    GLenum m_currMatrixMode;                    ///< Текущий glMatrixMode
-    SWRastInternal::matrix4f m_sw_modelview;    ///< Текущий GL_MODELVIEW
-    SWRastInternal::matrix4f m_sw_viewport;     ///< Текущий glViewport
-    SWRastInternal::matrix4f m_sw_projection;   ///< Текущий GL_PROJECTION
-
-    QVector<float> m_zbuffer;   ///< z-буфер
-
-    static QVector<QImage> m_textures;  ///< Хранилище наших текстур
-    int m_current_texture;              ///< Текущая текстура
-    bool m_textures_enabled;            ///< Включены ли текстуры
 
 public:
     /// Аналоги OpenGL функций
@@ -136,9 +90,12 @@ public:
     void glScalef(GLfloat x, GLfloat y, GLfloat z);
     void glTranslatef(GLfloat x, GLfloat y, GLfloat z);
     void glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
-    void gluLookAt(GLdouble eyeX, GLdouble eyeY, GLdouble eyeZ, GLdouble centerX, GLdouble centerY, GLdouble centerZ, GLdouble upX, GLdouble upY, GLdouble upZ);
-    void gluLookAt(SWRastInternal::vec3f eye, SWRastInternal::vec3f center, SWRastInternal::vec3f up);
     GLboolean glIsEnabled(GLenum cap);
+
+private:
+    /// Private Implementation
+    struct Impl;
+    Impl * m_impl;
 };
 
 #endif // PHYSICALLABCORE_SWRASTWIDGET_H_INCLUDED
