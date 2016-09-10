@@ -21,14 +21,9 @@
 */
 
 #include "Workarounds.h"
-#include <QtGlobal>
-
-#if defined (Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(4, 5, 0)) && ((defined (_MSC_VER) && (_MSC_VER) <= 1400) || defined (__GNUC__) || defined (__MINGW32__))
-#include <windows.h>
-#define USE_WIN98_WORKAROUNDS
-#endif
 #include <cstdlib>
-
+#include <QtGlobal>
+#include <QSysInfo>
 #include <QApplication>
 #include <QList>
 #include <QPair>
@@ -75,17 +70,14 @@ void FontsFix(const QString & language)
     else
         qApp->setFont(defaultFont);    // Если умеет, то вернем его обратно
 
-#if defined (USE_WIN98_WORKAROUNDS)
     // Для Win98 форсированно заменяем шрифты на Tahoma для всех не-английских локалей
-    static DWORD dwVersion = (DWORD)(LOBYTE(LOWORD(GetVersion())));
-    if(dwVersion <= 4)
+    if(QSysInfo::windowsVersion() <= QSysInfo::WV_Me)
     {
         if(language != QString::fromLatin1("en"))
             qApp->setFont(fallbackFont);
         else
             qApp->setFont(defaultFont);
     }
-#endif
 
 #else
 
