@@ -232,7 +232,7 @@ public:
     }
     Vector<3, Real> & normalize()
     {
-        VectorBase::normalize();
+        VectorBase<3, Real>::normalize();
         return * this;
     }
 };
@@ -260,7 +260,7 @@ public:
     }
     Vector<3, Integer> & normalize()
     {
-        VectorBase::normalize();
+        VectorBase<3, Integer>::normalize();
         return * this;
     }
 };
