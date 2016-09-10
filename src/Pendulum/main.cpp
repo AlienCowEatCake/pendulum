@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
     app.setApplicationVersion(QString::fromLatin1("1.0"));
 #if !defined (Q_OS_MAC)
     app.setWindowIcon(QIcon(QString::fromLatin1(":/icon/ball.ico")));
+    app.setAttribute(Qt::AA_DontShowIconsInMenus, false);
 #else
     app.setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
