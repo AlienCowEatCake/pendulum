@@ -91,21 +91,35 @@ void FontsFix(const QString & language)
 /// @attention Актуально только для Qt 5.4+
 void HighDPIFix()
 {
+    if(!IsRemoteSession())
+    {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
-    static char newEnv [] = "QT_AUTO_SCREEN_SCALE_FACTOR=1";
-    if(!getenv("QT_AUTO_SCREEN_SCALE_FACTOR") && !getenv("QT_DEVICE_PIXEL_RATIO"))
-        putenv(newEnv);
+        static char newEnv [] = "QT_AUTO_SCREEN_SCALE_FACTOR=1";
+        if(!getenv("QT_AUTO_SCREEN_SCALE_FACTOR") && !getenv("QT_DEVICE_PIXEL_RATIO"))
+            putenv(newEnv);
 #elif (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
-    static char newEnv [] = "QT_DEVICE_PIXEL_RATIO=auto";
-    if(!getenv("QT_DEVICE_PIXEL_RATIO"))
-        putenv(newEnv);
+        static char newEnv [] = "QT_DEVICE_PIXEL_RATIO=auto";
+        if(!getenv("QT_DEVICE_PIXEL_RATIO"))
+            putenv(newEnv);
 #endif
+    }
 
     // Qt::AA_UseHighDpiPixmaps доступен и в более ранних версиях,
     // однако без поддержки HighDPI его применение нецелесообразно
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
+}
+
+/// @brief Определить, запущено ли приложение удаленно
+/// @return true - удаленный запуск, false - иначе
+bool IsRemoteSession()
+{
+#if defined (Q_OS_UNIX) && !defined (Q_OS_MAC)
+    if(getenv("SSH_CLIENT") || getenv("SSH_TTY") || getenv("SSH_CONNECTION"))
+        return true;
+#endif
+    return false;
 }
 
 } // Workarounds

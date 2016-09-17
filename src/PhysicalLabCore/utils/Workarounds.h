@@ -37,6 +37,10 @@ void FontsFix(const QString & language);
 /// @attention Актуально только для Qt 5.4+
 void HighDPIFix();
 
+/// @brief Определить, запущено ли приложение удаленно
+/// @return true - удаленный запуск, false - иначе
+bool IsRemoteSession();
+
 } // Workarounds
 
 #endif // PHYSICALLABCORE_WORKAROUNDS_H_INCLUDED
