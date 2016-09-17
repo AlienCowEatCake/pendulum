@@ -7,7 +7,7 @@
 # === Настраиваемые опции ======================================================
 
 # Использовать высокополигональные модели
-CONFIG += use_hipoly
+#CONFIG += use_hipoly
 # Использовать софтверный растеризатор
 #CONFIG += use_swrast
 
@@ -92,8 +92,6 @@ lessThan(QT_VERSION, 5.4.0) {
     RESOURCES += \
         src/Pendulum/resources/splash/splash-svg.qrc
 }
-
-use_swrast : use_hipoly : CONFIG -= use_hipoly
 
 use_hipoly {
     RESOURCES += \
