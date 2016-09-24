@@ -111,7 +111,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // =======
     m_helpWindow = new HtmlWindow;
     m_helpWindow->setHidden(true);
-    m_helpWindow->setSize(helpWindowWidth, helpWindowHeight);
+    m_helpWindow->setPreferredSize(helpWindowWidth, helpWindowHeight);
     m_helpWindow->setScrollBarEnabled();
     // =======
     m_authorsWindow = new HtmlWindow(this);
@@ -120,7 +120,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // =======
     m_manualWindow = new HtmlWindow;
     m_manualWindow->setHidden(true);
-    m_manualWindow->setSize(helpWindowWidth, helpWindowHeight);
+    m_manualWindow->setPreferredSize(helpWindowWidth, helpWindowHeight);
     m_manualWindow->setScrollBarEnabled();
     // =======
     m_licenseWindow = new HtmlWindow(this);

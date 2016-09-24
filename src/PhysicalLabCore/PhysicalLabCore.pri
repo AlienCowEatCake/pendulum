@@ -72,8 +72,7 @@ SOURCES += \
     $$files($$PWD/widgets/SplashScreenWindow/*.cpp)
 
 FORMS += \
-    $$files($$PWD/widgets/GraphWindowAbstract/*.ui) \
-    $$files($$PWD/widgets/HtmlWindow/*.ui)
+    $$files($$PWD/widgets/GraphWindowAbstract/*.ui)
 
 RESOURCES += \
     $$files($$PWD/themes/icons/*.qrc)

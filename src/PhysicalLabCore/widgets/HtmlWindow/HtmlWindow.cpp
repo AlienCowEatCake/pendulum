@@ -21,19 +21,24 @@
 */
 
 #include "HtmlWindow.h"
-#include "ui_HtmlWindow.h"
 
 #include <QtGlobal>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QPoint>
 #include <QFile>
+#include <QTextBrowser>
+#include <QVBoxLayout>
 
 HtmlWindow::HtmlWindow(QWidget * parent) :
     QWidget(parent),
-    m_ui(new Ui::HtmlWindow)
+    m_textBrowser(new QTextBrowser(this))
 {
-    m_ui->setupUi(this);
+    QVBoxLayout * layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+    layout->addWidget(m_textBrowser);
+
     setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint |
                    Qt::WindowSystemMenuHint | Qt::WindowMinimizeButtonHint
 #if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
@@ -46,22 +51,17 @@ HtmlWindow::HtmlWindow(QWidget * parent) :
     moveToCenter();
 
     // Отключение скроллбара
-    m_ui->textBrowser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_ui->textBrowser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_textBrowser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_textBrowser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     // Разрешить открывать внешние ссылки
-    m_ui->textBrowser->setOpenExternalLinks(true);
-}
-
-HtmlWindow::~HtmlWindow()
-{
-    delete m_ui;
+    m_textBrowser->setOpenExternalLinks(true);
 }
 
 /// @brief setScrollBarEnabled - Включить или отключить вертикальный скроллбар
 void HtmlWindow::setScrollBarEnabled(bool enabled)
 {
-    m_ui->textBrowser->setVerticalScrollBarPolicy(enabled ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
+    m_textBrowser->setVerticalScrollBarPolicy(enabled ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
 }
 
 /// @brief setTitle - Установить заголовок окна
@@ -76,18 +76,32 @@ void HtmlWindow::loadHtml(const QString & filename)
     QFile file(filename);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     QString htmlString = QString::fromUtf8(file.readAll());
-    m_ui->textBrowser->setHtml(htmlString);
+    m_textBrowser->setHtml(htmlString);
 }
 
-/// @brief setSize - Установить размер окна
+/// @brief setSize - Установить фиксированный размер окна
 void HtmlWindow::setSize(int width, int height)
 {
-    m_ui->textBrowser->setGeometry(0, 0, width, height);
-    adjustSize();
+    setGeometry(0, 0, width, height);
     setFixedSize(size());
+    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     moveToCenter();
 }
 
+/// @brief setPreferredSize - Установить предпочтительный не фиксированный размер окна
+void HtmlWindow::setPreferredSize(int width, int height)
+{
+    QRect availableGeometry = QApplication::desktop()->availableGeometry();
+    QSize newSize(qMin(availableGeometry.width(), width), qMin(availableGeometry.height(), height));
+    setGeometry(0, 0, newSize.width(), newSize.height());
+    setMinimumSize(size());
+    setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
+    moveToCenter();
+    if(newSize.width() < width && m_textBrowser->horizontalScrollBarPolicy() == Qt::ScrollBarAlwaysOff)
+        m_textBrowser->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    if(newSize.height() < height && m_textBrowser->verticalScrollBarPolicy() == Qt::ScrollBarAlwaysOff)
+        m_textBrowser->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+}
 
 /// @brief moveToCenter - Перемещение окна в центр экрана
 void HtmlWindow::moveToCenter()

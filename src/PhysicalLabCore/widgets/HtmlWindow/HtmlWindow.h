@@ -26,9 +26,7 @@
 #include <QWidget>
 #include <QString>
 
-namespace Ui {
-class HtmlWindow;
-}
+class QTextBrowser;
 
 class HtmlWindow : public QWidget
 {
@@ -36,7 +34,6 @@ class HtmlWindow : public QWidget
     
 public:
     explicit HtmlWindow(QWidget * parent = 0);
-    ~HtmlWindow();
 
     /// @brief setScrollBarEnabled - Включить или отключить вертикальный скроллбар
     void setScrollBarEnabled(bool enabled = true);
@@ -44,14 +41,16 @@ public:
     void setTitle(const QString & title);
     /// @brief loadHtml - Загрузить html из файла
     void loadHtml(const QString & filename);
-    /// @brief setSize - Установить размер окна
+    /// @brief setSize - Установить фиксированный размер окна
     void setSize(int width, int height);
+    /// @brief setPreferredSize - Установить предпочтительный не фиксированный размер окна
+    void setPreferredSize(int width, int height);
     
 private:
     /// @brief moveToCenter - Перемещение окна в центр экрана
     void moveToCenter();
 
-    Ui::HtmlWindow * m_ui;
+    QTextBrowser * m_textBrowser;
 };
 
 #endif // PHYSICALLABCORE_HTMLWINDOW_H_INCLUDED
