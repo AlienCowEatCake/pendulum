@@ -2,6 +2,10 @@
     <qresource prefix="/icons/modern">
         <file>icon_close_black.svg</file>
         <file>icon_close_white.svg</file>
+        <file>icon_copy_black.svg</file>
+        <file>icon_copy_white.svg</file>
+        <file>icon_cut_black.svg</file>
+        <file>icon_cut_white.svg</file>
         <file>icon_exit_black.svg</file>
         <file>icon_exit_white.svg</file>
         <file>icon_help_black.svg</file>
@@ -14,6 +18,8 @@
         <file>icon_new_window_white.svg</file>
         <file>icon_open_black.svg</file>
         <file>icon_open_white.svg</file>
+        <file>icon_paste_black.svg</file>
+        <file>icon_paste_white.svg</file>
         <file>icon_people_black.svg</file>
         <file>icon_people_white.svg</file>
         <file>icon_qt_black.svg</file>

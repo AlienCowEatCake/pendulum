@@ -54,7 +54,10 @@ enum IconTypes
     ICON_EXIT,
     ICON_NEW,
     ICON_NEW_WINDOW,
-    ICON_OPEN
+    ICON_OPEN,
+    ICON_CUT,
+    ICON_COPY,
+    ICON_PASTE
 };
 
 /// @brief Функция для получения иконки

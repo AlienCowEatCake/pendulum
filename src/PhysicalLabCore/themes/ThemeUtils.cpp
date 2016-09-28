@@ -110,6 +110,15 @@ QIcon GetIcon(IconTypes type, bool darkBackground)
     case ICON_OPEN:
         return CreateScalableIcon(iconNameTemplate.arg(QString::fromLatin1("icon_open")).arg(defaultExt),
                                   QStringList(iconNameTemplate.arg(QString::fromLatin1("icon_open")).arg(pixmapExt)));
+    case ICON_CUT:
+        return CreateScalableIcon(iconNameTemplate.arg(QString::fromLatin1("icon_cut")).arg(defaultExt),
+                                  QStringList(iconNameTemplate.arg(QString::fromLatin1("icon_cut")).arg(pixmapExt)));
+    case ICON_COPY:
+        return CreateScalableIcon(iconNameTemplate.arg(QString::fromLatin1("icon_copy")).arg(defaultExt),
+                                  QStringList(iconNameTemplate.arg(QString::fromLatin1("icon_copy")).arg(pixmapExt)));
+    case ICON_PASTE:
+        return CreateScalableIcon(iconNameTemplate.arg(QString::fromLatin1("icon_paste")).arg(defaultExt),
+                                  QStringList(iconNameTemplate.arg(QString::fromLatin1("icon_paste")).arg(pixmapExt)));
 
     }
     return QIcon();
