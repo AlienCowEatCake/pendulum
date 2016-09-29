@@ -28,7 +28,6 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QPair>
-#include <QSettings>
 #include <QLocale>
 #include <QResizeEvent>
 
@@ -37,6 +36,7 @@
 #include "themes/ThemeUtils.h"
 #include "utils/Workarounds.h"
 #include "utils/ImageSaver.h"
+#include "utils/SettingsWrapper.h"
 #include "GraphWindowSpeed.h"
 #include "GraphWindowDisplacement.h"
 #include "GraphWindowEnergy.h"
@@ -215,7 +215,7 @@ void MainWindow::updateTranslations(QString language)
     }
 
     // Посмотрим в настройки, не сохранен ли случайно в них язык
-    QSettings settings;
+    SettingsWrapper settings;
     if(language.isEmpty())
         language = settings.value(QString::fromLatin1("Language"), systemLang).toString();
     else

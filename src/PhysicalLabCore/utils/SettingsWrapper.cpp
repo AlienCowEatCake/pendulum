@@ -25,8 +25,8 @@
 #include <QMap>
 #include <QSettings>
 #include <QMutex>
-#include <QDebug>
 #include <QApplication>
+#include <QDir>
 
 struct SettingsWrapper::SettingsStorage
 {
@@ -47,9 +47,28 @@ struct SettingsWrapper::SettingsStorage
     {
         settingsMutex.lock();
         if(!settings)
-            settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, QApplication::organizationName());
+        {
+#if defined (Q_OS_WIN)
+            const QSettings::Format format = QSettings::NativeFormat;
+            const QString organizationName = QApplication::organizationName();
+            const QString applicationName = QApplication::applicationName();
+#elif defined (Q_OS_MAC)
+            const QSettings::Format format = QSettings::IniFormat;
+            const QString organizationName = QApplication::organizationName();
+            const QString applicationName = QApplication::applicationName();
+            QSettings::setPath(format, QSettings::UserScope,
+                    QString::fromLatin1("%1/Library/Application Support").arg(QDir::homePath()));
+#else
+            const QSettings::Format format = QSettings::NativeFormat;
+            const QString organizationName = QApplication::organizationName()
+                    .simplified().replace(QString::fromLatin1(" "), QString::fromLatin1(""));
+            const QString applicationName = QApplication::applicationName()
+                    .simplified().replace(QString::fromLatin1(" "), QString::fromLatin1(""));
+#endif
+            settings = new QSettings(format, QSettings::UserScope, organizationName, applicationName);
+            settings->setFallbacksEnabled(false);
+        }
         settingsMutex.unlock();
-        qDebug() << settings->fileName();
     }
 
     void saveSettings()
@@ -61,12 +80,7 @@ struct SettingsWrapper::SettingsStorage
             if(useGroup)
                 settings->beginGroup(group.key());
             for(QMap<QString, QVariant>::Iterator value = group->begin(); value != group->end(); ++value)
-            {
                 settings->setValue(value.key(), value.value());
-                if(settings->value(value.key()) != value.value())
-                    qWarning() << "QSettings::setValue failed for key" << QString::fromLatin1("%1/%2").arg(group.key()).arg(value.key())
-                               << "with type" << value.value().typeName();
-            }
             if(useGroup)
                 settings->endGroup();
         }
