@@ -97,7 +97,6 @@ void GraphWindowAbstract::on_actionGraphColor_triggered()
     if(newColor.isValid() && newColor != oldColor)
     {
         m_scene2D->setPlotColor(newColor);
-        m_scene2D->settings().saveAll();
         emit settingsChanged();
     }
 }
@@ -112,7 +111,6 @@ void GraphWindowAbstract::on_actionGraphWidth_triggered()
     if(ok && std::fabs(oldValue - newValue) > 1e-5)
     {
         m_scene2D->setPlotWidth(newValue);
-        m_scene2D->settings().saveAll();
         emit settingsChanged();
     }
 }
@@ -130,7 +128,6 @@ void GraphWindowAbstract::on_actionSaveGraphFile_triggered()
 /// @brief onSettingsChanged - Слот на изменение настроек
 void GraphWindowAbstract::onSettingsChanged()
 {
-    m_scene2D->settings().reloadAll();
     update();
 }
 

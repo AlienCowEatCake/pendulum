@@ -22,50 +22,119 @@
 
 #include "SettingsWrapper.h"
 #include <QStringList>
+#include <QMap>
+#include <QSettings>
+#include <QMutex>
+#include <QDebug>
+#include <QApplication>
+
+struct SettingsWrapper::SettingsStorage
+{
+    SettingsStorage()
+        : settings(NULL)
+    {}
+
+    ~SettingsStorage()
+    {
+        if(settings)
+        {
+            saveSettings();
+            settings->deleteLater();
+        }
+    }
+
+    void createSettings()
+    {
+        settingsMutex.lock();
+        if(!settings)
+            settings = new QSettings(QSettings::IniFormat, QSettings::UserScope, QApplication::organizationName());
+        settingsMutex.unlock();
+        qDebug() << settings->fileName();
+    }
+
+    void saveSettings()
+    {
+        settingsMutex.lock();
+        for(QMap<QString, QMap<QString, QVariant> >::Iterator group = settingsCache.begin(); group != settingsCache.end(); ++group)
+        {
+            bool useGroup = !group.key().isEmpty();
+            if(useGroup)
+                settings->beginGroup(group.key());
+            for(QMap<QString, QVariant>::Iterator value = group->begin(); value != group->end(); ++value)
+            {
+                settings->setValue(value.key(), value.value());
+                if(settings->value(value.key()) != value.value())
+                    qWarning() << "QSettings::setValue failed for key" << QString::fromLatin1("%1/%2").arg(group.key()).arg(value.key())
+                               << "with type" << value.value().typeName();
+            }
+            if(useGroup)
+                settings->endGroup();
+        }
+        settings->sync();
+        settingsMutex.unlock();
+    }
+
+    void setValue(const QString &group, const QString &key, const QVariant &value)
+    {
+        settingsMutex.lock();
+        settingsCache[group][key] = value;
+        settingsMutex.unlock();
+    }
+
+    QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
+    {
+        QVariant retValue = defaultValue;
+        bool foundInCache = false;
+        settingsMutex.lock();
+        QMap<QString, QMap<QString, QVariant> >::Iterator groupIter = settingsCache.find(group);
+        if(groupIter != settingsCache.end())
+        {
+            QMap<QString, QVariant>::Iterator valueIter = groupIter->find(key);
+            if(valueIter != groupIter->end())
+            {
+                retValue = valueIter.value();
+                foundInCache = true;
+            }
+        }
+        if(!foundInCache)
+        {
+            settings->beginGroup(group);
+            QVariant newValue = settings->value(key, defaultValue);
+            settings->endGroup();
+            if(newValue.isValid())
+            {
+                settingsCache[group][key] = newValue;
+                retValue = newValue;
+            }
+        }
+        settingsMutex.unlock();
+        return retValue;
+    }
+
+    QMutex settingsMutex;
+    QSettings* settings;
+    QMap<QString, QMap<QString, QVariant> > settingsCache;
+};
+
+SettingsWrapper::SettingsStorage SettingsWrapper::g_settingsStorage;
+
 
 SettingsWrapper::SettingsWrapper(const QString &settingsGroup)
+    : m_settingsGroup(settingsGroup)
 {
-    if(!settingsGroup.isEmpty())
-        m_settings.beginGroup(settingsGroup);
+    g_settingsStorage.createSettings();
 }
 
 SettingsWrapper::~SettingsWrapper()
-{
-    saveAll();
-}
+{}
 
 void SettingsWrapper::setValue(const QString &key, const QVariant &value)
 {
-    m_settingsCache[key] = value;
-    m_settings.sync();
-    m_settings.setValue(key, value);
-    m_settings.sync();
+    g_settingsStorage.setValue(m_settingsGroup, key, value);
 }
 
 QVariant SettingsWrapper::value(const QString &key, const QVariant &defaultValue) const
 {
-    QMap<QString, QVariant>::ConstIterator it = m_settingsCache.find(key);
-    if(it != m_settingsCache.end())
-        return it.value();
-    m_settings.sync();
-    QVariant value = m_settings.value(key, defaultValue);
-    m_settingsCache[key] = value;
-    return value;
-}
-
-void SettingsWrapper::saveAll()
-{
-    m_settings.sync();
-    for(QMap<QString, QVariant>::ConstIterator it = m_settingsCache.begin(); it != m_settingsCache.end(); ++it)
-        m_settings.setValue(it.key(), it.value());
-    m_settings.sync();
-}
-
-void SettingsWrapper::reloadAll()
-{
-    m_settings.sync();
-    QStringList keys = m_settings.allKeys();
-    for(QStringList::ConstIterator it = keys.begin(); it != keys.end(); ++it)
-        m_settingsCache[*it] = m_settings.value(*it);
+    return g_settingsStorage.value(m_settingsGroup, key, defaultValue);
 }
 
