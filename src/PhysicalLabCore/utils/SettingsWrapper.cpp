@@ -48,11 +48,7 @@ struct SettingsWrapper::SettingsStorage
         settingsMutex.lock();
         if(!settings)
         {
-#if defined (Q_OS_WIN)
-            const QSettings::Format format = QSettings::NativeFormat;
-            const QString organizationName = QApplication::organizationName();
-            const QString applicationName = QApplication::applicationName();
-#elif defined (Q_OS_MAC)
+#if defined (Q_OS_MAC)
             const QSettings::Format format = QSettings::IniFormat;
             const QString organizationName = QApplication::organizationName();
             const QString applicationName = QApplication::applicationName();
@@ -60,10 +56,8 @@ struct SettingsWrapper::SettingsStorage
                     QString::fromLatin1("%1/Library/Application Support").arg(QDir::homePath()));
 #else
             const QSettings::Format format = QSettings::NativeFormat;
-            const QString organizationName = QApplication::organizationName()
-                    .simplified().replace(QString::fromLatin1(" "), QString::fromLatin1(""));
-            const QString applicationName = QApplication::applicationName()
-                    .simplified().replace(QString::fromLatin1(" "), QString::fromLatin1(""));
+            const QString organizationName = QApplication::organizationName();
+            const QString applicationName = QApplication::applicationName();
 #endif
             settings = new QSettings(format, QSettings::UserScope, organizationName, applicationName);
             settings->setFallbacksEnabled(false);
