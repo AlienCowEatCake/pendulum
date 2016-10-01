@@ -21,83 +21,119 @@
 */
 
 #include "SettingsWrapper.h"
-#include <QStringList>
-#include <QMap>
+#include <QVariantMap>
 #include <QSettings>
 #include <QMutex>
 #include <QApplication>
 #include <QDir>
 
-struct SettingsWrapper::SettingsStorage
+#include <QColor>
+#include <QDebug>
+
+namespace {
+
+class SettingsStorage
 {
+public:
     SettingsStorage()
-        : settings(NULL)
+        : m_settings(NULL)
     {}
 
     ~SettingsStorage()
     {
-        if(settings)
+        if(m_settings)
         {
-            saveSettings();
-            settings->deleteLater();
+            m_settings->sync();
+            m_settings->deleteLater();
         }
     }
 
-    void createSettings()
+    void setValue(const QString &group, const QString &key, const QVariant &value)
     {
-        settingsMutex.lock();
-        if(!settings)
+        if(!m_settings)
+            initStorage();
+        bool useGroup = !group.isEmpty();
+        if(useGroup)
+            m_settings->beginGroup(group);
+        m_settings->setValue(key, value);
+        if(useGroup)
+            m_settings->endGroup();
+    }
+
+    QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
+    {
+        if(!m_settings)
+            initStorage();
+        m_settings->beginGroup(group);
+        QVariant value = m_settings->value(key, defaultValue);
+        m_settings->endGroup();
+        return value;
+    }
+
+private:
+    void initStorage()
+    {
+        if(!m_settings)
         {
 #if defined (Q_OS_MAC)
             const QSettings::Format format = QSettings::IniFormat;
             const QString organizationName = QApplication::organizationName();
             const QString applicationName = QApplication::applicationName();
             QSettings::setPath(format, QSettings::UserScope,
-                    QString::fromLatin1("%1/Library/Application Support").arg(QDir::homePath()));
+                               QString::fromLatin1("%1/Library/Application Support").arg(QDir::homePath()));
 #else
             const QSettings::Format format = QSettings::NativeFormat;
             const QString organizationName = QApplication::organizationName();
             const QString applicationName = QApplication::applicationName();
 #endif
-            settings = new QSettings(format, QSettings::UserScope, organizationName, applicationName);
-            settings->setFallbacksEnabled(false);
+            m_settings = new QSettings(format, QSettings::UserScope, organizationName, applicationName);
+            m_settings->setFallbacksEnabled(false);
         }
-        settingsMutex.unlock();
+    }
+
+    QSettings* m_settings;
+};
+
+} // namespace
+
+class SettingsWrapper::SettingsCache
+{
+public:
+    SettingsCache()
+    {}
+
+    ~SettingsCache()
+    {
+        saveSettings();
     }
 
     void saveSettings()
     {
-        settingsMutex.lock();
-        for(QMap<QString, QMap<QString, QVariant> >::Iterator group = settingsCache.begin(); group != settingsCache.end(); ++group)
+        m_settingsMutex.lock();
+        for(QMap<QString, QVariantMap>::Iterator group = m_settingsCache.begin(); group != m_settingsCache.end(); ++group)
         {
-            bool useGroup = !group.key().isEmpty();
-            if(useGroup)
-                settings->beginGroup(group.key());
-            for(QMap<QString, QVariant>::Iterator value = group->begin(); value != group->end(); ++value)
-                settings->setValue(value.key(), value.value());
-            if(useGroup)
-                settings->endGroup();
+            for(QVariantMap::Iterator value = group->begin(); value != group->end(); ++value)
+                m_settingsStorage.setValue(group.key(), value.key(), value.value());
         }
-        settings->sync();
-        settingsMutex.unlock();
+        m_settingsMutex.unlock();
     }
 
     void setValue(const QString &group, const QString &key, const QVariant &value)
     {
-        settingsMutex.lock();
-        settingsCache[group][key] = value;
-        settingsMutex.unlock();
+        m_settingsMutex.lock();
+        m_settingsCache[group][key] = value;
+        m_settingsMutex.unlock();
     }
 
     QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
     {
         QVariant retValue = defaultValue;
         bool foundInCache = false;
-        settingsMutex.lock();
-        QMap<QString, QMap<QString, QVariant> >::Iterator groupIter = settingsCache.find(group);
-        if(groupIter != settingsCache.end())
+        m_settingsMutex.lock();
+        QMap<QString, QVariantMap>::Iterator groupIter = m_settingsCache.find(group);
+        if(groupIter != m_settingsCache.end())
         {
-            QMap<QString, QVariant>::Iterator valueIter = groupIter->find(key);
+            QVariantMap::Iterator valueIter = groupIter->find(key);
             if(valueIter != groupIter->end())
             {
                 retValue = valueIter.value();
@@ -106,43 +142,40 @@ struct SettingsWrapper::SettingsStorage
         }
         if(!foundInCache)
         {
-            settings->beginGroup(group);
-            QVariant newValue = settings->value(key, defaultValue);
-            settings->endGroup();
+            QVariant newValue = m_settingsStorage.value(group, key, defaultValue);
             if(newValue.isValid())
             {
-                settingsCache[group][key] = newValue;
+                m_settingsCache[group][key] = newValue;
                 retValue = newValue;
             }
         }
-        settingsMutex.unlock();
+        m_settingsMutex.unlock();
         return retValue;
     }
 
-    QMutex settingsMutex;
-    QSettings* settings;
-    QMap<QString, QMap<QString, QVariant> > settingsCache;
+private:
+    QMutex m_settingsMutex;
+    SettingsStorage m_settingsStorage;
+    QMap<QString, QVariantMap> m_settingsCache;
 };
 
-SettingsWrapper::SettingsStorage SettingsWrapper::g_settingsStorage;
+SettingsWrapper::SettingsCache SettingsWrapper::g_settingsCache;
 
 
 SettingsWrapper::SettingsWrapper(const QString &settingsGroup)
     : m_settingsGroup(settingsGroup)
-{
-    g_settingsStorage.createSettings();
-}
+{}
 
 SettingsWrapper::~SettingsWrapper()
 {}
 
 void SettingsWrapper::setValue(const QString &key, const QVariant &value)
 {
-    g_settingsStorage.setValue(m_settingsGroup, key, value);
+    g_settingsCache.setValue(m_settingsGroup, key, value);
 }
 
 QVariant SettingsWrapper::value(const QString &key, const QVariant &defaultValue) const
 {
-    return g_settingsStorage.value(m_settingsGroup, key, defaultValue);
+    return g_settingsCache.value(m_settingsGroup, key, defaultValue);
 }
 

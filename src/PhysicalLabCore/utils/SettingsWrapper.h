@@ -38,8 +38,8 @@ public:
 
 private:
     const QString m_settingsGroup;
-    struct SettingsStorage;
-    static SettingsStorage g_settingsStorage;
+    class SettingsCache;
+    static SettingsCache g_settingsCache;
 };
 
 #endif // PHYSICALLABCORE_SETTINGSWRAPPER_H_INCLUDED
