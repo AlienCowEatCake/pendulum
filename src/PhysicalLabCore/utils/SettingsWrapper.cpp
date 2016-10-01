@@ -27,10 +27,31 @@
 #include <QApplication>
 #include <QDir>
 
-#include <QColor>
-#include <QDebug>
+#if defined (Q_OS_MAC)
+namespace NativeSettingsStorage {
+void setValue(const QString &group, const QString &key, const QVariant &value);
+QVariant value(const QString &group, const QString &key, const QVariant &defaultValue);
+} // namespace NativeSettingsStorage
+#endif
 
 namespace {
+
+#if defined (Q_OS_MAC)
+
+class SettingsStorage
+{
+public:
+    void setValue(const QString &group, const QString &key, const QVariant &value)
+    {
+        NativeSettingsStorage::setValue(group, key, value);
+    }
+    QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
+    {
+        return NativeSettingsStorage::value(group, key, defaultValue);
+    }
+};
+
+#else
 
 class SettingsStorage
 {
@@ -93,6 +114,8 @@ private:
 
     QSettings* m_settings;
 };
+
+#endif
 
 } // namespace
 
