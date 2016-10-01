@@ -23,26 +23,38 @@
 #if !defined (PHYSICALLABCORE_SETTINGSWRAPPER_H_INCLUDED)
 #define PHYSICALLABCORE_SETTINGSWRAPPER_H_INCLUDED
 
-#include <QMap>
 #include <QString>
 #include <QVariant>
-#include <QSettings>
 
-/// @brief Класс-обертка над настройками, хранит в себе локальную копию настроек
+/// @brief Класс-обертка над настройками, содержит в себе кэш, сбрасываемый при выходе из программы
+/// @note Thread-safe
 class SettingsWrapper
 {
 public:
+    /// @brief SettingsWrapper
+    /// @param[in] settingsGroup - группа (секция) настроек
     SettingsWrapper(const QString &settingsGroup = QString());
+
     ~SettingsWrapper();
 
-    void setValue(const QString &name, const QVariant &value);
+    /// @brief Установить значение для заданного ключа
+    /// @param[in] key - ключ, для которого устанавливается значение
+    /// @param[in] value - значение, которое устанавливается для ключа
+    void setValue(const QString &key, const QVariant &value);
+
+    /// @brief Получить значение для заданного ключа
+    /// @param[in] key - ключ, для которого получается значение
+    /// @param[in] defaultValue - умолчательное значение, возвращается при отсутствии значения
+    /// @return - значение для ключа или defaultValue при отсутствии значения
     QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
-    void saveAll();
-    void reloadAll();
 
 private:
-    mutable QSettings m_settings;
-    mutable QMap<QString, QVariant> m_settingsCache;
+    /// @brief Группа (секция) настроек
+    const QString m_settingsGroup;
+
+    /// @brief Глобальный кэш настроек
+    class SettingsCache;
+    static SettingsCache g_settingsCache;
 };
 
 #endif // PHYSICALLABCORE_SETTINGSWRAPPER_H_INCLUDED

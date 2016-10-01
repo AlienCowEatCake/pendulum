@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     app.setOrganizationDomain(QString::fromLatin1("fami.codefreak.ru"));
-    app.setOrganizationName(QString::fromLatin1("fami_net_team"));
-    app.setApplicationName(QString::fromLatin1("pendulum"));
+    app.setOrganizationName(QString::fromLatin1("FAMI Net Team"));
+    app.setApplicationName(QString::fromLatin1("Pendulum"));
     app.setApplicationVersion(QString::fromLatin1("1.0"));
 #if !defined (Q_OS_MAC)
     app.setWindowIcon(QIcon(QString::fromLatin1(":/icon/ball.ico")));

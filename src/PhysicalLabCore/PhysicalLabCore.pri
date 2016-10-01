@@ -77,6 +77,12 @@ FORMS += \
 RESOURCES += \
     $$files($$PWD/themes/icons/*.qrc)
 
+macx {
+    OBJECTIVE_SOURCES += \
+        $$files($$PWD/utils/*.mm)
+    LIBS += -framework Foundation
+}
+
 use_swrast {
     QT -= opengl
     DEFINES += USE_SWRAST
