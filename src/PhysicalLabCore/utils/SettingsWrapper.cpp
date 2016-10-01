@@ -28,23 +28,50 @@
 #include <QDir>
 
 #if defined (Q_OS_MAC)
+
 namespace NativeSettingsStorage {
+
+/// @brief Установить значение для заданного ключа в NSUserDefaults
+/// @param[in] group - группа (секция) настроек
+/// @param[in] key - ключ, для которого устанавливается значение
+/// @param[in] value - значение, которое устанавливается для ключа
+/// @note Реализация в SettingsWrapper_mac.mm
 void setValue(const QString &group, const QString &key, const QVariant &value);
+
+/// @brief Получить значение для заданного ключа из NSUserDefaults
+/// @param[in] group - группа (секция) настроек
+/// @param[in] key - ключ, для которого получается значение
+/// @param[in] defaultValue - умолчательное значение, возвращается при отсутствии значения
+/// @return - значение для ключа или defaultValue при отсутствии значения
+/// @note Реализация в SettingsWrapper_mac.mm
 QVariant value(const QString &group, const QString &key, const QVariant &defaultValue);
+
 } // namespace NativeSettingsStorage
+
 #endif
 
 namespace {
 
 #if defined (Q_OS_MAC)
 
+/// @brief Хранилище настроек для Mac, использует NSUserDefaults. Введен по причине глючности QSettings.
 class SettingsStorage
 {
 public:
+    /// @brief Установить значение для заданного ключа в NSUserDefaults
+    /// @param[in] group - группа (секция) настроек
+    /// @param[in] key - ключ, для которого устанавливается значение
+    /// @param[in] value - значение, которое устанавливается для ключа
     void setValue(const QString &group, const QString &key, const QVariant &value)
     {
         NativeSettingsStorage::setValue(group, key, value);
     }
+
+    /// @brief Получить значение для заданного ключа из NSUserDefaults
+    /// @param[in] group - группа (секция) настроек
+    /// @param[in] key - ключ, для которого получается значение
+    /// @param[in] defaultValue - умолчательное значение, возвращается при отсутствии значения
+    /// @return - значение для ключа или defaultValue при отсутствии значения
     QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
     {
         return NativeSettingsStorage::value(group, key, defaultValue);
@@ -53,6 +80,7 @@ public:
 
 #else
 
+/// @brief Универсальное хранилище настроек, использует QSettings.
 class SettingsStorage
 {
 public:
@@ -69,6 +97,10 @@ public:
         }
     }
 
+    /// @brief Установить значение для заданного ключа в QSettings
+    /// @param[in] group - группа (секция) настроек
+    /// @param[in] key - ключ, для которого устанавливается значение
+    /// @param[in] value - значение, которое устанавливается для ключа
     void setValue(const QString &group, const QString &key, const QVariant &value)
     {
         if(!m_settings)
@@ -81,6 +113,11 @@ public:
             m_settings->endGroup();
     }
 
+    /// @brief Получить значение для заданного ключа из QSettings
+    /// @param[in] group - группа (секция) настроек
+    /// @param[in] key - ключ, для которого получается значение
+    /// @param[in] defaultValue - умолчательное значение, возвращается при отсутствии значения
+    /// @return - значение для ключа или defaultValue при отсутствии значения
     QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
     {
         if(!m_settings)
@@ -92,6 +129,7 @@ public:
     }
 
 private:
+    /// @brief Инициализация QSettings
     void initStorage()
     {
         if(!m_settings)
@@ -119,6 +157,7 @@ private:
 
 } // namespace
 
+/// @brief Кэш настроек
 class SettingsWrapper::SettingsCache
 {
 public:
@@ -130,17 +169,10 @@ public:
         saveSettings();
     }
 
-    void saveSettings()
-    {
-        m_settingsMutex.lock();
-        for(QMap<QString, QVariantMap>::Iterator group = m_settingsCache.begin(); group != m_settingsCache.end(); ++group)
-        {
-            for(QVariantMap::Iterator value = group->begin(); value != group->end(); ++value)
-                m_settingsStorage.setValue(group.key(), value.key(), value.value());
-        }
-        m_settingsMutex.unlock();
-    }
-
+    /// @brief Установить значение для заданного ключа
+    /// @param[in] group - группа (секция) настроек
+    /// @param[in] key - ключ, для которого устанавливается значение
+    /// @param[in] value - значение, которое устанавливается для ключа
     void setValue(const QString &group, const QString &key, const QVariant &value)
     {
         m_settingsMutex.lock();
@@ -148,6 +180,11 @@ public:
         m_settingsMutex.unlock();
     }
 
+    /// @brief Получить значение для заданного ключа
+    /// @param[in] group - группа (секция) настроек
+    /// @param[in] key - ключ, для которого получается значение
+    /// @param[in] defaultValue - умолчательное значение, возвращается при отсутствии значения
+    /// @return - значение для ключа или defaultValue при отсутствии значения
     QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
     {
         QVariant retValue = defaultValue;
@@ -177,14 +214,32 @@ public:
     }
 
 private:
+    /// @brief Сброс настроек в SettingsStorage
+    void saveSettings()
+    {
+        m_settingsMutex.lock();
+        for(QMap<QString, QVariantMap>::Iterator group = m_settingsCache.begin(); group != m_settingsCache.end(); ++group)
+        {
+            for(QVariantMap::Iterator value = group->begin(); value != group->end(); ++value)
+                m_settingsStorage.setValue(group.key(), value.key(), value.value());
+        }
+        m_settingsMutex.unlock();
+    }
+
+    /// @brief Мьютекс, блокирующий доступ к кэшу из разных потоков
     QMutex m_settingsMutex;
+    /// @brief Платформозависимое хранилище настроек
     SettingsStorage m_settingsStorage;
+    /// @brief Кэш настроек, QMap<Group, QMap<Key, Value>>
     QMap<QString, QVariantMap> m_settingsCache;
 };
 
+/// @brief Глобальный кэш настроек
 SettingsWrapper::SettingsCache SettingsWrapper::g_settingsCache;
 
 
+/// @brief SettingsWrapper
+/// @param[in] settingsGroup - группа (секция) настроек
 SettingsWrapper::SettingsWrapper(const QString &settingsGroup)
     : m_settingsGroup(settingsGroup)
 {}
@@ -192,11 +247,18 @@ SettingsWrapper::SettingsWrapper(const QString &settingsGroup)
 SettingsWrapper::~SettingsWrapper()
 {}
 
+/// @brief Установить значение для заданного ключа
+/// @param[in] key - ключ, для которого устанавливается значение
+/// @param[in] value - значение, которое устанавливается для ключа
 void SettingsWrapper::setValue(const QString &key, const QVariant &value)
 {
     g_settingsCache.setValue(m_settingsGroup, key, value);
 }
 
+/// @brief Получить значение для заданного ключа
+/// @param[in] key - ключ, для которого получается значение
+/// @param[in] defaultValue - умолчательное значение, возвращается при отсутствии значения
+/// @return - значение для ключа или defaultValue при отсутствии значения
 QVariant SettingsWrapper::value(const QString &key, const QVariant &defaultValue) const
 {
     return g_settingsCache.value(m_settingsGroup, key, defaultValue);

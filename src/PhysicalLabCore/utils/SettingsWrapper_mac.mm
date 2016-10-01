@@ -28,6 +28,10 @@ namespace NativeSettingsStorage {
 
 namespace {
 
+/// @brief Получить из пары (group, key) ключ, пригодный для использования с NSUserDefaults
+/// @param[in] group - группа (секция) настроек
+/// @param[in] key - исходный ключ в группе
+/// @return ключ, пригодный для использования с NSUserDefaults
 QString getNativeKeyString(const QString &group, const QString &key)
 {
     return (group.isEmpty() ? QString() : (group + QString::fromLatin1("/"))) + key;
@@ -35,6 +39,10 @@ QString getNativeKeyString(const QString &group, const QString &key)
 
 } // namespace
 
+/// @brief Установить значение для заданного ключа в NSUserDefaults
+/// @param[in] group - группа (секция) настроек
+/// @param[in] key - ключ, для которого устанавливается значение
+/// @param[in] value - значение, которое устанавливается для ключа
 void setValue(const QString &group, const QString &key, const QVariant &value)
 {
     NSString *nativeKey = [NSString stringWithUTF8String: getNativeKeyString(group, key).toUtf8().data()];
@@ -44,6 +52,11 @@ void setValue(const QString &group, const QString &key, const QVariant &value)
     [defaults synchronize];
 }
 
+/// @brief Получить значение для заданного ключа из NSUserDefaults
+/// @param[in] group - группа (секция) настроек
+/// @param[in] key - ключ, для которого получается значение
+/// @param[in] defaultValue - умолчательное значение, возвращается при отсутствии значения
+/// @return - значение для ключа или defaultValue при отсутствии значения
 QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
 {
     NSString *nativeKey = [NSString stringWithUTF8String: getNativeKeyString(group, key).toUtf8().data()];
