@@ -25,10 +25,17 @@
 #include <cmath>
 #include <cstring>
 #include <cassert>
+#include <QGesture>
+#include <QGestureEvent>
+#include <QPanGesture>
+#include <QPinchGesture>
 
 Scene3DAbstract::Scene3DAbstract(QWidget* parent)
     : GLWidgetImpl(parent)
-{}
+{
+    grabGesture(Qt::PanGesture);
+    grabGesture(Qt::PinchGesture);
+}
 
 /// @brief Установить параметры сцены по-умолчанию
 void Scene3DAbstract::setDefaultScene(const SceneDefault & sceneDefault)
@@ -150,6 +157,13 @@ void Scene3DAbstract::keyPressEvent(QKeyEvent* pe)
     updateGL();
 }
 
+bool Scene3DAbstract::event(QEvent* event)
+{
+    if(event->type() == QEvent::Gesture)
+        return gestureEvent(static_cast<QGestureEvent*>(event));
+    return GLWidgetImpl::event(event);
+}
+
 void Scene3DAbstract::scale_plus()
 {
     if(m_sceneParameters.nSca < m_sceneDefault.scaleMax)
@@ -240,6 +254,39 @@ const GLfloat * Scene3DAbstract::lightPosition(GLenum light_ID) const
     }
     assert(false);
     return m_lightParameters.begin()->lightPosition;
+}
+
+bool Scene3DAbstract::gestureEvent(QGestureEvent* event)
+{
+    if(QGesture* pan = event->gesture(Qt::PanGesture))
+        panTriggered(static_cast<QPanGesture*>(pan));
+    if(QGesture* pinch = event->gesture(Qt::PinchGesture))
+        pinchTriggered(static_cast<QPinchGesture*>(pinch));
+    return true;
+}
+
+void Scene3DAbstract::panTriggered(QPanGesture* gesture)
+{
+    QPointF delta = gesture->delta();
+    m_sceneParameters.xRot += 180.0f / 1.5f * static_cast<GLfloat>(delta.y()) / static_cast<GLfloat>(height());
+    m_sceneParameters.zRot += 180.0f / 1.5f * static_cast<GLfloat>(delta.x()) / static_cast<GLfloat>(width());
+    updateGL();
+}
+
+void Scene3DAbstract::pinchTriggered(QPinchGesture* gesture)
+{
+    QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
+    if(changeFlags & QPinchGesture::ScaleFactorChanged)
+    {
+        qreal scaleDelta = gesture->scaleFactor() - gesture->lastScaleFactor();
+        float newScale = m_sceneParameters.nSca * static_cast<float>(scaleDelta);
+        if(newScale <= m_sceneDefault.scaleMax && newScale >= m_sceneDefault.scaleMin)
+        {
+            m_sceneParameters.nSca = newScale;
+            updateLight();
+        }
+    }
+    updateGL();
 }
 
 /// @brief Обновление освещения при изменении масштаба

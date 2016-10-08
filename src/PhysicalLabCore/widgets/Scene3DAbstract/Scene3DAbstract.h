@@ -27,6 +27,10 @@
 #include <QList>
 #include "widgets/GLWidgetImpl/GLWidgetImpl.h"
 
+class QGestureEvent;
+class QPanGesture;
+class QPinchGesture;
+
 /// @brief Абстрактный класс 3D сцены с камерой
 class Scene3DAbstract : public GLWidgetImpl
 {
@@ -88,6 +92,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent*);
     void wheelEvent(QWheelEvent* pe);
     void keyPressEvent(QKeyEvent* pe);
+    bool event(QEvent* event);
 
     /// @brief Обновление освещения при изменении масштаба
     void updateLight();
@@ -106,6 +111,10 @@ protected:
     const GLfloat * lightAmbient(GLenum light_ID) const;
     const GLfloat * lightDiffuse(GLenum light_ID) const;
     const GLfloat * lightPosition(GLenum light_ID) const;
+
+    bool gestureEvent(QGestureEvent* event);
+    void panTriggered(QPanGesture* gesture);
+    void pinchTriggered(QPinchGesture* gesture);
 
 private:
     SceneParameters m_sceneParameters;
