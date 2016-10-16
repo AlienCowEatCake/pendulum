@@ -3,7 +3,7 @@ PROJECT="pendulum"
 BUILDDIR="build_linux_qt5.6_gcc"
 SUFFIX="_qt5.6_$(gcc -dumpmachine)"
 
-QTDIR="/opt/qt-5.6.1-static"
+QTDIR="/opt/qt-5.6.2-static"
 CMD_QMAKE="${QTDIR}/bin/qmake"
 
 cd "$(dirname $0)"/..
