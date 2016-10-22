@@ -24,6 +24,21 @@
 #include <QString>
 #include <QVariant>
 
+namespace SettingsEncoder {
+
+/// @brief Кодировщик данных QVariant -> QString, по возможности использует человеко-читаемое представление
+/// @param[in] data - Исходные данные
+/// @return Кодированные данные
+QString Encode(const QVariant& data);
+
+/// @brief Декодировщик данных QString -> QVariant
+/// @param[in] data - Кодированные в Encode() данные
+/// @return Исходные данные
+/// @attention Предназначен для работы совместно с Encode()
+QVariant Decode(const QString& data);
+
+} // namespace SettingsEncoder
+
 namespace NativeSettingsStorage {
 
 namespace {
@@ -47,7 +62,7 @@ void setValue(const QString &group, const QString &key, const QVariant &value)
 {
     NSString *nativeKey = [NSString stringWithUTF8String: getNativeKeyString(group, key).toUtf8().data()];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *nativeValue = [NSString stringWithUTF8String: value.toByteArray().toHex().data()];
+    NSString *nativeValue = [NSString stringWithUTF8String: SettingsEncoder::Encode(value).toUtf8().data()];
     [defaults setObject: nativeValue forKey: nativeKey];
     [defaults synchronize];
 }
@@ -61,10 +76,10 @@ QVariant value(const QString &group, const QString &key, const QVariant &default
 {
     NSString *nativeKey = [NSString stringWithUTF8String: getNativeKeyString(group, key).toUtf8().data()];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    QString value = QString::fromNSString([defaults stringForKey: nativeKey]);
+    const QString value = QString::fromNSString([defaults stringForKey: nativeKey]);
     if(value.isEmpty())
         return defaultValue;
-    QVariant variantValue = QVariant(QByteArray::fromHex(value.toLatin1()));
+    const QVariant variantValue = SettingsEncoder::Decode(value);
     if(variantValue.isValid())
         return variantValue;
     return defaultValue;

@@ -355,23 +355,23 @@ QColor Scene2D::plotColor()
 /// @brief gridSmallWidth - Получить толщину основных линий сетки
 qreal Scene2D::gridSmallWidth()
 {
-    return static_cast<qreal>(m_settings.value(QString::fromLatin1("GridSmallWidth"), 1.0f).toDouble());
+    return static_cast<qreal>(m_settings.value(QString::fromLatin1("GridSmallWidth"), static_cast<qreal>(1.0)).toDouble());
 }
 
 /// @brief gridBigWidth - Получить толщину дополнительных линий сетки
 qreal Scene2D::gridBigWidth()
 {
-    return static_cast<qreal>(m_settings.value(QString::fromLatin1("GridBigWidth"), 1.5f).toDouble());
+    return static_cast<qreal>(m_settings.value(QString::fromLatin1("GridBigWidth"), static_cast<qreal>(1.5)).toDouble());
 }
 
 /// @brief axisWidth - Получить толщину осей
 qreal Scene2D::axisWidth()
 {
-    return static_cast<qreal>(m_settings.value(QString::fromLatin1("AxisWidth"), 3.0f).toDouble());
+    return static_cast<qreal>(m_settings.value(QString::fromLatin1("AxisWidth"), static_cast<qreal>(3.0)).toDouble());
 }
 
 /// @brief plotWidth - Получить толщину графика
 qreal Scene2D::plotWidth()
 {
-    return static_cast<qreal>(m_settings.value(QString::fromLatin1("PlotWidth"), 2.0f).toDouble());
+    return static_cast<qreal>(m_settings.value(QString::fromLatin1("PlotWidth"), static_cast<qreal>(2.0)).toDouble());
 }
