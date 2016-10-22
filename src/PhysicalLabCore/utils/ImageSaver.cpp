@@ -21,6 +21,7 @@
 */
 
 #include "ImageSaver.h"
+#include <algorithm>
 #include <QStringList>
 #include <QByteArray>
 #include <QImageWriter>
