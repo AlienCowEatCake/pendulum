@@ -58,6 +58,25 @@ public:
     /// @brief plotWidth - Получить толщину графика
     qreal plotWidth();
 
+    /// @brief arrX - Получить ссылку на вектор из значений по оси абсцисс
+    QVector<float> & arrX();
+    /// @brief arrX - Получить константную ссылку на вектор из значений по оси абсцисс
+    const QVector<float> & arrX() const;
+    /// @brief arrY - Получить ссылку на вектор из значений по оси ординат
+    QVector<float> & arrY();
+    /// @brief arrY - Получить константную ссылку на вектор из значений по оси ординат
+    const QVector<float> & arrY() const;
+
+    /// @brief scaleX - Получить коэффициент масштабирования по оси X
+    float scaleX() const;
+    /// @brief scaleY - Получить коэффициент масштабирования по оси Y
+    float scaleY() const;
+
+    /// @brief settings - Получить SettingsWrapper
+    SettingsWrapper & settings();
+    const SettingsWrapper & settings() const;
+
+public slots:
     /// @brief setGridBigColor - Установить цвет основных линий сетки
     void setGridBigColor(const QColor &color);
     /// @brief setGridSmallColor - Установить цвет дополнительных линий сетки
@@ -80,26 +99,8 @@ public:
     /// @brief setLabelY - Установить подпись оси Y
     void setLabelY(const QString & labelY);
 
-    /// @brief arrX - Получить ссылку на вектор из значений по оси абсцисс
-    QVector<float> & arrX();
-    /// @brief arrX - Получить константную ссылку на вектор из значений по оси абсцисс
-    const QVector<float> & arrX() const;
-    /// @brief arrY - Получить ссылку на вектор из значений по оси ординат
-    QVector<float> & arrY();
-    /// @brief arrY - Получить константную ссылку на вектор из значений по оси ординат
-    const QVector<float> & arrY() const;
-
-    /// @brief scaleX - Получить коэффициент масштабирования по оси X
-    float scaleX() const;
-    /// @brief scaleY - Получить коэффициент масштабирования по оси Y
-    float scaleY() const;
-    
     /// @brief drawGraph - Обобщённое событие отрисовки графика
     void drawGraph(QPaintDevice * device);
-
-    /// @brief settings - Получить SettingsWrapper
-    SettingsWrapper & settings();
-    const SettingsWrapper & settings() const;
 
 protected:
     /// @brief paintEvent - Событие рисования

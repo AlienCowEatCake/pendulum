@@ -88,7 +88,8 @@ const SettingsWrapper & GraphWindowAbstract::settings() const
 /// @brief on_actionGraphColor_triggered - Слот на событие изменения цвета графика
 void GraphWindowAbstract::on_actionGraphColor_triggered()
 {
-    QColor oldColor = m_scene2D->plotColor();
+    const QColor oldColor = m_scene2D->plotColor();
+#if !defined (Q_OS_MAC)
     QColor newColor = QColorDialog::getColor(oldColor, this
 #if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
         , tr("Select Graph Color")
@@ -99,6 +100,13 @@ void GraphWindowAbstract::on_actionGraphColor_triggered()
         m_scene2D->setPlotColor(newColor);
         emit settingsChanged();
     }
+#else
+   QColorDialog dialog(oldColor, this);
+   dialog.setOption(QColorDialog::NoButtons);
+   connect(&dialog, SIGNAL(colorSelected(const QColor&)), m_scene2D, SLOT(setPlotColor(const QColor&)));
+   connect(&dialog, SIGNAL(colorSelected(const QColor&)), this, SIGNAL(settingsChanged()));
+   dialog.exec();
+#endif
 }
 
 /// @brief on_actionGraphWidth_triggered - Слот на событие изменения толщины графика
