@@ -138,15 +138,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // О Qt
     connect(m_ui->actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
-    // Соединяем графики друг с другом, чтобы они могли сообщать об изменении настроек
-    /// @todo Сделать более разумный способ соединения графиков
-    connect(m_speedWindow, SIGNAL(settingsChanged()), m_displacementWindow, SLOT(onSettingsChanged()));
-    connect(m_speedWindow, SIGNAL(settingsChanged()), m_energyWindow, SLOT(onSettingsChanged()));
-    connect(m_displacementWindow, SIGNAL(settingsChanged()), m_speedWindow, SLOT(onSettingsChanged()));
-    connect(m_displacementWindow, SIGNAL(settingsChanged()), m_energyWindow, SLOT(onSettingsChanged()));
-    connect(m_energyWindow, SIGNAL(settingsChanged()), m_speedWindow, SLOT(onSettingsChanged()));
-    connect(m_energyWindow, SIGNAL(settingsChanged()), m_displacementWindow, SLOT(onSettingsChanged()));
-
     // Окно-заставка
     m_splashWindow = new SplashScreenWindow(this);
 
