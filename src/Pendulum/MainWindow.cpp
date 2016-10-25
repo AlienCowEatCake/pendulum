@@ -30,6 +30,8 @@
 #include <QPair>
 #include <QLocale>
 #include <QResizeEvent>
+#include <QActionGroup>
+#include <QMap>
 
 #include "widgets/HtmlWindow/HtmlWindow.h"
 #include "widgets/SplashScreenWindow/SplashScreenWindow.h"
@@ -69,20 +71,19 @@ MainWindow::MainWindow(QWidget *parent) :
     setCentralWidget(m_ui->widget);
     setAttribute(Qt::WA_DeleteOnClose);
 
+    QActionGroup * langActions = new QActionGroup(this);
+    langActions->addAction(m_ui->actionEnglish);
+    langActions->addAction(m_ui->actionRussian);
+    langActions->setExclusive(true);
+
 #if defined (Q_OS_MAC)
     // Под Mac OS X из коробки выглядит настолько страшно, что приходится немного стилизовать
     QList<QGroupBox*> allGroupBoxes = findChildren<QGroupBox*>();
     for(QList<QGroupBox*>::ConstIterator it = allGroupBoxes.begin(); it != allGroupBoxes.end(); ++it)
-    {
-        QGroupBox * groupBox = * it;
-        groupBox->setStyleSheet(QString::fromLatin1("QGroupBox::title { font-size: 12pt; margin-bottom: 0px; margin-left: 7px; margin-top: 2px; }"));
-    }
+        (*it)->setStyleSheet(QString::fromLatin1("QGroupBox::title { font-size: 12pt; margin-bottom: 0px; margin-left: 7px; margin-top: 2px; }"));
     QList<QLabel*> allLabels = findChildren<QLabel*>();
     for(QList<QLabel*>::ConstIterator it = allLabels.begin(); it != allLabels.end(); ++it)
-    {
-        QLabel * label = * it;
-        label->setStyleSheet(QString::fromLatin1("QLabel { min-width: 35px; font-size: 12pt; }"));
-    }
+        (*it)->setStyleSheet(QString::fromLatin1("QLabel { min-width: 35px; font-size: 12pt; }"));
 #endif
 
     m_ui->widget->setPhysicalController(m_physicalController);
@@ -193,20 +194,23 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::updateTranslations(QString language)
 {
     // Отображение название языка -> соответствующая ему менюшка
-    static QList<QPair<QString, QAction *> > languagesMap = QList<QPair<QString, QAction *> >()
-            << qMakePair(QString::fromLatin1("en"), m_ui->actionEnglish)
-            << qMakePair(QString::fromLatin1("ru"), m_ui->actionRussian);
+    static QMap<QString, QAction *> languagesMap;
+    if(languagesMap.isEmpty())
+    {
+        languagesMap[QString::fromLatin1("en")] = m_ui->actionEnglish;
+        languagesMap[QString::fromLatin1("ru")] = m_ui->actionRussian;
+    }
 
     // Определим системную локаль
     static QString systemLang;
     if(systemLang.isEmpty())
     {
         QString systemLocale = QLocale::system().name().toLower();
-        for(QList<QPair<QString, QAction *> >::Iterator it = languagesMap.begin(); it != languagesMap.end(); ++it)
+        for(QMap<QString, QAction *>::Iterator it = languagesMap.begin(); it != languagesMap.end(); ++it)
         {
-            if(systemLocale.startsWith(it->first))
+            if(systemLocale.startsWith(it.key()))
             {
-                systemLang = it->first;
+                systemLang = it.key();
                 break;
             }
         }
@@ -237,10 +241,8 @@ void MainWindow::updateTranslations(QString language)
     // Пофиксим шрифты
     Workarounds::FontsFix(language);
 
-    // Пробежим по меню и проставим галочку на нужном нам языке и снимем с остальных
-    /// @todo Неудачное решение, стоит посмотреть в сторону QActionGroup::setExclusive
-    for(QList<QPair<QString, QAction *> >::Iterator it = languagesMap.begin(); it != languagesMap.end(); ++it)
-        it->second->setChecked(it->first == language);
+    // Проставим галочку на нужном нам языке и снимем с остальных
+    languagesMap[language]->setChecked(true);
 
     // У кнопки старт/пауза текст зависит от состояния
     switch(m_physicalController->currentState())
