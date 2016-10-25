@@ -53,7 +53,7 @@ void RegisterEmitter(const char * id, QObject * emitter, const char * signal)
     assert(signal && signal[0] == '2');
 
     const std::string id_str = std::string(id);
-    const std::string signal_str = std::string(signal + 1);
+    const std::string signal_str = std::string(signal);
 
     emitters[id_str].push_back(std::make_pair(QPointer<QObject>(emitter), signal_str));
 
@@ -64,10 +64,7 @@ void RegisterEmitter(const char * id, QObject * emitter, const char * signal)
     for(ObjectInfoList::iterator it = list->second.begin(); it != list->second.end(); ++it)
     {
         if(!it->first.isNull())
-        {
-            const std::string slot = "1" + it->second;
-            QObject::connect(emitter, signal, it->first.data(), slot.c_str());
-        }
+            QObject::connect(emitter, signal, it->first.data(), it->second.c_str());
     }
 }
 
@@ -82,7 +79,7 @@ void RegisterReceiver(const char * id, QObject * receiver, const char * slot)
     assert(slot && slot[0] == '1');
 
     const std::string id_str = std::string(id);
-    const std::string slot_str = std::string(slot + 1);
+    const std::string slot_str = std::string(slot);
 
     receivers[id_str].push_back(std::make_pair(QPointer<QObject>(receiver), slot_str));
 
@@ -93,10 +90,7 @@ void RegisterReceiver(const char * id, QObject * receiver, const char * slot)
     for(ObjectInfoList::iterator it = list->second.begin(); it != list->second.end(); ++it)
     {
         if(!it->first.isNull())
-        {
-            const std::string signal = "2" + it->second;
-            QObject::connect(it->first.data(), signal.c_str(), receiver, slot);
-        }
+            QObject::connect(it->first.data(), it->second.c_str(), receiver, slot);
     }
 }
 
@@ -111,7 +105,7 @@ void UnregisterEmitter(const char * id, QObject * emitter, const char * signal)
     assert(signal && signal[0] == '2');
 
     const std::string id_str = std::string(id);
-    const std::string signal_str = std::string(signal + 1);
+    const std::string signal_str = std::string(signal);
 
     const ObjectInfo objectInfo = std::make_pair(QPointer<QObject>(emitter), signal_str);
     assert(emitters.find(id_str) != emitters.end());
@@ -125,10 +119,7 @@ void UnregisterEmitter(const char * id, QObject * emitter, const char * signal)
     for(ObjectInfoList::iterator it = list->second.begin(); it != list->second.end(); ++it)
     {
         if(!it->first.isNull())
-        {
-            const std::string slot = "1" + it->second;
-            QObject::disconnect(emitter, signal, it->first.data(), slot.c_str());
-        }
+            QObject::disconnect(emitter, signal, it->first.data(), it->second.c_str());
     }
 }
 
@@ -143,7 +134,7 @@ void UnregisterReceiver(const char * id, QObject * receiver, const char * slot)
     assert(slot && slot[0] == '1');
 
     const std::string id_str = std::string(id);
-    const std::string slot_str = std::string(slot + 1);
+    const std::string slot_str = std::string(slot);
 
     const ObjectInfo objectInfo = std::make_pair(QPointer<QObject>(receiver), slot_str);
     assert(receivers.find(id_str) != receivers.end());
@@ -157,10 +148,7 @@ void UnregisterReceiver(const char * id, QObject * receiver, const char * slot)
     for(ObjectInfoList::iterator it = list->second.begin(); it != list->second.end(); ++it)
     {
         if(!it->first.isNull())
-        {
-            const std::string signal = "2" + it->second;
-            QObject::disconnect(it->first.data(), signal.c_str(), receiver, slot);
-        }
+            QObject::disconnect(it->first.data(), it->second.c_str(), receiver, slot);
     }
 }
 
