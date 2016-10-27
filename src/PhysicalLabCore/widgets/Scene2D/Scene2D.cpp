@@ -327,51 +327,71 @@ void Scene2D::setPlotWidth(qreal width)
 /// @brief gridBigColor - Получить цвет основных линий сетки
 QColor Scene2D::gridBigColor()
 {
-    static QColor defaultValue(Qt::gray);
-    return m_settings.value(QString::fromLatin1("GridBigColor"), defaultValue).value<QColor>();
+    static const QColor defaultValue(Qt::gray);
+    const QVariant rawValue = m_settings.value(QString::fromLatin1("GridBigColor"), defaultValue);
+    const QColor value = rawValue.isValid() ? rawValue.value<QColor>() : defaultValue;
+    return value.isValid() ? value : defaultValue;
 }
 
 /// @brief gridSmallColor - Получить цвет дополнительных линий сетки
 QColor Scene2D::gridSmallColor()
 {
-    static QColor defaultValue(Qt::lightGray);
-    return m_settings.value(QString::fromLatin1("GridSmallColor"), defaultValue).value<QColor>();
+    static const QColor defaultValue(Qt::lightGray);
+    const QVariant rawValue = m_settings.value(QString::fromLatin1("GridSmallColor"), defaultValue);
+    const QColor value = rawValue.isValid() ? rawValue.value<QColor>() : defaultValue;
+    return value.isValid() ? value : defaultValue;
 }
 
 /// @brief axisColor - Получить цвет осей
 QColor Scene2D::axisColor()
 {
-    static QColor defaultValue(Qt::black);
-    return m_settings.value(QString::fromLatin1("AxisColor"), defaultValue).value<QColor>();
+    static const QColor defaultValue(Qt::black);
+    const QVariant rawValue = m_settings.value(QString::fromLatin1("AxisColor"), defaultValue);
+    const QColor value = rawValue.isValid() ? rawValue.value<QColor>() : defaultValue;
+    return value.isValid() ? value : defaultValue;
 }
 
 /// @brief plotColor - Получить цвет графика
 QColor Scene2D::plotColor()
 {
-    static QColor defaultValue(Qt::darkRed);
-    return m_settings.value(QString::fromLatin1("PlotColor"), defaultValue).value<QColor>();
+    static const QColor defaultValue(Qt::darkRed);
+    const QVariant rawValue = m_settings.value(QString::fromLatin1("PlotColor"), defaultValue);
+    const QColor value = rawValue.isValid() ? rawValue.value<QColor>() : defaultValue;
+    return value.isValid() ? value : defaultValue;
 }
 
 /// @brief gridSmallWidth - Получить толщину основных линий сетки
 qreal Scene2D::gridSmallWidth()
 {
-    return static_cast<qreal>(m_settings.value(QString::fromLatin1("GridSmallWidth"), static_cast<qreal>(1.0)).toDouble());
+    static const qreal defaultValue = static_cast<qreal>(1.0);
+    const QVariant rawValue = m_settings.value(QString::fromLatin1("GridSmallWidth"), defaultValue);
+    const qreal value = rawValue.isValid() ? static_cast<qreal>(rawValue.toDouble()) : defaultValue;
+    return value >= 0.0 ? value : defaultValue;
 }
 
 /// @brief gridBigWidth - Получить толщину дополнительных линий сетки
 qreal Scene2D::gridBigWidth()
 {
-    return static_cast<qreal>(m_settings.value(QString::fromLatin1("GridBigWidth"), static_cast<qreal>(1.5)).toDouble());
+    static const qreal defaultValue = static_cast<qreal>(1.5);
+    const QVariant rawValue = m_settings.value(QString::fromLatin1("GridBigWidth"), defaultValue);
+    const qreal value = rawValue.isValid() ? static_cast<qreal>(rawValue.toDouble()) : defaultValue;
+    return value >= 0.0 ? value : defaultValue;
 }
 
 /// @brief axisWidth - Получить толщину осей
 qreal Scene2D::axisWidth()
 {
-    return static_cast<qreal>(m_settings.value(QString::fromLatin1("AxisWidth"), static_cast<qreal>(3.0)).toDouble());
+    static const qreal defaultValue = static_cast<qreal>(3.0);
+    const QVariant rawValue = m_settings.value(QString::fromLatin1("AxisWidth"), defaultValue);
+    const qreal value = rawValue.isValid() ? static_cast<qreal>(rawValue.toDouble()) : defaultValue;
+    return value >= 0.0 ? value : defaultValue;
 }
 
 /// @brief plotWidth - Получить толщину графика
 qreal Scene2D::plotWidth()
 {
-    return static_cast<qreal>(m_settings.value(QString::fromLatin1("PlotWidth"), static_cast<qreal>(2.0)).toDouble());
+    static const qreal defaultValue = static_cast<qreal>(2.0);
+    const QVariant rawValue = m_settings.value(QString::fromLatin1("PlotWidth"), defaultValue);
+    const qreal value = rawValue.isValid() ? static_cast<qreal>(rawValue.toDouble()) : defaultValue;
+    return value > 0.0 ? value : defaultValue;
 }

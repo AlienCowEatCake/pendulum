@@ -146,6 +146,9 @@ void GraphWindowSpeed::setNumPerionds(int value)
 
 int GraphWindowSpeed::numPeriods() const
 {
-    return settings().value(QString::fromLatin1("NumT"), 3).toInt();
+    static const int defaultValue = 3;
+    const QVariant rawValue = settings().value(QString::fromLatin1("NumT"), defaultValue);
+    const int value = rawValue.isValid() ? rawValue.toInt() : defaultValue;
+    return value > 0 ? value : defaultValue;
 }
 

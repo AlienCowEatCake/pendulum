@@ -138,6 +138,9 @@ void GraphWindowDisplacement::setNumPerionds(int value)
 
 int GraphWindowDisplacement::numPeriods() const
 {
-    return settings().value(QString::fromLatin1("NumT"), 3).toInt();
+    static const int defaultValue = 3;
+    const QVariant rawValue = settings().value(QString::fromLatin1("NumT"), defaultValue);
+    const int value = rawValue.isValid() ? rawValue.toInt() : defaultValue;
+    return value > 0 ? value : defaultValue;
 }
 

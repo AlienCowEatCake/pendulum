@@ -212,9 +212,15 @@ void MainWindow::updateTranslations(QString language)
     // Посмотрим в настройки, не сохранен ли случайно в них язык
     SettingsWrapper settings;
     if(language.isEmpty())
-        language = settings.value(QString::fromLatin1("Language"), systemLang).toString();
+    {
+        const QVariant rawValue = settings.value(QString::fromLatin1("Language"), systemLang);
+        const QString value = rawValue.isValid() ? rawValue.toString() : systemLang;
+        language = languagesMap.find(value) != languagesMap.end() ? value : systemLang;
+    }
     else
+    {
         settings.setValue(QString::fromLatin1("Language"), language);
+    }
 
     // Удалим старый перевод, установим новый
     static QTranslator qtTranslator;
