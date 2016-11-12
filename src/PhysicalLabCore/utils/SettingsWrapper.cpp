@@ -376,15 +376,17 @@ private:
 } // namespace
 
 /// @brief Кэш настроек
-class SettingsWrapper::SettingsCache
+class SettingsWrapper::SettingsCache : public QObject
 {
 public:
     SettingsCache()
+        : m_isConnectedToQApp(false)
     {}
 
     ~SettingsCache()
     {
-        saveSettings();
+        if(m_isConnectedToQApp)
+            saveSettings();
     }
 
     /// @brief Установить значение для заданного ключа
@@ -394,6 +396,7 @@ public:
     void setValue(const QString &group, const QString &key, const QVariant &value)
     {
         m_settingsMutex.lock();
+        CheckOrConnectToQApp();
         m_settingsCache[group][key] = value;
         m_settingsMutex.unlock();
     }
@@ -405,9 +408,10 @@ public:
     /// @return - значение для ключа или defaultValue при отсутствии значения
     QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
     {
+        m_settingsMutex.lock();
+        CheckOrConnectToQApp();
         QVariant retValue = defaultValue;
         bool foundInCache = false;
-        m_settingsMutex.lock();
         QMap<QString, QVariantMap>::Iterator groupIter = m_settingsCache.find(group);
         if(groupIter != m_settingsCache.end())
         {
@@ -444,6 +448,18 @@ private:
         m_settingsMutex.unlock();
     }
 
+    /// @brief Проверяет, соединен ли кэш настроек с QApplication, если нет - выполняет соединение
+    void CheckOrConnectToQApp()
+    {
+        if(!m_isConnectedToQApp && qApp)
+        {
+            connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(deleteLater()));
+            m_isConnectedToQApp = true;
+        }
+    }
+
+    /// @brief Флаг соединен ли кэш настроек с QApplication
+    bool m_isConnectedToQApp;
     /// @brief Мьютекс, блокирующий доступ к кэшу из разных потоков
     QMutex m_settingsMutex;
     /// @brief Платформозависимое хранилище настроек
@@ -453,7 +469,7 @@ private:
 };
 
 /// @brief Глобальный кэш настроек
-SettingsWrapper::SettingsCache SettingsWrapper::g_settingsCache;
+QPointer<SettingsWrapper::SettingsCache> SettingsWrapper::g_settingsCache = new SettingsCache;
 
 
 /// @brief SettingsWrapper
@@ -470,7 +486,8 @@ SettingsWrapper::~SettingsWrapper()
 /// @param[in] value - значение, которое устанавливается для ключа
 void SettingsWrapper::setValue(const QString &key, const QVariant &value)
 {
-    g_settingsCache.setValue(m_settingsGroup, key, value);
+    if(!g_settingsCache.isNull())
+        g_settingsCache->setValue(m_settingsGroup, key, value);
 }
 
 /// @brief Получить значение для заданного ключа
@@ -479,6 +496,6 @@ void SettingsWrapper::setValue(const QString &key, const QVariant &value)
 /// @return - значение для ключа или defaultValue при отсутствии значения
 QVariant SettingsWrapper::value(const QString &key, const QVariant &defaultValue) const
 {
-    return g_settingsCache.value(m_settingsGroup, key, defaultValue);
+    return g_settingsCache.isNull() ? defaultValue : g_settingsCache->value(m_settingsGroup, key, defaultValue);
 }
 

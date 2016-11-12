@@ -25,6 +25,7 @@
 
 #include <QString>
 #include <QVariant>
+#include <QPointer>
 
 /// @brief Класс-обертка над настройками, содержит в себе кэш, сбрасываемый при выходе из программы
 /// @note Thread-safe
@@ -54,7 +55,7 @@ private:
 
     /// @brief Глобальный кэш настроек
     class SettingsCache;
-    static SettingsCache g_settingsCache;
+    static QPointer<SettingsCache> g_settingsCache;
 };
 
 #endif // PHYSICALLABCORE_SETTINGSWRAPPER_H_INCLUDED
