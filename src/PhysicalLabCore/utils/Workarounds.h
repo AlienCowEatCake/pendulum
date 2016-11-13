@@ -41,6 +41,9 @@ void HighDPIFix();
 /// @return true - удаленный запуск, false - иначе
 bool IsRemoteSession();
 
+/// @brief Переопределить неподдерживаемые QT_QPA_PLATFORMTHEME и QT_STYLE_OVERRIDE
+void StyleFix();
+
 } // Workarounds
 
 #endif // PHYSICALLABCORE_WORKAROUNDS_H_INCLUDED

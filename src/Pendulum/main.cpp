@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
     QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
 #endif
 #endif
+    Workarounds::StyleFix();
 
     QApplication app(argc, argv);
     app.setOrganizationDomain(QString::fromLatin1("fami.codefreak.ru"));
