@@ -122,5 +122,23 @@ bool IsRemoteSession()
     return false;
 }
 
+/// @brief Переопределить неподдерживаемые QT_QPA_PLATFORMTHEME и QT_STYLE_OVERRIDE
+void StyleFix()
+{
+#if (defined (Q_OS_UNIX) && !defined (Q_OS_MAC) && QT_VERSION >= QT_VERSION_CHECK(5, 0, 0) && QT_VERSION < QT_VERSION_CHECK(5, 7, 0))
+    // До 5.6 включительно использовался стиль gtk, с 5.7 он называется gtk2
+    // Если это статическая сборка, например, с 5.6 и в системе определены
+    // QT_QPA_PLATFORMTHEME и/или QT_STYLE_OVERRIDE, то стили не подхватятся.
+    static char newPlatformThemeEnv [] = "QT_QPA_PLATFORMTHEME=gtk";
+    const char * platformThemeEnv = getenv("QT_QPA_PLATFORMTHEME");
+    if(platformThemeEnv && !QString::fromLatin1(platformThemeEnv).compare(QString::fromLatin1("gtk2"), Qt::CaseInsensitive))
+        putenv(newPlatformThemeEnv);
+    static char newStyleOverrideEnv [] = "QT_STYLE_OVERRIDE=gtk";
+    const char * styleOverrideEnv = getenv("QT_STYLE_OVERRIDE");
+    if(styleOverrideEnv && !QString::fromLatin1(styleOverrideEnv).compare(QString::fromLatin1("gtk2"), Qt::CaseInsensitive))
+        putenv(newStyleOverrideEnv);
+#endif
+}
+
 } // Workarounds
 
