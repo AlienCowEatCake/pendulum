@@ -44,22 +44,22 @@
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="94"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="96"/>
         <source>Select Graph Color</source>
         <translation>Выберите цвет графика</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="110"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="118"/>
         <source>Width</source>
         <translation>Толщина</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="110"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="118"/>
         <source>Enter Graph Width:</source>
         <translation>Укажите толщину графика:</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="123"/>
+        <location filename="../../../PhysicalLabCore/widgets/GraphWindowAbstract/GraphWindowAbstract.cpp" line="130"/>
         <source>Graph</source>
         <translation>График</translation>
     </message>
@@ -67,32 +67,32 @@
 <context>
     <name>GraphWindowDisplacement</name>
     <message>
-        <location filename="../../GraphWindowDisplacement.cpp" line="114"/>
+        <location filename="../../GraphWindowDisplacement.cpp" line="115"/>
         <source>Number of &amp;Periods...</source>
         <translation>Количество &amp;периодов...</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowDisplacement.cpp" line="109"/>
+        <location filename="../../GraphWindowDisplacement.cpp" line="110"/>
         <source>Displacement</source>
         <translation>Смещение</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowDisplacement.cpp" line="109"/>
+        <location filename="../../GraphWindowDisplacement.cpp" line="110"/>
         <source>t, s</source>
         <translation>t, c</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowDisplacement.cpp" line="109"/>
+        <location filename="../../GraphWindowDisplacement.cpp" line="110"/>
         <source>x, m</source>
         <translation>x, м</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowDisplacement.cpp" line="126"/>
+        <location filename="../../GraphWindowDisplacement.cpp" line="127"/>
         <source>Number of Periods</source>
         <translation>Количество периодов</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowDisplacement.cpp" line="126"/>
+        <location filename="../../GraphWindowDisplacement.cpp" line="127"/>
         <source>Enter Number of Periods:</source>
         <translation>Введите количество периодов:</translation>
     </message>
@@ -100,17 +100,17 @@
 <context>
     <name>GraphWindowEnergy</name>
     <message>
-        <location filename="../../GraphWindowEnergy.cpp" line="81"/>
+        <location filename="../../GraphWindowEnergy.cpp" line="82"/>
         <source>Mechanical Energy</source>
         <translation>Механическая энергия</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowEnergy.cpp" line="81"/>
+        <location filename="../../GraphWindowEnergy.cpp" line="82"/>
         <source>t, s</source>
         <translation>t, c</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowEnergy.cpp" line="81"/>
+        <location filename="../../GraphWindowEnergy.cpp" line="82"/>
         <source>E, J</source>
         <translation>E, Дж</translation>
     </message>
@@ -118,32 +118,32 @@
 <context>
     <name>GraphWindowSpeed</name>
     <message>
-        <location filename="../../GraphWindowSpeed.cpp" line="117"/>
+        <location filename="../../GraphWindowSpeed.cpp" line="118"/>
         <source>Speed</source>
         <translation>Скорость</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowSpeed.cpp" line="117"/>
+        <location filename="../../GraphWindowSpeed.cpp" line="118"/>
         <source>t, s</source>
         <translation>t, c</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowSpeed.cpp" line="117"/>
+        <location filename="../../GraphWindowSpeed.cpp" line="118"/>
         <source>v, m/s</source>
         <translation>v, м/с</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowSpeed.cpp" line="122"/>
+        <location filename="../../GraphWindowSpeed.cpp" line="123"/>
         <source>Number of &amp;Periods...</source>
         <translation>Количество &amp;периодов...</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowSpeed.cpp" line="134"/>
+        <location filename="../../GraphWindowSpeed.cpp" line="135"/>
         <source>Number of Periods</source>
         <translation>Количество периодов</translation>
     </message>
     <message>
-        <location filename="../../GraphWindowSpeed.cpp" line="134"/>
+        <location filename="../../GraphWindowSpeed.cpp" line="135"/>
         <source>Enter Number of Periods:</source>
         <translation>Введите количество периодов:</translation>
     </message>
@@ -151,27 +151,27 @@
 <context>
     <name>ImageSaver</name>
     <message>
-        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="71"/>
+        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="72"/>
         <source>Images</source>
         <translation>Изображения</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="74"/>
+        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="75"/>
         <source>All Images</source>
         <translation>Все изображения</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="80"/>
+        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="81"/>
         <source>Save Image File</source>
         <translation>Сохранить изображение</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="108"/>
+        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="109"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="108"/>
+        <location filename="../../../PhysicalLabCore/utils/ImageSaver.cpp" line="109"/>
         <source>Error: Can&apos;t save file</source>
         <translation>Ошибка: Не удалось сохранить файл</translation>
     </message>
@@ -330,53 +330,53 @@
     </message>
     <message>
         <location filename="../../MainWindow.ui" line="387"/>
-        <location filename="../../MainWindow.cpp" line="249"/>
-        <location filename="../../MainWindow.cpp" line="339"/>
+        <location filename="../../MainWindow.cpp" line="248"/>
+        <location filename="../../MainWindow.cpp" line="332"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="252"/>
-        <location filename="../../MainWindow.cpp" line="312"/>
-        <location filename="../../MainWindow.cpp" line="316"/>
+        <location filename="../../MainWindow.cpp" line="251"/>
+        <location filename="../../MainWindow.cpp" line="305"/>
+        <location filename="../../MainWindow.cpp" line="309"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="255"/>
-        <location filename="../../MainWindow.cpp" line="320"/>
+        <location filename="../../MainWindow.cpp" line="254"/>
+        <location filename="../../MainWindow.cpp" line="313"/>
         <source>Resume</source>
         <translatorcomment>Вообще надо возобновить или продолжить, но кнопка слишком маленькой ширины</translatorcomment>
         <translation type="unfinished">Старт</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="262"/>
+        <location filename="../../MainWindow.cpp" line="261"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="264"/>
+        <location filename="../../MainWindow.cpp" line="263"/>
         <source>Credits</source>
         <translation>Разработчики</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="266"/>
+        <location filename="../../MainWindow.cpp" line="265"/>
         <source>User Manual</source>
         <translation>Руководство пользователя</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="268"/>
+        <location filename="../../MainWindow.cpp" line="267"/>
         <source>License</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="280"/>
+        <location filename="../../MainWindow.cpp" line="279"/>
         <source>Screenshot.png</source>
         <translation>Скриншот.png</translation>
     </message>
     <message>
-        <location filename="../../MainWindow.cpp" line="260"/>
-        <location filename="../../MainWindow.cpp" line="274"/>
+        <location filename="../../MainWindow.cpp" line="259"/>
+        <location filename="../../MainWindow.cpp" line="273"/>
         <source>Mass Spring Damper System</source>
         <translation>Пружинный маятник в среде с сопротивлением</translation>
     </message>
@@ -384,9 +384,9 @@
 <context>
     <name>Scene2D</name>
     <message>
-        <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="177"/>
         <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="179"/>
         <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="181"/>
+        <location filename="../../../PhysicalLabCore/widgets/Scene2D/Scene2D.cpp" line="183"/>
         <source>Times</source>
         <translation>Times</translation>
     </message>
