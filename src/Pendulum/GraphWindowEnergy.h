@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -30,11 +30,11 @@ class PhysicalController;
 class GraphWindowEnergy : public GraphWindowAbstract
 {
     Q_OBJECT
-    
+
 public:
     explicit GraphWindowEnergy(QWidget *parent = 0);
     void update();
-    
+
     void setPhysicalController(const PhysicalController * physicalController);
 
 protected:

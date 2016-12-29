@@ -31,7 +31,7 @@ class QTextBrowser;
 class HtmlWindow : public QWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit HtmlWindow(QWidget * parent = 0);
 
@@ -45,7 +45,7 @@ public:
     void setSize(int width, int height);
     /// @brief setPreferredSize - Установить предпочтительный не фиксированный размер окна
     void setPreferredSize(int width, int height);
-    
+
 private:
     /// @brief moveToCenter - Перемещение окна в центр экрана
     void moveToCenter();

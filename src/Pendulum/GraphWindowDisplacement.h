@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2014,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -30,11 +30,11 @@ class PhysicalController;
 class GraphWindowDisplacement : public GraphWindowAbstract
 {
     Q_OBJECT
-    
+
 public:
     explicit GraphWindowDisplacement(QWidget * parent = NULL);
     void update();
-    
+
     void setPhysicalController(const PhysicalController * physicalController);
 
 protected:
