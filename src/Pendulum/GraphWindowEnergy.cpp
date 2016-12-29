@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -27,8 +27,9 @@
 #include <QEvent>
 #include "PhysicalController.h"
 
-GraphWindowEnergy::GraphWindowEnergy(QWidget * parent) :
-    GraphWindowAbstract(false, parent), m_physicalController(NULL)
+GraphWindowEnergy::GraphWindowEnergy(QWidget * parent)
+    : GraphWindowAbstract(false, parent)
+    , m_physicalController(NULL)
 {
     updateTitle();
 }
@@ -55,10 +56,10 @@ void GraphWindowEnergy::update()
         mactiont = std::log(action.get_E0() / 0.001) / (2.0 * action.get_sigma());
     else
         mactiont = 1.0;
-    float maximumValue = std::max(static_cast<float>(action.get_E0()), 1e-3f);
+    const float maximumValue = std::max(static_cast<float>(action.get_E0()), 1e-3f);
     resizeGraph(0.0f, static_cast<float>(mactiont), 0, maximumValue);
 
-    double di = mactiont * 1000.0 / 50.0;
+    const double di = mactiont * 1000.0 / 50.0;
     for(double i = 0.0; i <= mactiont * 1000.0; i += di)
     {
         action.Refresh(i);

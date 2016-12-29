@@ -50,7 +50,7 @@ void ImageSaver::setDefaultName(const QString &defaultName)
 bool ImageSaver::save(const QImage & image)
 {
     // Белый список форматов, чтобы в предлагаемых форматах не было всяких ico, webp и прочих
-    static QStringList whiteList = QStringList()
+    static const QStringList whiteList = QStringList()
             << QString::fromLatin1("bmp")
             << QString::fromLatin1("jpg")
             << QString::fromLatin1("jpeg")
@@ -63,7 +63,7 @@ bool ImageSaver::save(const QImage & image)
     for(QList<QByteArray>::iterator it = supported.begin(); it != supported.end(); ++it)
     {
         *it = (*it).toLower();
-        QString format = QString::fromLatin1(*it);
+        const QString format = QString::fromLatin1(*it);
         if(!whiteList.contains(format, Qt::CaseInsensitive))
             continue;
         formatsAll.append(formatsAll.length() > 0 ? QString::fromLatin1(" *.") : QString::fromLatin1("*.")).append(format);

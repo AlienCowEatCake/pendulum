@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -139,7 +139,7 @@ bool MilkshapeModel::loadModelData(const QString & filename)
     if(strncmp(pHeader->m_ID, "MS3D000000", 10) != 0)
         return false; // неправильный заголовок файла
     // загрузка вершин
-    int nVertices = *reinterpret_cast<const MS3DWord*>(pPtr);
+    const int nVertices = *reinterpret_cast<const MS3DWord*>(pPtr);
     m_numVertices = nVertices;
     m_pVertices = new Vertex[nVertices];
     pPtr += sizeof(MS3DWord);
@@ -152,7 +152,7 @@ bool MilkshapeModel::loadModelData(const QString & filename)
         pPtr += sizeof(MS3DVertex);
     }
     // загрузка треугольников
-    int nTriangles = *reinterpret_cast<const MS3DWord*>(pPtr);
+    const int nTriangles = *reinterpret_cast<const MS3DWord*>(pPtr);
     m_numTriangles = nTriangles;
     m_pTriangles = new Triangle[nTriangles];
     pPtr += sizeof(MS3DWord);
@@ -161,7 +161,7 @@ bool MilkshapeModel::loadModelData(const QString & filename)
     {
         const MS3DTriangle *pTriangle = reinterpret_cast<const MS3DTriangle*>(pPtr);
         int vertexIndices[3] = {pTriangle->m_vertexIndices[0], pTriangle->m_vertexIndices[1], pTriangle->m_vertexIndices[2]};
-        float t[3] = {1.0f-pTriangle->m_t[0], 1.0f-pTriangle->m_t[1], 1.0f-pTriangle->m_t[2]};
+        const float t[3] = {1.0f-pTriangle->m_t[0], 1.0f-pTriangle->m_t[1], 1.0f-pTriangle->m_t[2]};
         memcpy(m_pTriangles[i].m_vertexNormals, pTriangle->m_vertexNormals, sizeof(float)*3*3);
         memcpy(m_pTriangles[i].m_s, pTriangle->m_s, sizeof(float)*3);
         memcpy(m_pTriangles[i].m_t, t, sizeof(float)*3);
@@ -169,7 +169,7 @@ bool MilkshapeModel::loadModelData(const QString & filename)
         pPtr += sizeof(MS3DTriangle);
     }
     // загрузка сетки
-    int nGroups = *reinterpret_cast<const MS3DWord*>(pPtr);
+    const int nGroups = *reinterpret_cast<const MS3DWord*>(pPtr);
     m_numMeshes = nGroups;
     m_pMeshes = new Mesh[nGroups];
     pPtr += sizeof(MS3DWord);
@@ -187,7 +187,7 @@ bool MilkshapeModel::loadModelData(const QString & filename)
             pPtr += sizeof(MS3DWord);
         }
 
-        char materialIndex = *reinterpret_cast<const char*>(pPtr);
+        const char materialIndex = *reinterpret_cast<const char*>(pPtr);
         pPtr += sizeof(char);
 
         m_pMeshes[i].m_materialIndex = materialIndex;
@@ -195,7 +195,7 @@ bool MilkshapeModel::loadModelData(const QString & filename)
         m_pMeshes[i].m_pTriangleIndices = pTriangleIndices;
     }
     // загрузка материалов
-    int nMaterials = *reinterpret_cast<const MS3DWord*>(pPtr);
+    const int nMaterials = *reinterpret_cast<const MS3DWord*>(pPtr);
     m_numMaterials = nMaterials;
     m_pMaterials = new Material[nMaterials];
     pPtr += sizeof(MS3DWord);
@@ -224,19 +224,19 @@ bool MilkshapeModel::loadModelData(const QString & filename)
 /// @param[in] smoothNormalesWeight - веса сглаживания нормалей [0..1], чем больше, тем сильнее сглаживание
 void MilkshapeModel::generateNormales(float smoothNormalesWeight)
 {
-    float oldNormalesWeight = 1.0f - smoothNormalesWeight;
+    const float oldNormalesWeight = 1.0f - smoothNormalesWeight;
     for(int i = 0; i < m_numTriangles; i++)
     {
-        float ax = m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[0] - m_pVertices[m_pTriangles[i].m_vertexIndices[0]].m_location[0];
-        float ay = m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[1] - m_pVertices[m_pTriangles[i].m_vertexIndices[0]].m_location[1];
-        float az = m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[2] - m_pVertices[m_pTriangles[i].m_vertexIndices[0]].m_location[2];
-        float bx = m_pVertices[m_pTriangles[i].m_vertexIndices[2]].m_location[0] - m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[0];
-        float by = m_pVertices[m_pTriangles[i].m_vertexIndices[2]].m_location[1] - m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[1];
-        float bz = m_pVertices[m_pTriangles[i].m_vertexIndices[2]].m_location[2] - m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[2];
-        float nx = ay * bz - by * az;
-        float ny = az * bx - bz * ax;
-        float nz = ax * by - bx * ay;
-        float nn = std::sqrt(nx * nx + ny * ny + nz * nz);
+        const float ax = m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[0] - m_pVertices[m_pTriangles[i].m_vertexIndices[0]].m_location[0];
+        const float ay = m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[1] - m_pVertices[m_pTriangles[i].m_vertexIndices[0]].m_location[1];
+        const float az = m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[2] - m_pVertices[m_pTriangles[i].m_vertexIndices[0]].m_location[2];
+        const float bx = m_pVertices[m_pTriangles[i].m_vertexIndices[2]].m_location[0] - m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[0];
+        const float by = m_pVertices[m_pTriangles[i].m_vertexIndices[2]].m_location[1] - m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[1];
+        const float bz = m_pVertices[m_pTriangles[i].m_vertexIndices[2]].m_location[2] - m_pVertices[m_pTriangles[i].m_vertexIndices[1]].m_location[2];
+        const float nx = ay * bz - by * az;
+        const float ny = az * bx - bz * ax;
+        const float nz = ax * by - bx * ay;
+        const float nn = std::sqrt(nx * nx + ny * ny + nz * nz);
         for(int j = 0; j < 3; j++)
         {
             m_pTriangles[i].m_vertexNormals[j][0] = nx / nn;

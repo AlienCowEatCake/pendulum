@@ -40,15 +40,15 @@
 #include "utils/ObjectsConnector.h"
 
 GraphWindowAbstract::GraphWindowAbstract(bool haveNegativeY, QWidget *parent)
-    : QMainWindow(parent),
-      m_ui(new Ui::GraphWindowAbstract),
-      m_imageSaver(new ImageSaver(this))
+    : QMainWindow(parent)
+    , m_ui(new Ui::GraphWindowAbstract)
+    , m_imageSaver(new ImageSaver(this))
 {
     m_ui->setupUi(this);
     m_scene2D = new Scene2D(haveNegativeY, m_ui->centralwidget);
     setCentralWidget(m_scene2D);
     connect(m_ui->actionClose, SIGNAL(triggered()), this, SLOT(close()));
-    bool darkBackground = ThemeUtils::MenuHasDarkTheme(m_ui->menuFile);
+    const bool darkBackground = ThemeUtils::MenuHasDarkTheme(m_ui->menuFile);
     m_ui->actionSaveGraphFile->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_SAVE_AS, darkBackground));
     m_ui->actionClose->setIcon(ThemeUtils::GetIcon(ThemeUtils::ICON_CLOSE, darkBackground));
     static const char settingsChangedID[] = "Scene2D_SettingsChangedID";
@@ -93,7 +93,7 @@ void GraphWindowAbstract::on_actionGraphColor_triggered()
 {
     const QColor oldColor = m_scene2D->plotColor();
 #if !defined (Q_OS_MAC)
-    QColor newColor = QColorDialog::getColor(oldColor, this
+    const QColor newColor = QColorDialog::getColor(oldColor, this
 #if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
         , tr("Select Graph Color")
 #endif
@@ -116,8 +116,8 @@ void GraphWindowAbstract::on_actionGraphColor_triggered()
 void GraphWindowAbstract::on_actionGraphWidth_triggered()
 {
     bool ok = false;
-    qreal oldValue = m_scene2D->plotWidth();
-    double value = QInputDialog::getDouble(this, tr("Width"), tr("Enter Graph Width:"), static_cast<double>(oldValue), 1.0, 10.0, 1, &ok);
+    const qreal oldValue = m_scene2D->plotWidth();
+    const double value = QInputDialog::getDouble(this, tr("Width"), tr("Enter Graph Width:"), static_cast<double>(oldValue), 1.0, 10.0, 1, &ok);
     qreal newValue = static_cast<qreal>(value);
     if(ok && std::fabs(oldValue - newValue) > 1e-5)
     {
@@ -129,8 +129,8 @@ void GraphWindowAbstract::on_actionGraphWidth_triggered()
 /// @brief on_actionSaveGraphFile_triggered - Слот на событие сохранения графика в файл
 void GraphWindowAbstract::on_actionSaveGraphFile_triggered()
 {
-    QString title = (windowTitle().isEmpty() ? tr("Graph") : windowTitle());
-    m_imageSaver->setDefaultName(title.append(QString::fromLatin1(".png")));
+    const QString title = (windowTitle().isEmpty() ? tr("Graph") : windowTitle());
+    m_imageSaver->setDefaultName(title + QString::fromLatin1(".png"));
     QImage image(m_scene2D->width(), m_scene2D->height(), QImage::Format_ARGB32_Premultiplied);
     m_scene2D->drawGraph(& image);
     m_imageSaver->save(image);

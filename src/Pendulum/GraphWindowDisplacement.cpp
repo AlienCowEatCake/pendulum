@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -30,8 +30,9 @@
 #include "utils/SettingsWrapper.h"
 #include "PhysicalController.h"
 
-GraphWindowDisplacement::GraphWindowDisplacement(QWidget * parent) :
-    GraphWindowAbstract(true, parent), m_physicalController(NULL)
+GraphWindowDisplacement::GraphWindowDisplacement(QWidget * parent)
+    : GraphWindowAbstract(true, parent)
+    , m_physicalController(NULL)
 {
     setNumPerionds(3);
     m_actionSetNumPeriods = new QAction(this);
@@ -49,7 +50,7 @@ void GraphWindowDisplacement::setPhysicalController(const PhysicalController * p
 }
 
 void GraphWindowDisplacement::update()
-{   
+{
     if(!m_physicalController)
         return;
     clear();
@@ -69,7 +70,7 @@ void GraphWindowDisplacement::update()
     }
     else
     {
-        int numT = numPeriods();
+        const int numT = numPeriods();
 
         double mactiont;
         if(action.get_w0() <= action.get_sigma())
@@ -77,12 +78,12 @@ void GraphWindowDisplacement::update()
         else
             mactiont = action.get_T();
 
-        float maxoffset = static_cast<float>(std::fabs(action.get_A0()));
+        const float maxoffset = static_cast<float>(std::fabs(action.get_A0()));
         resizeGraph(0.0f, static_cast<float>(mactiont) * static_cast<float>(numT), -maxoffset, maxoffset);
 
         action.InitBall();
 
-        double di = mactiont / 50.0 * 1000.0;
+        const double di = mactiont / 50.0 * 1000.0;
         for(double i = 0.0; i <= mactiont * numT * 1000.0; i += di)
         {
             action.Refresh(i);
@@ -117,7 +118,7 @@ void GraphWindowDisplacement::updateActions()
 void GraphWindowDisplacement::onSetNumPeriodsTriggered()
 {
     bool ok = false;
-    int value =
+    const int value =
 #if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
             QInputDialog::getInt
 #else

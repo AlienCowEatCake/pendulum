@@ -25,7 +25,11 @@
 #include <cassert>
 
 PhysicalControllerAbstract::PhysicalControllerAbstract(QObject * parent)
-    : QObject(parent), m_timer(new QTimer(this)), m_simulationSpeed(1.0), m_currentTime(0), m_currentState(SimulationNotRunning)
+    : QObject(parent)
+    , m_timer(new QTimer(this))
+    , m_simulationSpeed(1.0)
+    , m_currentTime(0)
+    , m_currentState(SimulationNotRunning)
 {
     m_timerStep = 25;
 }

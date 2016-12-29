@@ -72,7 +72,7 @@ void Scene3DAbstract::resizeGL(int nWidth, int nHeight)
     GLImpl::glMatrixMode(GL_PROJECTION);
     GLImpl::glLoadIdentity();
 
-    GLdouble ratio = static_cast<GLdouble>(nHeight) / static_cast<GLdouble>(nWidth);
+    const GLdouble ratio = static_cast<GLdouble>(nHeight) / static_cast<GLdouble>(nWidth);
     if (nWidth>=nHeight)
         GLImpl::glOrtho(-1.0/ratio, 1.0/ratio, -1.0, 1.0, -10.0, 30.0);
     else
@@ -267,7 +267,7 @@ bool Scene3DAbstract::gestureEvent(QGestureEvent* event)
 
 void Scene3DAbstract::panTriggered(QPanGesture* gesture)
 {
-    QPointF delta = gesture->delta();
+    const QPointF delta = gesture->delta();
     m_sceneParameters.xRot += 180.0f / 1.5f * static_cast<GLfloat>(delta.y()) / static_cast<GLfloat>(height());
     m_sceneParameters.zRot += 180.0f / 1.5f * static_cast<GLfloat>(delta.x()) / static_cast<GLfloat>(width());
     updateGL();
@@ -275,10 +275,10 @@ void Scene3DAbstract::panTriggered(QPanGesture* gesture)
 
 void Scene3DAbstract::pinchTriggered(QPinchGesture* gesture)
 {
-    QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
+    const QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
     if(changeFlags & QPinchGesture::ScaleFactorChanged)
     {
-        float newScale = m_sceneParameters.nSca * static_cast<float>(gesture->scaleFactor());
+        const float newScale = m_sceneParameters.nSca * static_cast<float>(gesture->scaleFactor());
         if(newScale <= m_sceneDefault.scaleMax && newScale >= m_sceneDefault.scaleMin)
         {
             m_sceneParameters.nSca = newScale;
@@ -293,7 +293,7 @@ void Scene3DAbstract::updateLight()
 {
     for(QList<LightParameters>::ConstIterator it = m_lightParameters.begin(); it != m_lightParameters.end(); ++it)
     {
-        GLfloat correctionFactor = it->lightCorrection;
+        const GLfloat correctionFactor = it->lightCorrection;
         if(correctionFactor > 0.0f)
         {
             GLfloat light_diffuse_new[] =

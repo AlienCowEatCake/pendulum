@@ -35,8 +35,10 @@
 #include <QGraphicsSvgItem>
 #endif
 
-SplashScreenWindow::SplashScreenWindow(QWidget * parent) :
-    QGraphicsView(parent), m_graphicsItem(NULL), m_wasClosed(false)
+SplashScreenWindow::SplashScreenWindow(QWidget * parent)
+    : QGraphicsView(parent)
+    , m_graphicsItem(NULL)
+    , m_wasClosed(false)
 {
     setScene(new QGraphicsScene(this));
     setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint |
@@ -76,7 +78,7 @@ void SplashScreenWindow::setGraphicsItem(QGraphicsItem * graphicsItem)
     m_graphicsItem->setFlags(QGraphicsItem::ItemClipsToShape);
     m_graphicsItem->setCacheMode(QGraphicsItem::NoCache);
     scene()->addItem(m_graphicsItem);
-    QRectF boundingRect = m_graphicsItem->boundingRect();
+    const QRectF boundingRect = m_graphicsItem->boundingRect();
     scene()->setSceneRect(boundingRect);
     setGeometry(boundingRect.toRect());
     setFixedSize(boundingRect.size().toSize());

@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -34,7 +34,7 @@ namespace {
 GLuint LoadGLTextures(const char * name)
 {
     static QMap<QString, GLuint> texturesCache;
-    QString qName = QString::fromUtf8(name);
+    const QString qName = QString::fromUtf8(name);
     QMap<QString, GLuint>::ConstIterator it = texturesCache.find(qName);
     if(it == texturesCache.end())
     {
@@ -61,8 +61,8 @@ GLuint LoadGLTextures(const char * name)
         texImage = GLWidgetImpl::convertToGLFormat(texImage);
         GLImpl::glGenTextures(1, &texPtr);
         GLImpl::glBindTexture(GL_TEXTURE_2D, texPtr);
-        GLsizei texWidth = static_cast<GLsizei>(texImage.width());
-        GLsizei texHeight = static_cast<GLsizei>(texImage.height());
+        const GLsizei texWidth = static_cast<GLsizei>(texImage.width());
+        const GLsizei texHeight = static_cast<GLsizei>(texImage.height());
         GLImpl::glTexImage2D(GL_TEXTURE_2D, 0, 3, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, texImage.bits());
         GLImpl::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         GLImpl::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -75,10 +75,10 @@ GLuint LoadGLTextures(const char * name)
 } // namespace
 
 Model::Model()
-    : m_numMeshes(0), m_pMeshes(NULL),
-      m_numMaterials(0), m_pMaterials(NULL),
-      m_numTriangles(0), m_pTriangles(NULL),
-      m_numVertices(0), m_pVertices(NULL)
+    : m_numMeshes(0), m_pMeshes(NULL)
+    , m_numMaterials(0), m_pMaterials(NULL)
+    , m_numTriangles(0), m_pTriangles(NULL)
+    , m_numVertices(0), m_pVertices(NULL)
 {}
 
 Model::~Model()
@@ -108,10 +108,10 @@ Model::~Model()
 /// @brief draw - отрисовка модели
 void Model::draw() const
 {
-    GLboolean texEnabled = GLImpl::glIsEnabled(GL_TEXTURE_2D);  //если поддерживается загрузка текстур
+    const GLboolean texEnabled = GLImpl::glIsEnabled(GL_TEXTURE_2D);  //если поддерживается загрузка текстур
     for(int i = 0; i < m_numMeshes; i++)    // отрисовка по группам с одинаковыми материалами
     {
-        int materialIndex = m_pMeshes[i].m_materialIndex;
+        const int materialIndex = m_pMeshes[i].m_materialIndex;
         if(materialIndex >= 0)  // если материал задан
         {
             // установить параметры материала
@@ -143,7 +143,7 @@ void Model::draw() const
             for(int j = 0; j < m_pMeshes[i].m_numTriangles; j++)
             {
                 // добавление в OpenGL конвеер координаты треугольников и нормалей
-                int triangleIndex = m_pMeshes[i].m_pTriangleIndices[j];
+                const int triangleIndex = m_pMeshes[i].m_pTriangleIndices[j];
                 const Triangle * pTri = &m_pTriangles[triangleIndex];
                 for(int k = 0; k < 3; k++)
                 {

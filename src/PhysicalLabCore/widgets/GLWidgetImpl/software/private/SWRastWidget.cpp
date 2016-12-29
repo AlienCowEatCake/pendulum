@@ -186,7 +186,7 @@ void SWRastWidget::paintEvent(QPaintEvent *)
         static QTime t;
         static int counter = -1;
         static QString fps;
-        static QFont mono(QString::fromLatin1("Monospace"), 16, QFont::Bold);
+        static const QFont mono(QString::fromLatin1("Monospace"), 16, QFont::Bold);
         if(counter < 0)
         {
             t.start();
@@ -221,7 +221,7 @@ void SWRastWidget::resizeEvent(QResizeEvent * event)
 
 void SWRastWidget::glLightfv(GLenum light, GLenum pname, const GLfloat * params)
 {
-    std::size_t index = static_cast<std::size_t>(light - GL_LIGHT0);
+    const std::size_t index = static_cast<std::size_t>(light - GL_LIGHT0);
     Impl::light * lights = m_impl->lights;
     switch(pname)
     {
@@ -400,8 +400,8 @@ void SWRastWidget::Impl::triangle(const SWRastPrivate::Matrix<4, 3, SWRastPrivat
                 continue;
 
             // Проверим, что точка находится спереди от всего уже отрисованного
-            int zbuffer_ind = static_cast<int>(x + y * buffer.width());
-            SWRastPrivate::Real frag_depth = verts[2] * L_point;
+            const int zbuffer_ind = static_cast<int>(x + y * buffer.width());
+            const SWRastPrivate::Real frag_depth = verts[2] * L_point;
             if(zBuffer[zbuffer_ind] > frag_depth)
                 continue;
             zBuffer[zbuffer_ind] = frag_depth;
@@ -410,19 +410,19 @@ void SWRastWidget::Impl::triangle(const SWRastPrivate::Matrix<4, 3, SWRastPrivat
             SWRastPrivate::vec3f intensity = light_intensity * L_point;
             if(isTexturesEnabled)
             {
-                SWRastPrivate::vec2f uv = texs * L_point;
-                QRgb rgb = g_textures[currentTexture].pixel(static_cast<int>(uv[0] * tex_size[0]),
-                                                            static_cast<int>(uv[1] * tex_size[1]));
-                QColor color(static_cast<int>(qRed(rgb)   * intensity[0]),
-                             static_cast<int>(qGreen(rgb) * intensity[0]),
-                             static_cast<int>(qBlue(rgb)  * intensity[0]));
+                const SWRastPrivate::vec2f uv = texs * L_point;
+                const QRgb rgb = g_textures[currentTexture].pixel(static_cast<int>(uv[0] * tex_size[0]),
+                                                                  static_cast<int>(uv[1] * tex_size[1]));
+                const QColor color(static_cast<int>(qRed(rgb)   * intensity[0]),
+                                   static_cast<int>(qGreen(rgb) * intensity[0]),
+                                   static_cast<int>(qBlue(rgb)  * intensity[0]));
                 buffer.setPixel(x, y, color.rgb());
             }
             else
             {
-                QColor color(static_cast<int>(255 * intensity[0]),
-                             static_cast<int>(255 * intensity[1]),
-                             static_cast<int>(255 * intensity[2]));
+                const QColor color(static_cast<int>(255 * intensity[0]),
+                                   static_cast<int>(255 * intensity[1]),
+                                   static_cast<int>(255 * intensity[2]));
                 buffer.setPixel(x, y, color.rgb());
             }
         }
@@ -458,9 +458,9 @@ void SWRastWidget::glEnd()
             // Найдем вектор от источника
             v3[j] = SWRastPrivate::proj<3>(projection * lights[j].position).normalize();
             // Смешение цветов пока простое - кто ярче, того и тапки
-            SWRastPrivate::Real r = lights[j].ambient[0];
-            SWRastPrivate::Real g = lights[j].ambient[1];
-            SWRastPrivate::Real b = lights[j].ambient[2];
+            const SWRastPrivate::Real r = lights[j].ambient[0];
+            const SWRastPrivate::Real g = lights[j].ambient[1];
+            const SWRastPrivate::Real b = lights[j].ambient[2];
             if(r > intensity_ambient[0]) intensity_ambient[0] = r;
             if(g > intensity_ambient[1]) intensity_ambient[1] = g;
             if(b > intensity_ambient[2]) intensity_ambient[2] = b;
@@ -470,9 +470,9 @@ void SWRastWidget::glEnd()
         intensity_ambient[j] *= material.ambient[j] * ambient_correct;
 
     // Сохраним также произведение матриц GL_PROJECTION на GL_MODELVIEW
-    SWRastPrivate::matrix4f sw_pm = projection * modelview;
+    const SWRastPrivate::matrix4f sw_pm = projection * modelview;
     // А также его обратно-транспонированное значение
-    SWRastPrivate::matrix4f sw_pm_it = sw_pm.inverse().transpose();
+    const SWRastPrivate::matrix4f sw_pm_it = sw_pm.inverse().transpose();
 
     // Обойдем все треугольники
     for(int i = 0; i < vertexes.size(); i += 3)
@@ -484,7 +484,7 @@ void SWRastWidget::glEnd()
         // Обойдем все вершины треугольника и упакуем данные в матрицы выше
         for(SWRastPrivate::Memsize k = 0; k < 3; k++)
         {
-            int vert_ind = i + static_cast<int>(k);
+            const int vert_ind = i + static_cast<int>(k);
             SWRastPrivate::vec3f norm_vert = SWRastPrivate::proj<3>(sw_pm_it * SWRastPrivate::embed<4>(normales[vert_ind], static_cast<SWRastPrivate::Real>(0)));
             SWRastPrivate::vec4f coord_vert = sw_pm * SWRastPrivate::embed<4>(vertexes[vert_ind]);
             texs.set_col(k, texcoords[vert_ind]);
@@ -580,7 +580,7 @@ void SWRastWidget::glEnable(GLenum cap)
 {
     if(cap >= GL_LIGHT0 && cap <= SW_LIGHT_LAST)
     {
-        std::size_t index = static_cast<std::size_t>(cap - GL_LIGHT0);
+        const std::size_t index = static_cast<std::size_t>(cap - GL_LIGHT0);
         m_impl->lights[index].isEnabled = true;
     }
     if(cap == GL_TEXTURE_2D)
@@ -591,7 +591,7 @@ void SWRastWidget::glDisable(GLenum cap)
 {
     if(cap >= GL_LIGHT0 && cap <= SW_LIGHT_LAST)
     {
-        std::size_t index = static_cast<std::size_t>(cap - GL_LIGHT0);
+        const std::size_t index = static_cast<std::size_t>(cap - GL_LIGHT0);
         m_impl->lights[index].isEnabled = false;
     }
     if(cap == GL_TEXTURE_2D)
@@ -602,7 +602,7 @@ GLboolean SWRastWidget::glIsEnabled(GLenum cap)
 {
     if(cap >= GL_LIGHT0 && cap <= SW_LIGHT_LAST)
     {
-        std::size_t index = static_cast<std::size_t>(cap - GL_LIGHT0);
+        const std::size_t index = static_cast<std::size_t>(cap - GL_LIGHT0);
         return m_impl->lights[index].isEnabled ? GL_TRUE : GL_FALSE;
     }
     else if(cap > SW_LIGHT_LAST && cap <= GL_MAX_LIGHTS)
@@ -653,15 +653,15 @@ void SWRastWidget::glRotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
     SWRastPrivate::Real xr = static_cast<SWRastPrivate::Real>(x);
     SWRastPrivate::Real yr = static_cast<SWRastPrivate::Real>(y);
     SWRastPrivate::Real zr = static_cast<SWRastPrivate::Real>(z);
-    SWRastPrivate::Real norm = std::sqrt(xr * xr + yr * yr + zr * zr);
+    const SWRastPrivate::Real norm = std::sqrt(xr * xr + yr * yr + zr * zr);
     xr /= norm;
     yr /= norm;
     zr /= norm;
     static const SWRastPrivate::Real deg2rad = static_cast<SWRastPrivate::Real>(3.14159265358979323846 / 180.0);
-    SWRastPrivate::Real angle_rad = static_cast<SWRastPrivate::Real>(angle) * deg2rad;
-    SWRastPrivate::Real c = std::cos(angle_rad);
-    SWRastPrivate::Real s = std::sin(angle_rad);
-    SWRastPrivate::Real c1 = (static_cast<SWRastPrivate::Real>(1) - c);
+    const SWRastPrivate::Real angle_rad = static_cast<SWRastPrivate::Real>(angle) * deg2rad;
+    const SWRastPrivate::Real c = std::cos(angle_rad);
+    const SWRastPrivate::Real s = std::sin(angle_rad);
+    const SWRastPrivate::Real c1 = (static_cast<SWRastPrivate::Real>(1) - c);
 
     SWRastPrivate::matrix4f m = SWRastPrivate::matrix4f::identity();
     m[0][0] = xr * xr * c1 + c;

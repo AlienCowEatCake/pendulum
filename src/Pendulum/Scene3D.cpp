@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -25,7 +25,9 @@
 #include <cmath>
 #include "PhysicalController.h"
 
-Scene3D::Scene3D(QWidget* parent) : Scene3DAbstract(parent), m_physicalController(NULL)
+Scene3D::Scene3D(QWidget* parent)
+    : Scene3DAbstract(parent)
+    , m_physicalController(NULL)
 {
     const GLfloat light_ambient[] = {0.3f, 0.3f, 0.3f, 0.0f};   // фоновый свет
     const GLfloat light_diffuse[] = {0.5f, 0.5f, 0.5f, 0.0f};   // значение диффузного света
@@ -91,8 +93,8 @@ void Scene3D::paintGL()
     GLImpl::glTranslatef(0.0f, 0.75f, 0.0f);
 
     const Action & action = m_physicalController->action();
-    float balance = static_cast<float>(- 0.2 - 0.8 - (action.get_m() * 9.81 / action.get_k()));
-    float offset = static_cast<float>(action.get_x()) + balance;
+    const float balance = static_cast<float>(- 0.2 - 0.8 - (action.get_m() * 9.81 / action.get_k()));
+    const float offset = static_cast<float>(action.get_x()) + balance;
 
     GLImpl::glTranslatef(0.0f, balance, 0.0f);
     m_scale.draw();

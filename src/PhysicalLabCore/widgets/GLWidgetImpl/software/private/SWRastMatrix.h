@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -148,7 +148,7 @@ Matrix<3, 3, T> inverse(const Matrix<3, 3, T> & A, T & detA)
 {
     Matrix<3, 3, T> Inv_A;
     detA = determenant(A);
-    T inv_detA = static_cast<T>(1) / detA;
+    const T inv_detA = static_cast<T>(1) / detA;
 
     Inv_A[0][0] = (A[1][1] * A[2][2] - A[2][1] * A[1][2]) * inv_detA;
     Inv_A[0][1] = - (A[0][1] * A[2][2] - A[2][1] * A[0][2]) * inv_detA;
@@ -171,7 +171,7 @@ Matrix<4, 4, T> inverse(const Matrix<4, 4, T> & A, T & detA)
 {
     Matrix<4, 4, T> Inv_A;
     detA = determenant(A);
-    T inv_detA = static_cast<T>(1) / detA;
+    const T inv_detA = static_cast<T>(1) / detA;
 
     Inv_A[0][0] = (A[3][1] * (A[1][2] * A[2][3] - A[1][3] * A[2][2]) +
                    A[3][2] * (A[1][3] * A[2][1] - A[1][1] * A[2][3]) +

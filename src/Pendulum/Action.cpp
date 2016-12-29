@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -69,7 +69,7 @@ void Action::InitBall()
 
 void Action::Refresh(double Ntime)
 {
-    double t = Ntime / 1000.0;
+    const double t = Ntime / 1000.0;
     x = A0 * std::exp(- sigma * t) * std::cos(w * t + fita);
     v = (x - oldx) / (t - oldtime);
     oldx = x;

@@ -42,7 +42,7 @@ QIcon CreateScalableIcon(const QString& defaultImagePath, const QStringList& sca
     QIcon result(defaultImagePath);
     for(QStringList::ConstIterator it = scaledImagePaths.begin(); it != scaledImagePaths.end(); ++it)
     {
-        QPixmap pixmap(*it);
+        const QPixmap pixmap(*it);
         if(!pixmap.isNull())
         {
             result.addPixmap(QPixmap(*it), QIcon::Normal);

@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -30,8 +30,9 @@
 #include "utils/SettingsWrapper.h"
 #include "PhysicalController.h"
 
-GraphWindowSpeed::GraphWindowSpeed(QWidget * parent) :
-    GraphWindowAbstract(true, parent), m_physicalController(NULL)
+GraphWindowSpeed::GraphWindowSpeed(QWidget * parent)
+    : GraphWindowAbstract(true, parent)
+    , m_physicalController(NULL)
 {
     setNumPerionds(3);
     m_actionSetNumPeriods = new QAction(this);
@@ -69,7 +70,7 @@ void GraphWindowSpeed::update()
     }
     else
     {
-        int numT = numPeriods();
+        const int numT = numPeriods();
 
         double mactiont;
         if(action.get_w0() <= action.get_sigma())
@@ -79,7 +80,7 @@ void GraphWindowSpeed::update()
         action.InitBall();
         double maxspeed = 0.0;
 
-        double di = mactiont / 50.0 * 1000.0;
+        const double di = mactiont / 50.0 * 1000.0;
         for(double i = 0.0; i <= mactiont * numT * 1000.0; i += di)
         {
             action.Refresh(i);
@@ -89,7 +90,7 @@ void GraphWindowSpeed::update()
                 maxspeed = std::fabs(action.get_v());
         }
 
-        float maxspeedf = static_cast<float>(maxspeed);
+        const float maxspeedf = static_cast<float>(maxspeed);
         resizeGraph(0.0f, static_cast<float>(mactiont) * static_cast<float>(numT), -maxspeedf, maxspeedf);
 
         for(int i = 0; i < arrY.size(); i++)
@@ -125,7 +126,7 @@ void GraphWindowSpeed::updateActions()
 void GraphWindowSpeed::onSetNumPeriodsTriggered()
 {
     bool ok = false;
-    int value =
+    const int value =
 #if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
             QInputDialog::getInt
 #else

@@ -28,7 +28,9 @@
 #include <QString>
 
 Scene2D::Scene2D(bool haveNegativeY, QWidget* parent)
-    : QWidget(parent), m_haveNegativeY(haveNegativeY), m_settings(QString::fromLatin1("Scene2D"))
+    : QWidget(parent)
+    , m_haveNegativeY(haveNegativeY)
+    , m_settings(QString::fromLatin1("Scene2D"))
 {
     // Мин/макс значения рисуемой области в локальных координатах
     m_minX_local = 0.0f;
@@ -51,7 +53,7 @@ void Scene2D::adjustAxis(float & min, float & max, int & numTicks)
     }
 
     const int minTicks = 6;
-    double grossStep = static_cast<double>(max - min) / minTicks;
+    const double grossStep = static_cast<double>(max - min) / minTicks;
     double step = std::pow(10, std::floor(std::log10(grossStep)));
 
     if (5 * step < grossStep)
@@ -93,8 +95,8 @@ QPoint Scene2D::toWindow(float x, float y) const
     const float gl_hx = gl_x1 - gl_x0;
     const float gl_hy = gl_y1 - gl_y0;
     // Перевод
-    int xl = static_cast<int>((x - gl_x0) / gl_hx * static_cast<float>(width()));
-    int yl = height() - static_cast<int>((y - gl_y0) / gl_hy * static_cast<float>(height()));
+    const int xl = static_cast<int>((x - gl_x0) / gl_hx * static_cast<float>(width()));
+    const int yl = height() - static_cast<int>((y - gl_y0) / gl_hy * static_cast<float>(height()));
     return QPoint(xl, yl);
 }
 
@@ -120,14 +122,14 @@ void Scene2D::paintEvent(QPaintEvent * event)
 void Scene2D::drawGraph(QPaintDevice * device)
 {
     // Цвет и ширина для всех линий графиков
-    QColor currentGridSmallColor = gridSmallColor();
-    QColor currentGridBigColor   = gridBigColor();
-    QColor currentAxisColor      = axisColor();
-    QColor currentPlotColor      = plotColor();
-    qreal currentGridSmallWidth  = gridSmallWidth();
-    qreal currentGridBigWidth    = gridBigWidth();
-    qreal currentAxisWidth       = axisWidth();
-    qreal currentPlotWidth       = plotWidth();
+    const QColor currentGridSmallColor = gridSmallColor();
+    const QColor currentGridBigColor   = gridBigColor();
+    const QColor currentAxisColor      = axisColor();
+    const QColor currentPlotColor      = plotColor();
+    const qreal currentGridSmallWidth  = gridSmallWidth();
+    const qreal currentGridBigWidth    = gridBigWidth();
+    const qreal currentAxisWidth       = axisWidth();
+    const qreal currentPlotWidth       = plotWidth();
 
     // Поехали рисовать
     QPainter painter;

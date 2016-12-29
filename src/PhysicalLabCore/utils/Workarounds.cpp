@@ -41,14 +41,14 @@ void FontsFix(const QString & language)
 #if defined (Q_OS_WIN)
 
     // Отображение название языка -> соответствующая ему WritingSystem
-    static QList<QPair<QString, QFontDatabase::WritingSystem> > writingSystemMap =
+    static const QList<QPair<QString, QFontDatabase::WritingSystem> > writingSystemMap =
             QList<QPair<QString, QFontDatabase::WritingSystem> >()
             << qMakePair(QString::fromLatin1("en"), QFontDatabase::Latin)
             << qMakePair(QString::fromLatin1("ru"), QFontDatabase::Cyrillic);
 
     // Найдем WritingSystem для текущего языка
     QFontDatabase::WritingSystem currentWritingSystem = QFontDatabase::Any;
-    for(QList<QPair<QString, QFontDatabase::WritingSystem> >::Iterator it = writingSystemMap.begin(); it != writingSystemMap.end(); ++it)
+    for(QList<QPair<QString, QFontDatabase::WritingSystem> >::ConstIterator it = writingSystemMap.begin(); it != writingSystemMap.end(); ++it)
     {
         if(it->first == language)
         {
@@ -58,13 +58,13 @@ void FontsFix(const QString & language)
     }
 
     // Шрифт стандартный, по умолчанию
-    static QFont defaultFont = qApp->font();
+    static const QFont defaultFont = qApp->font();
     // Шрифт Tahoma, если стандартный не поддерживает выбранный язык
     QFont fallbackFont = defaultFont;
     fallbackFont.setFamily(QString::fromLatin1("Tahoma"));
 
     // Проверим, умеет ли стандартный шрифт писать на новом языке
-    static QFontDatabase fontDatabase;
+    static const QFontDatabase fontDatabase;
     if(!fontDatabase.families(currentWritingSystem).contains(defaultFont.family(), Qt::CaseInsensitive))
         qApp->setFont(fallbackFont);   // Если не умеет - заменим на Tahoma
     else

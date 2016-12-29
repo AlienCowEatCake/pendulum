@@ -30,9 +30,9 @@
 #include <QTextBrowser>
 #include <QVBoxLayout>
 
-HtmlWindow::HtmlWindow(QWidget * parent) :
-    QWidget(parent),
-    m_textBrowser(new QTextBrowser(this))
+HtmlWindow::HtmlWindow(QWidget * parent)
+    : QWidget(parent)
+    , m_textBrowser(new QTextBrowser(this))
 {
     QVBoxLayout * layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -75,7 +75,7 @@ void HtmlWindow::loadHtml(const QString & filename)
 {
     QFile file(filename);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
-    QString htmlString = QString::fromUtf8(file.readAll());
+    const QString htmlString = QString::fromUtf8(file.readAll());
     m_textBrowser->setHtml(htmlString);
 }
 
@@ -91,8 +91,8 @@ void HtmlWindow::setSize(int width, int height)
 /// @brief setPreferredSize - Установить предпочтительный не фиксированный размер окна
 void HtmlWindow::setPreferredSize(int width, int height)
 {
-    QRect availableGeometry = QApplication::desktop()->availableGeometry();
-    QSize newSize(qMin(availableGeometry.width(), width), qMin(availableGeometry.height(), height));
+    const QRect availableGeometry = QApplication::desktop()->availableGeometry();
+    const QSize newSize(qMin(availableGeometry.width(), width), qMin(availableGeometry.height(), height));
     setGeometry(0, 0, newSize.width(), newSize.height());
     setMinimumSize(size());
     setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
