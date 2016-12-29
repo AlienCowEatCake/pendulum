@@ -4,7 +4,7 @@ BUILDDIR=build_osx_qt5.6_clang64_libstdc++
 APPNAME="Pendulum"
 DMGNAME="${PROJECT}_qt5.6_clang64_libstdc++"
 
-QTDIR="/opt/Qt/5.6.2/clang_64_libstdc++_sdk10.9"
+QTDIR="/opt/Qt/5.6.2/clang_64_libstdc++_sdk10.11"
 CMD_QMAKE="${QTDIR}/bin/qmake"
 CMD_DEPLOY="${QTDIR}/bin/macdeployqt"
 
