@@ -25,16 +25,28 @@
 #include <cmath>
 #include <cstring>
 #include <cassert>
+#include <QtGlobal>
+#if (QT_VERSION < QT_VERSION_CHECK(4, 6, 0))
+#define SCENE3D_NO_GESTURES
+#endif
+#if !defined (SCENE3D_NO_GESTURES)
 #include <QGesture>
 #include <QGestureEvent>
 #include <QPanGesture>
 #include <QPinchGesture>
+#else
+class QGestureEvent {};
+class QPanGesture   {};
+class QPinchGesture {};
+#endif
 
 Scene3DAbstract::Scene3DAbstract(QWidget* parent)
     : GLWidgetImpl(parent)
 {
+#if !defined (SCENE3D_NO_GESTURES)
     grabGesture(Qt::PanGesture);
     grabGesture(Qt::PinchGesture);
+#endif
 }
 
 /// @brief Установить параметры сцены по-умолчанию
@@ -159,8 +171,10 @@ void Scene3DAbstract::keyPressEvent(QKeyEvent* pe)
 
 bool Scene3DAbstract::event(QEvent* event)
 {
+#if !defined (SCENE3D_NO_GESTURES)
     if(event->type() == QEvent::Gesture)
         return gestureEvent(static_cast<QGestureEvent*>(event));
+#endif
     return GLWidgetImpl::event(event);
 }
 
@@ -258,23 +272,33 @@ const GLfloat * Scene3DAbstract::lightPosition(GLenum light_ID) const
 
 bool Scene3DAbstract::gestureEvent(QGestureEvent* event)
 {
+#if !defined (SCENE3D_NO_GESTURES)
     if(QGesture* pan = event->gesture(Qt::PanGesture))
         panTriggered(static_cast<QPanGesture*>(pan));
     if(QGesture* pinch = event->gesture(Qt::PinchGesture))
         pinchTriggered(static_cast<QPinchGesture*>(pinch));
     return true;
+#else
+    Q_UNUSED(event);
+    return true;
+#endif
 }
 
 void Scene3DAbstract::panTriggered(QPanGesture* gesture)
 {
+#if !defined (SCENE3D_NO_GESTURES)
     const QPointF delta = gesture->delta();
     m_sceneParameters.xRot += 180.0f / 1.5f * static_cast<GLfloat>(delta.y()) / static_cast<GLfloat>(height());
     m_sceneParameters.zRot += 180.0f / 1.5f * static_cast<GLfloat>(delta.x()) / static_cast<GLfloat>(width());
     updateGL();
+#else
+    Q_UNUSED(gesture);
+#endif
 }
 
 void Scene3DAbstract::pinchTriggered(QPinchGesture* gesture)
 {
+#if !defined (SCENE3D_NO_GESTURES)
     const QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
     if(changeFlags & QPinchGesture::ScaleFactorChanged)
     {
@@ -286,6 +310,9 @@ void Scene3DAbstract::pinchTriggered(QPinchGesture* gesture)
         }
     }
     updateGL();
+#else
+    Q_UNUSED(gesture);
+#endif
 }
 
 /// @brief Обновление освещения при изменении масштаба
