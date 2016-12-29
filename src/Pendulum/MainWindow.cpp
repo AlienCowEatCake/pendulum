@@ -427,7 +427,7 @@ void MainWindow::on_horizontalSliderQuality_valueChanged(int value)
 /// @brief Слот на запрос сохранения скриншота из меню
 void MainWindow::on_actionSaveScreenshot_triggered()
 {
-    QImage screenshot = m_ui->widget->grabFrameBuffer();
+    const QImage screenshot = m_ui->widget->grabFrameBuffer();
     m_imageSaver->save(screenshot);
 }
 
