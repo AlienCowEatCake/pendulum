@@ -93,7 +93,7 @@ void Scene3DAbstract::mouseReleaseEvent(QMouseEvent*)
 }
 
 void Scene3DAbstract::mouseMoveEvent(QMouseEvent* pe)
-{    
+{
     m_sceneParameters.xRot += 180.0f / 1.5f * static_cast<GLfloat>(pe->y()-m_mousePosition.y()) / static_cast<GLfloat>(height());
     m_sceneParameters.zRot += 180.0f / 1.5f * static_cast<GLfloat>(pe->x()-m_mousePosition.x()) / static_cast<GLfloat>(width());
     m_mousePosition = pe->pos();
@@ -278,8 +278,7 @@ void Scene3DAbstract::pinchTriggered(QPinchGesture* gesture)
     QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
     if(changeFlags & QPinchGesture::ScaleFactorChanged)
     {
-        qreal scaleDelta = gesture->scaleFactor() - gesture->lastScaleFactor();
-        float newScale = m_sceneParameters.nSca * static_cast<float>(scaleDelta);
+        float newScale = m_sceneParameters.nSca * static_cast<float>(gesture->scaleFactor());
         if(newScale <= m_sceneDefault.scaleMax && newScale >= m_sceneDefault.scaleMin)
         {
             m_sceneParameters.nSca = newScale;
