@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -27,6 +27,7 @@
 #include <QPoint>
 #include <QColor>
 #include <QResizeEvent>
+#include "utils/ScopedPointer.h"
 #include "GLDefines.h"
 
 /// @brief Класс виджет с софтверным растеризатором
@@ -95,7 +96,7 @@ public:
 private:
     /// Private Implementation
     struct Impl;
-    Impl * m_impl;
+    QScopedPointer<Impl> m_impl;
 };
 
 #endif // PHYSICALLABCORE_SWRASTWIDGET_H_INCLUDED

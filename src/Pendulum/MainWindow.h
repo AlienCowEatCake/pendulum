@@ -1,4 +1,4 @@
-/* 
+/*
    Copyright (C) 2011-2016,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
@@ -24,6 +24,7 @@
 #define MAINWINDOW_H_INCLUDED
 
 #include <QMainWindow>
+#include "utils/ScopedPointer.h"
 
 namespace Ui {
 class MainWindow;
@@ -40,7 +41,7 @@ class ImageSaver;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
 public:
 
     explicit MainWindow(QWidget * parent = NULL);
@@ -96,18 +97,18 @@ private:
     /// @brief Функция для применения локализации
     void updateTranslations(QString language = QString());
 
-    Ui::MainWindow *m_ui;
+    QScopedPointer<Ui::MainWindow> m_ui;
 
     PhysicalController *m_physicalController;
 
     SplashScreenWindow *m_splashWindow;
-    GraphWindowSpeed *m_speedWindow;
-    GraphWindowDisplacement *m_displacementWindow;
-    GraphWindowEnergy *m_energyWindow;
-    HtmlWindow *m_helpWindow;
     HtmlWindow *m_authorsWindow;
-    HtmlWindow *m_manualWindow;
     HtmlWindow *m_licenseWindow;
+    QScopedPointer<GraphWindowSpeed> m_speedWindow;
+    QScopedPointer<GraphWindowDisplacement> m_displacementWindow;
+    QScopedPointer<GraphWindowEnergy> m_energyWindow;
+    QScopedPointer<HtmlWindow> m_helpWindow;
+    QScopedPointer<HtmlWindow> m_manualWindow;
 
     ImageSaver *m_imageSaver;
 };

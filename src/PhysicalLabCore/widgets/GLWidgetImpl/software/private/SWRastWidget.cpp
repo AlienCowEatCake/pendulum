@@ -134,7 +134,6 @@ SWRastWidget::~SWRastWidget()
 {
     if(GLImpl::g_SWContext == this)
         GLImpl::g_SWContext = NULL;
-    delete m_impl;
 }
 
 /// @brief qglClearColor - Задание фонового цвета

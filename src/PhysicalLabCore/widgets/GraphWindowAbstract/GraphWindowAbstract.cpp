@@ -57,9 +57,7 @@ GraphWindowAbstract::GraphWindowAbstract(bool haveNegativeY, QWidget *parent)
 }
 
 GraphWindowAbstract::~GraphWindowAbstract()
-{
-    delete m_ui;
-}
+{}
 
 /// @brief clear - Очистка данных графика
 void GraphWindowAbstract::clear()

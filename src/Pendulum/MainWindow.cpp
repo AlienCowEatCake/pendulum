@@ -98,19 +98,19 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui->lcdNumber->setDecMode();
     m_ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
     // =======
-    m_speedWindow = new GraphWindowSpeed;
+    m_speedWindow.reset(new GraphWindowSpeed);
     m_speedWindow->setPhysicalController(m_physicalController);
     m_speedWindow->setHidden(true);
     // =======
-    m_displacementWindow = new GraphWindowDisplacement;
+    m_displacementWindow.reset(new GraphWindowDisplacement);
     m_displacementWindow->setPhysicalController(m_physicalController);
     m_displacementWindow->setHidden(true);
     // =======
-    m_energyWindow = new GraphWindowEnergy;
+    m_energyWindow.reset(new GraphWindowEnergy);
     m_energyWindow->setPhysicalController(m_physicalController);
     m_energyWindow->setHidden(true);
     // =======
-    m_helpWindow = new HtmlWindow;
+    m_helpWindow.reset(new HtmlWindow);
     m_helpWindow->setHidden(true);
     m_helpWindow->setPreferredSize(helpWindowWidth, helpWindowHeight);
     m_helpWindow->setScrollBarEnabled();
@@ -119,7 +119,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_authorsWindow->setHidden(true);
     m_authorsWindow->setSize(authorsWindowWidth, authorsWindowHeight);
     // =======
-    m_manualWindow = new HtmlWindow;
+    m_manualWindow.reset(new HtmlWindow);
     m_manualWindow->setHidden(true);
     m_manualWindow->setPreferredSize(helpWindowWidth, helpWindowHeight);
     m_manualWindow->setScrollBarEnabled();
@@ -281,12 +281,6 @@ void MainWindow::updateTranslations(QString language)
 
 MainWindow::~MainWindow()
 {
-    delete m_speedWindow;
-    delete m_displacementWindow;
-    delete m_energyWindow;
-    delete m_manualWindow;
-    delete m_helpWindow;
-    delete m_ui;
     qApp->quit();
 }
 

@@ -25,6 +25,7 @@
 
 #include <QMainWindow>
 #include <QString>
+#include "utils/ScopedPointer.h"
 
 namespace Ui {
 class GraphWindowAbstract;
@@ -93,10 +94,10 @@ protected:
     void changeEvent(QEvent *event);
 
 private:
-    Ui::GraphWindowAbstract *m_ui;
+    QScopedPointer<Ui::GraphWindowAbstract> m_ui;
 
     Scene2D * m_scene2D;
-    
+
     ImageSaver * m_imageSaver;
 };
 
