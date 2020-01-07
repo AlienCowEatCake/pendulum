@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="description" content="Пружинный маятник в среде с сопротивлением">
+	<title>Пружинный маятник в среде с сопротивлением</title>
+
+	<!--[if true]><![if gt IE 7]><![endif]-->
+	<script language="JavaScript" type="text/javascript">
+		function getStyleObject(objectId) {
+			if(document.getElementById) {
+				if(document.getElementById(objectId))
+					return document.getElementById(objectId).style;
+			} else if(document.all) {
+				if(document.all(objectId))
+					return document.all(objectId).style;
+			} else if(document.layers) {
+				if(document.layers[objectId])
+					return document.layers[objectId];
+			} else {
+				return false;
+			}
+		}
+
+		function toggleObjectVisibility(objectId) {
+			var styleObject = getStyleObject(objectId);
+			if(styleObject) {
+				if(styleObject.visibility == 'hidden') {
+					styleObject.visibility = 'visible';
+					styleObject.position = 'relative';
+				} else {
+					styleObject.visibility = 'hidden';
+					styleObject.position = 'fixed';
+				}
+				return true;
+			} else {
+				return false;
+			}
+		}
+	</script>
+	<!--[if true]><![endif]><![endif]-->
+
+	<style type="text/css">
+		html, body {
+			font-size: 12px;
+			font-family: sans-serif;
+			background: #ffffff;
+			color: #000000;
+			margin: 12px;
+		}
+		h1 {
+			font-size: 16px;
+		}
+		h2 {
+			font-size: 14px;
+		}
+		h3 {
+			font-size: 13px;
+		}
+		.div_gpl_logo {
+			float: right;
+			display: inline;
+			margin-left: -88px;
+		}
+		.img_screenshot {
+			vertical-align: middle;
+		}
+		.table_dl, .table_dl th, .table_dl td {
+			border-collapse: collapse;
+			border: 1px solid #999999;
+		}
+		.table_dl td {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+		.table_dl_head {
+			background-color: LightGray;
+		}
+		.table_model td {
+			vertical-align: middle;
+		}
+		.table_model_desc {
+			padding-left: 10px;
+			padding-top: 6px;
+			padding-bottom: 6px;
+		}
+		.spoiler {
+			visibility: visible;
+			position: relative;
+		}
+		.spoiler_head {
+			cursor: pointer;
+			background-color: #eeeeee;
+			color: #000000;
+			font-weight: bold;
+			font-size: 0.95em;
+			padding: 2px 20px 2px 20px;
+			border:solid #bbbbbb 1px;
+			line-height: 24px;
+		}
+		.spoiler_content {
+			padding-top:4px;
+			padding-bottom:4px;
+		}
+	</style>
+</head>
+<body>
+	<div class="div_gpl_logo"><img src="images/gplv3-88x31.png" alt="[GPL v3]"></div>
+	<div align="center"><h1>Пружинный маятник в среде с сопротивлением</h1></div>
+
+	<h2>Описание</h2>
+	<br>
+	<b>Цель проекта:</b> разработать программный продукт, представляющий собой виртуальную физическую лабораторию, моделирующую поведение пружинного маятника в среде с сопротивлением<br>
+	<br>
+	<b>Язык программирования:</b> C++<br>
+	<br>
+	<b>Фреймворк:</b> Qt4 / Qt5<br>
+	<br>
+	<b>Лицензия:</b> <a href="http://www.gnu.org/copyleft/gpl.html" target="_blank">GNU GPL v3</a><br>
+	<br>
+
+	<h2>Описание установки</h2>
+	<p>В программе моделируются свободные затухающие колебания пружинного маятника.</p>
+	<p>Существует возможность изменять следующие параметры модели:</p>
+	<ul>
+		<li>массу груза</li>
+		<li>начальное смещение груза от положения равновесия</li>
+		<li>коэффициент жёсткости пружины</li>
+		<li>коэффициент сопротивления среды</li>
+	</ul>
+	<p>Для удобства проведения эксперимента добавлены секундомер и возможность изменения скорости опыта, а так же линейка для измерения смещения груза от положения равновесия.</p>
+	<p>В программе могут быть выведены графики следующих зависимостей:</p>
+	<ul>
+		<li>смещения от времени</li>
+		<li>скорости от времени</li>
+		<li>энергии от времени</li>
+	</ul>
+
+	<br>
+	<h2>Скриншоты</h2>
+	<div align="center">
+		<img src="images/screenshot1.png" alt="" class="img_screenshot">&nbsp;
+		<img src="images/screenshot2.png" alt="" class="img_screenshot">
+	</div>
+	<br>
+
+	<br>
+	<h2>Загрузка</h2>
+	<b>Исходный код:</b><br>
+	<a href="https://github.com/AlienCowEatCake/pendulum/archive/v1.0.zip">pendulum-1.0.zip</a><br>
+	<a href="https://github.com/AlienCowEatCake/pendulum/archive/v1.0.tar.gz">pendulum-1.0.tar.gz</a><br>
+	<br>
+	<b>Git:</b><br>
+	<a href="https://github.com/AlienCowEatCake/pendulum.git">https://github.com/AlienCowEatCake/pendulum.git</a><br>
+	<br>
+	<b>Бинарные сборки:</b><br>
+	<table class="table_dl">
+		<tr class="table_dl_head">
+			<th><b>Компилятор / Qt</b></th>
+			<th><b>ОС</b></th>
+			<th><b>Ссылка</b></th>
+		</tr>
+		<tr>
+			<td>MSVC 2015 x86, Qt 5.6.2</td>
+			<td>Windows XP SP3 и выше</td>
+			<td><a href="https://github.com/AlienCowEatCake/pendulum/releases/download/v1.0/pendulum_qt5.6_msvc2015_x86.exe">pendulum_qt5.6_msvc2015_x86.exe</a></td>
+		</tr>
+		<tr>
+			<td>MSVC 2015 x64, Qt 5.6.2</td>
+			<td>Windows XP x64 SP2 и выше</td>
+			<td><a href="https://github.com/AlienCowEatCake/pendulum/releases/download/v1.0/pendulum_qt5.6_msvc2015_x64.exe">pendulum_qt5.6_msvc2015_x64.exe</a></td>
+		</tr>
+		<tr>
+			<td>MinGW 3.4.2, Qt 4.4.3</td>
+			<td>Windows 98 SE и выше</td>
+			<td><a href="https://github.com/AlienCowEatCake/pendulum/releases/download/v1.0/pendulum_qt4.4_mingw32.exe">pendulum_qt4.4_mingw32.exe</a></td>
+		</tr>
+		<tr>
+			<td>GCC 4.8.5 i486, Qt 5.6.2</td>
+			<td>GNU/Linux i486</td>
+			<td><a href="https://github.com/AlienCowEatCake/pendulum/releases/download/v1.0/pendulum_qt5.6_i486-linux-gnu.elf">pendulum_qt5.6_i486-linux-gnu.elf</a></td>
+		</tr>
+		<tr>
+			<td>GCC 4.8.5 x86_64, Qt 5.6.2</td>
+			<td>GNU/Linux x86_64</td>
+			<td><a href="https://github.com/AlienCowEatCake/pendulum/releases/download/v1.0/pendulum_qt5.6_x86_64-linux-gnu.elf">pendulum_qt5.6_x86_64-linux-gnu.elf</a></td>
+		</tr>
+		<tr>
+			<td>Apple Clang 7.3.0, Qt 5.6.2</td>
+			<td>Mac OS X 10.6 и выше</td>
+			<td><a href="https://github.com/AlienCowEatCake/pendulum/releases/download/v1.0/pendulum_qt5.6_clang64_libstdc.dmg">pendulum_qt5.6_clang64_libstdc++.dmg</a></td>
+		</tr>
+	</table>
+	<br>
+	<b>Архив версий:</b><br>
+	<a href="https://github.com/AlienCowEatCake/pendulum/releases" target="_blank">Releases</a><br>
+	<br>
+
+	<br>
+	<h2>Список изменений</h2>
+	<b>[v1.0]</b> - 31 Dec 2016
+	<ul>
+		<li>Глобальный рефакторинг, в ходе которого исправлено множество мелких багов</li>
+		<li>Общий код вынесен в отдельный модуль, который теперь используется и в других проектах</li>
+		<li>Добавлена английская локализация</li>
+		<li>Подготовлены официальные сборки для GNU/Linux и macOS</li>
+		<li>Исправлены проблемы с текстурами для устаревших видеокарт</li>
+		<li>Доработан дизайн приложения</li>
+		<li>Добавлена кастомизация внешнего вида графиков</li>
+		<li>Изображения графиков и текущего состояния сцены теперь можно сохранять</li>
+		<li>Реализована базовая поддержка дисплеев с высоким разрешением</li>
+		<li>Реализована базовая поддержка управления сценой жестами типа Pinch и Pan</li>
+	</ul>
+	<!--[if true]><![if gt IE 7]><![endif]-->
+	<span onclick="toggleObjectVisibility('spoiler_changelog');" class="spoiler_head">Предыдущие версии</span>
+	<!--[if true]><![endif]><![endif]-->
+	<div id="spoiler_changelog" class="spoiler">
+	<div id="spoiler_changelog_content" class="spoiler_content">
+	<b>[v0.40]</b> - 25 Aug 2015
+	<ul>
+		<li>Добавлен альтернативный софтверный рендер для систем, плохо поддерживающих OpenGL</li>
+		<li>Увеличена частота обновления изображения</li>
+		<li>Исправлено восстановление исходного состояния сцены</li>
+		<li>Обновлены ссылки на проект</li>
+		<li>Обновлены сборочные скрипты под Windows</li>
+	</ul>
+	<b>[v0.39]</b> - 05 Jan 2015
+	<ul>
+		<li>Построитель графиков перенесен с OpenGL на QPainter, исправлены найденные ошибки</li>
+		<li>Исправлены ошибки линковки при использовании Qt 5.4 в конфигурации -opengl dynamic</li>
+		<li>В сборочных скриптах под Linux добавлено экранирование переменных</li>
+		<li>Поправлены опции компиляции</li>
+	</ul>
+	<b>[v0.38]</b> - 24 Aug 2014
+	<ul>
+		<li>Добавлен антиалиасинг</li>
+		<li>Исправлены баги с освещением</li>
+		<li>Исправлены баги с непрорисовкой моделек из некоторых положений</li>
+		<li>Переписан построитель графиков</li>
+	</ul>
+	<b>[v0.37]</b> - 20 Aug 2014
+	<ul>
+		<li>Исправлен глюк с отображением шрифтов в Windows 98 (сломано в v0.36)</li>
+		<li>Улучшена поддержка системных шрифтов</li>
+	</ul>
+	<b>[v0.36]</b> - 07 Aug 2014
+	<ul>
+		<li>Добавлена совместимость с Qt5</li>
+		<li>Форма основного окна теперь одна для всех платформ</li>
+		<li>В основном окне теперь используются системные шрифты, если они поддерживают кириллицу</li>
+		<li>Добавлено управление с клавиатуры графическим виджетом, если он в фокусе</li>
+		<li>Начальное смещение можно регулировать точнее</li>
+		<li>Изменена стартовая позиция камеры на более удобную</li>
+		<li>В окне лицензии исправлены адреса ссылок, сами ссылки теперь кликабельны</li>
+		<li>Исправлены недоработки в меню &quot;О программе&quot;</li>
+		<li>Скриншоты в руководстве пользователя теперь лучшего качества и разные для разных платформ</li>
+		<li>Убрано все ненужное из файла проекта</li>
+		<li>Исправлены и доработаны сборочные скрипты</li>
+		<li>MinGW 4.8.x некорректно работал с __attribute__((packed)), заменено на #pragma pack</li>
+		<li>Убраны ненужные подключения &lt;GL/glext.h&gt;</li>
+		<li>Вместо &lt;GL/glu.h&gt; используется платформонезависимый &lt;QtOpenGL&gt;</li>
+		<li>Проект портирован под MSVC (протестировано на MSVC 2005 и MSVC 2013)</li>
+		<li>Исправлены все предупреждения компилятора</li>
+		<li>Исправлены найденные утечки памяти и переполнения</li>
+		<li>Бинарные билды теперь собираются в MSVC 2013 (кроме legacy), появиласть сборка для x64</li>
+	</ul>
+	<b>[v0.35]</b> - 09 Jan 2014
+	<ul>
+		<li>Исправлены и оптимизированы сборочные скрипты для Win32</li>
+		<li>В заголовок главного окна добавлена версия программы</li>
+	</ul>
+	<b>[v0.34]</b> - 01 Dec 2013
+	<ul>
+		<li>Убран скроллбар в окне с лицензией в Win32 версии</li>
+		<li>Добавлен пункт меню "О Qt"</li>
+	</ul>
+	<b>[v0.33]</b> - 11 Nov 2013
+	<ul>
+		<li>Улучшены низкополигональные модели</li>
+		<li>Изменен алгоритм вычисления значения коэффициента сопротивления от положения ползунка</li>
+		<li>Улучшено позиционирование в ползунках регулировки массы и смещения</li>
+		<li>Убрана автоматическая подстройка качества графики, ибо все равно работала не так, как задумывалось</li>
+		<li>Исправлены e-mail адреса на актуальные</li>
+		<li>Модели перенесены из каталога src/resources/data в src/resources/models</li>
+	</ul>
+	<b>[v0.32]</b> - 29 Oct 2013
+	<ul>
+		<li>Улучшены низкополигональные модели</li>
+	</ul>
+	<b>[v0.31]</b> - 27 Oct 2013
+	<ul>
+		<li>Добавлены текстуры уменьшенного разрешения</li>
+		<li>Улучшены низкополигональные модели</li>
+	</ul>
+	<b>[v0.30]</b> - 27 Oct 2013
+	<ul>
+		<li>Добавлены низкополигональные модели</li>
+		<li>Исправлен баг с неверным пропуском кадров при скорости эксперимента меньше 100%</li>
+		<li>Исправлено неверное изменение размеров графиков при геометрии окна, близкой к квадратной</li>
+	</ul>
+	<i>Список предыдущих изменений, увы, не сохранился.</i>
+	</div></div>
+	<!--[if true]><![if gt IE 7]><![endif]-->
+	<script language="JavaScript" type="text/javascript">toggleObjectVisibility('spoiler_changelog');</script>
+	<!--[if true]><![endif]><![endif]-->
+	<br>
+
+	<br>
+	<h2>Модель</h2>
+	<div align="center"><img src="images/image001.png" alt="[image]"></div>
+	<br>
+	<table border="0" align="center" class="table_model">
+		<tr>
+			<td align="center"><img src="images/image002.png" alt="r"></td>
+			<td class="table_model_desc"> — коэффициент сопротивления среды,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image004.png" alt="k"></td>
+			<td class="table_model_desc"> — коэффициент жёсткости пружины,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image006.png" alt="m"></td>
+			<td class="table_model_desc"> — масса груза,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image008.png" alt="A_0"></td>
+			<td class="table_model_desc"> — начальная амплитуда,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image010.png" alt="x"></td>
+			<td class="table_model_desc"> — смещение груза,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image012.png" alt="t"></td>
+			<td class="table_model_desc"> — время,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image014.png" alt="&#969;_0=sqrt(k/m)"></td>
+			<td class="table_model_desc"> — циклическая частота свободных незатухающих колебаний,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image016.png" alt="&#946;=r/(2*m)"></td>
+			<td class="table_model_desc"> — коэффициент затухания,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image018.png" alt="&#969;=sqrt(&#969;_0^2-&#946^2)"></td>
+			<td class="table_model_desc"> — циклическая частота свободных затухающих колебаний,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image020.png" alt="T=2*&#960;/sqrt(&#969;_0^2-&#946^2)"></td>
+			<td class="table_model_desc"> — период колебаний,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image022.png" alt="A_T=A_0*exp(-&#946;*T)*cos(&#969;*T)"></td>
+			<td class="table_model_desc"> — амплитуда колебаний в момент времени, равный периоду,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image024.png" alt="&#952;=ln(A_0/A_T)"></td>
+			<td class="table_model_desc"> — логарифмический декремент,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image026.png" alt="E_0=k*A_0^2/2"></td>
+			<td class="table_model_desc"> — энергия в начале эксперимента,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image028.png" alt="x=A_0*exp(-&#946;*t)*cos(&#969;*t)"></td>
+			<td class="table_model_desc"> — смещение в текущий момент времени,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image030.png" alt="v=&#916;x/&#916;t"></td>
+			<td class="table_model_desc"> — скорость в текущий момент времени,</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="images/image032.png" alt="E=E_0*exp(-2*&#946;*t)"></td>
+			<td class="table_model_desc"> — энергия в текущий момент времени.</td>
+		</tr>
+	</table>
+	<br>
+</body>
+</html>
