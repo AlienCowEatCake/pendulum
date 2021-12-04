@@ -18,7 +18,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
         !contains(QT_CONFIG, dynamicgl) : CONFIG += use_swrast
     }
     !use_swrast {
-        contains(QT_CONFIG, dynamicgl) {
+        contains(QT_CONFIG, dynamicgl) | greaterThan(QT_MAJOR_VERSION, 5) | greaterThan(QT_MINOR_VERSION, 4) {
             win32-g++*|win32-clang* {
                 QMAKE_LIBS += -lopengl32
             } else {
