@@ -17,9 +17,9 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     contains(QT_CONFIG, opengles.) | contains(QT_CONFIG, angle) {
         !contains(QT_CONFIG, dynamicgl) : CONFIG += use_swrast
     }
-    !use_swrast {
+    !use_swrast : win32 {
         contains(QT_CONFIG, dynamicgl) | greaterThan(QT_MAJOR_VERSION, 5) | greaterThan(QT_MINOR_VERSION, 4) {
-            win32-g++*|win32-clang* {
+            *g++*|*clang* {
                 QMAKE_LIBS += -lopengl32
             } else {
                 QMAKE_LIBS += opengl32.lib
