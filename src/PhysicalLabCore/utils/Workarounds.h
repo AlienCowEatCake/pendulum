@@ -1,8 +1,5 @@
 /*
-   Copyright (C) 2011-2016,
-        Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
-        Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
-        Peter S. Zhigalov       <peter.zhigalov@gmail.com>
+   Copyright (C) 2011-2017 Peter S. Zhigalov <peter.zhigalov@gmail.com>
 
    This file is part of the `PhysicalLabCore' library.
 
@@ -30,7 +27,7 @@ namespace Workarounds {
 /// @brief Исправить отображение локализованных шрифтов под Windows
 /// @param[in] language - язык, для которого будет проводиться исправление
 /// @note Функцию следует вызывать при смене языка
-void FontsFix(const QString & language);
+void FontsFix(const QString &language);
 
 /// @brief Автоматически увеличить масштаб отображения для высоких DPI
 /// @note Функцию следует вызывать перед созданием QApplication

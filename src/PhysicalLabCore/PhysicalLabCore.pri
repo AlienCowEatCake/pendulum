@@ -7,6 +7,11 @@ CONFIG += object_with_source object_parallel_to_source no_batch warn_on
 
 QT += core gui opengl svg
 
+greaterThan(QT_MAJOR_VERSION, 5) {
+    QT += svgwidgets
+    CONFIG += use_swrast
+}
+
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     contains(QT_CONFIG, opengles.) | contains(QT_CONFIG, angle) {

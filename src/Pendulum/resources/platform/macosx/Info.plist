@@ -33,8 +33,13 @@
 		<string>x86_64</string>
 	</array>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.7.0</string>
+	<string>10.7</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>(c) FAMI Net Team, 2011-2016</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>ru</string>
+	</array>
 </dict>
 </plist>

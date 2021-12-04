@@ -24,7 +24,11 @@
 
 #include <QtGlobal>
 #include <QApplication>
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QScreen>
+#else
 #include <QDesktopWidget>
+#endif
 #include <QPoint>
 #include <QFile>
 #include <QTextBrowser>
@@ -91,7 +95,12 @@ void HtmlWindow::setSize(int width, int height)
 /// @brief setPreferredSize - Установить предпочтительный не фиксированный размер окна
 void HtmlWindow::setPreferredSize(int width, int height)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QScreen *screen = qApp->primaryScreen();
+    const QRect availableGeometry = screen->availableGeometry();
+#else
     const QRect availableGeometry = QApplication::desktop()->availableGeometry();
+#endif
     const QSize newSize(qMin(availableGeometry.width(), width), qMin(availableGeometry.height(), height));
     setGeometry(0, 0, newSize.width(), newSize.height());
     setMinimumSize(size());
@@ -106,8 +115,14 @@ void HtmlWindow::setPreferredSize(int width, int height)
 /// @brief moveToCenter - Перемещение окна в центр экрана
 void HtmlWindow::moveToCenter()
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QScreen *screen = qApp->primaryScreen();
+    QPoint center = screen->availableGeometry().center();
+    QPoint corner = screen->availableGeometry().topLeft();
+#else
     QPoint center = QApplication::desktop()->availableGeometry().center();
     QPoint corner = QApplication::desktop()->availableGeometry().topLeft();
+#endif
     center.setX(center.x() - this->width() / 2);
     center.setY(center.y() - this->height() / 2);
     if(center.x() <= corner.x() || center.y() <= corner.y())

@@ -1,8 +1,5 @@
 /*
-   Copyright (C) 2011-2016,
-        Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
-        Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
-        Peter S. Zhigalov       <peter.zhigalov@gmail.com>
+   Copyright (C) 2011-2019 Peter S. Zhigalov <peter.zhigalov@gmail.com>
 
    This file is part of the `PhysicalLabCore' library.
 
@@ -27,14 +24,16 @@
 #include <QVariant>
 #include <QPointer>
 
-/// @brief Класс-обертка над настройками, содержит в себе кэш, сбрасываемый при выходе из программы
+/// @brief Класс-обертка над настройками, содержит в себе кэш, сохраняемый при выходе из программы
 /// @note Thread-safe
 class SettingsWrapper
 {
+    Q_DISABLE_COPY(SettingsWrapper)
+
 public:
     /// @brief SettingsWrapper
     /// @param[in] settingsGroup - группа (секция) настроек
-    SettingsWrapper(const QString &settingsGroup = QString());
+    explicit SettingsWrapper(const QString &settingsGroup = QString());
 
     ~SettingsWrapper();
 
@@ -48,6 +47,9 @@ public:
     /// @param[in] defaultValue - умолчательное значение, возвращается при отсутствии значения
     /// @return - значение для ключа или defaultValue при отсутствии значения
     QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
+
+    /// @brief Принудительно сохранить все настройки, не дожидаясь выхода из программы
+    void flush();
 
 private:
     /// @brief Группа (секция) настроек

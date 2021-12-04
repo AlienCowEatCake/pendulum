@@ -106,17 +106,22 @@ void Scene3DAbstract::mouseReleaseEvent(QMouseEvent*)
 
 void Scene3DAbstract::mouseMoveEvent(QMouseEvent* pe)
 {
-    m_sceneParameters.xRot += 180.0f / 1.5f * static_cast<GLfloat>(pe->y()-m_mousePosition.y()) / static_cast<GLfloat>(height());
-    m_sceneParameters.zRot += 180.0f / 1.5f * static_cast<GLfloat>(pe->x()-m_mousePosition.x()) / static_cast<GLfloat>(width());
+    m_sceneParameters.xRot += 180.0f / 1.5f * static_cast<GLfloat>(pe->pos().y()-m_mousePosition.y()) / static_cast<GLfloat>(height());
+    m_sceneParameters.zRot += 180.0f / 1.5f * static_cast<GLfloat>(pe->pos().x()-m_mousePosition.x()) / static_cast<GLfloat>(width());
     m_mousePosition = pe->pos();
     updateGL();
 }
 
 void Scene3DAbstract::wheelEvent(QWheelEvent* pe)
 {
-    if((pe->delta())>0)
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    const int delta = pe->angleDelta().x() + pe->angleDelta().y();
+#else
+    const int delta = pe->delta();
+#endif
+    if(delta > 0)
         scale_plus();
-    else if((pe->delta())<0)
+    else if(delta < 0)
         scale_minus();
     updateGL();
 }

@@ -1,8 +1,5 @@
 /*
-   Copyright (C) 2011-2016,
-        Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
-        Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
-        Peter S. Zhigalov       <peter.zhigalov@gmail.com>
+   Copyright (C) 2011-2017 Peter S. Zhigalov <peter.zhigalov@gmail.com>
 
    This file is part of the `PhysicalLabCore' library.
 
@@ -31,25 +28,25 @@ namespace ObjectsConnector {
 /// @param[in] id - идентификатор сигнала
 /// @param[in] emitter - объект, испускающий сигнал
 /// @param[in] signal - сигнал, испускаемый объектом
-void RegisterEmitter(const char * id, QObject * emitter, const char * signal);
+void RegisterEmitter(const char *id, QObject *emitter, const char *signal);
 
 /// @brief Регистрирация объекта, принимающего сигнал
 /// @param[in] id - идентификатор сигнала
 /// @param[in] receiver - объект, принимающий сигнал
 /// @param[in] slot - слот, в который должен прилететь сигнал
-void RegisterReceiver(const char * id, QObject * receiver, const char * slot);
+void RegisterReceiver(const char *id, QObject *receiver, const char *slot);
 
 /// @brief Разрегистрирация объекта, испускающего сигнал
 /// @param[in] id - идентификатор сигнала
 /// @param[in] emitter - объект, испускающий сигнал
 /// @param[in] signal - сигнал, испускаемый объектом
-void UnregisterEmitter(const char * id, QObject * emitter, const char * signal);
+void UnregisterEmitter(const char *id, QObject *emitter, const char *signal);
 
 /// @brief Разрегистрирация объекта, принимающего сигнал
 /// @param[in] id - идентификатор сигнала
 /// @param[in] receiver - объект, принимающий сигнал
 /// @param[in] slot - слот, в который должен прилететь сигнал
-void UnregisterReceiver(const char * id, QObject * receiver, const char * slot);
+void UnregisterReceiver(const char *id, QObject *receiver, const char *slot);
 
 } // namespace ObjectsConnector
 

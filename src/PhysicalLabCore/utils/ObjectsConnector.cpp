@@ -1,8 +1,5 @@
 /*
-   Copyright (C) 2011-2016,
-        Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
-        Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
-        Peter S. Zhigalov       <peter.zhigalov@gmail.com>
+   Copyright (C) 2011-2017 Peter S. Zhigalov <peter.zhigalov@gmail.com>
 
    This file is part of the `PhysicalLabCore' library.
 
@@ -46,7 +43,7 @@ ObjectInfoListMap receivers;
 /// @param[in] id - идентификатор сигнала
 /// @param[in] emitter - объект, испускающий сигнал
 /// @param[in] signal - сигнал, испускаемый объектом
-void RegisterEmitter(const char * id, QObject * emitter, const char * signal)
+void RegisterEmitter(const char *id, QObject *emitter, const char *signal)
 {
     assert(emitter);
     assert(id && std::string(id).length() > 0);
@@ -72,7 +69,7 @@ void RegisterEmitter(const char * id, QObject * emitter, const char * signal)
 /// @param[in] id - идентификатор сигнала
 /// @param[in] receiver - объект, принимающий сигнал
 /// @param[in] slot - слот, в который должен прилететь сигнал
-void RegisterReceiver(const char * id, QObject * receiver, const char * slot)
+void RegisterReceiver(const char *id, QObject *receiver, const char *slot)
 {
     assert(receiver);
     assert(id && std::string(id).length() > 0);
@@ -98,7 +95,7 @@ void RegisterReceiver(const char * id, QObject * receiver, const char * slot)
 /// @param[in] id - идентификатор сигнала
 /// @param[in] emitter - объект, испускающий сигнал
 /// @param[in] signal - сигнал, испускаемый объектом
-void UnregisterEmitter(const char * id, QObject * emitter, const char * signal)
+void UnregisterEmitter(const char *id, QObject *emitter, const char *signal)
 {
     assert(emitter);
     assert(id && std::string(id).length() > 0);
@@ -127,7 +124,7 @@ void UnregisterEmitter(const char * id, QObject * emitter, const char * signal)
 /// @param[in] id - идентификатор сигнала
 /// @param[in] receiver - объект, принимающий сигнал
 /// @param[in] slot - слот, в который должен прилететь сигнал
-void UnregisterReceiver(const char * id, QObject * receiver, const char * slot)
+void UnregisterReceiver(const char *id, QObject *receiver, const char *slot)
 {
     assert(receiver);
     assert(id && std::string(id).length() > 0);

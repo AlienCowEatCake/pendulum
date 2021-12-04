@@ -1,8 +1,5 @@
 /*
-   Copyright (C) 2011-2016,
-        Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
-        Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
-        Peter S. Zhigalov       <peter.zhigalov@gmail.com>
+   Copyright (C) 2011-2017 Peter S. Zhigalov <peter.zhigalov@gmail.com>
 
    This file is part of the `PhysicalLabCore' library.
 
@@ -21,21 +18,69 @@
 */
 
 #import <Foundation/Foundation.h>
+
 #include <QString>
 #include <QVariant>
+
+#define AUTORELEASE_POOL const ::ObjCUtils::AutoReleasePool pool; (void)(pool)
+
+namespace ObjCUtils {
+namespace {
+
+class AutoReleasePool
+{
+    Q_DISABLE_COPY(AutoReleasePool)
+
+public:
+    AutoReleasePool()
+    {
+        m_pool = [[NSAutoreleasePool alloc] init];
+    }
+
+    ~AutoReleasePool()
+    {
+        [m_pool release];
+    }
+
+private:
+    NSAutoreleasePool *m_pool;
+};
+
+QString QStringFromNSString(const NSString *string)
+{
+    if(!string)
+        return QString();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 2, 0))
+    return QString::fromNSString(string);
+#else
+    return QString::fromUtf8([string UTF8String]);
+#endif
+}
+
+NSString *QStringToNSString(const QString &string)
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 2, 0))
+    return string.toNSString();
+#else
+    return [NSString stringWithUTF8String:string.toUtf8().data()];
+#endif
+}
+
+} // namespace
+} // namespace ObjCUtils
 
 namespace SettingsEncoder {
 
 /// @brief Кодировщик данных QVariant -> QString, по возможности использует человеко-читаемое представление
 /// @param[in] data - Исходные данные
 /// @return Кодированные данные
-QString Encode(const QVariant& data);
+QString Encode(const QVariant &data);
 
 /// @brief Декодировщик данных QString -> QVariant
 /// @param[in] data - Кодированные в Encode() данные
 /// @return Исходные данные
 /// @attention Предназначен для работы совместно с Encode()
-QVariant Decode(const QString& data);
+QVariant Decode(const QString &data);
 
 } // namespace SettingsEncoder
 
@@ -60,9 +105,10 @@ QString getNativeKeyString(const QString &group, const QString &key)
 /// @param[in] value - значение, которое устанавливается для ключа
 void setValue(const QString &group, const QString &key, const QVariant &value)
 {
-    NSString *nativeKey = [NSString stringWithUTF8String: getNativeKeyString(group, key).toUtf8().data()];
+    AUTORELEASE_POOL;
+    NSString *nativeKey = ObjCUtils::QStringToNSString(getNativeKeyString(group, key));
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *nativeValue = [NSString stringWithUTF8String: SettingsEncoder::Encode(value).toUtf8().data()];
+    NSString *nativeValue = ObjCUtils::QStringToNSString(SettingsEncoder::Encode(value));
     [defaults setObject: nativeValue forKey: nativeKey];
     [defaults synchronize];
 }
@@ -74,15 +120,18 @@ void setValue(const QString &group, const QString &key, const QVariant &value)
 /// @return - значение для ключа или defaultValue при отсутствии значения
 QVariant value(const QString &group, const QString &key, const QVariant &defaultValue)
 {
-    NSString *nativeKey = [NSString stringWithUTF8String: getNativeKeyString(group, key).toUtf8().data()];
+    AUTORELEASE_POOL;
+    NSString *nativeKey = ObjCUtils::QStringToNSString(getNativeKeyString(group, key));
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    const QString value = QString::fromNSString([defaults stringForKey: nativeKey]);
-    if(value.isEmpty())
-        return defaultValue;
-    const QVariant variantValue = SettingsEncoder::Decode(value);
-    if(variantValue.isValid())
-        return variantValue;
-    return defaultValue;
+    const QString value = ObjCUtils::QStringFromNSString([defaults stringForKey: nativeKey]);
+    QVariant result = defaultValue;
+    if(!value.isEmpty())
+    {
+        const QVariant variantValue = SettingsEncoder::Decode(value);
+        if(variantValue.isValid())
+            result = variantValue;
+    }
+    return result;
 }
 
 } // namespace NativeSettingsStorage

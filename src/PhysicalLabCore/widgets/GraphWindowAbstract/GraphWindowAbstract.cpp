@@ -128,7 +128,7 @@ void GraphWindowAbstract::on_actionGraphWidth_triggered()
 void GraphWindowAbstract::on_actionSaveGraphFile_triggered()
 {
     const QString title = (windowTitle().isEmpty() ? tr("Graph") : windowTitle());
-    m_imageSaver->setDefaultName(title + QString::fromLatin1(".png"));
+    m_imageSaver->setDefaultFilePath(title + QString::fromLatin1(".png"));
     QImage image(m_scene2D->width(), m_scene2D->height(), QImage::Format_ARGB32_Premultiplied);
     m_scene2D->drawGraph(& image);
     m_imageSaver->save(image);

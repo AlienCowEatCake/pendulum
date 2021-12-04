@@ -1,8 +1,6 @@
 /*
-   Copyright (C) 2011-2016,
-        Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
-        Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
-        Peter S. Zhigalov       <peter.zhigalov@gmail.com>
+   Copyright (C) 2011-2017, Andrei V. Kurochkin <kurochkin.andrei.v@yandex.ru>
+                 2011-2019, Peter S. Zhigalov <peter.zhigalov@gmail.com>
 
    This file is part of the `PhysicalLabCore' library.
 
@@ -25,25 +23,27 @@
 
 #include <QWidget>
 #include <QString>
-#include <QImage>
+
+class QImage;
 
 class ImageSaver: public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(ImageSaver)
 
 public:
-    ImageSaver(QWidget * parent = NULL);
+    explicit ImageSaver(QWidget *parent = NULL);
     ~ImageSaver();
 
-    QString defaultName() const;
-    void setDefaultName(const QString & defaultName);
+    QString defaultFilePath() const;
+    void setDefaultFilePath(const QString &defaultFilePath);
 
-    bool save(const QImage & image);
+    bool save(const QImage &image, const QString &preferredName = QString());
 
 private:
-    QWidget * m_parent;
-    QString m_defaultName;
-    QString m_lastSavedName;
+    QWidget *m_parent;
+    QString m_defaultFilePath;
+    QString m_lastSavedFilePath;
 };
 
 #endif // PHYSICALLABCORE_IMAGESAVER_H_INCLUDED

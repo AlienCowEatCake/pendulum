@@ -184,6 +184,20 @@ public:
         for(Memsize i = 0; i < 2; i++)
             m_values[i] = static_cast<Real>(other[i]);
     }
+    Vector & operator = (const Vector<2, Real> & other)
+    {
+//        for(Memsize i = 0; i < 2; i++)
+//            m_values[i] = other.m_values[i];
+        memcpy(m_values, other.m_values, sizeof(Real) * 2);
+        return *this;
+    }
+    template<typename U>
+    Vector & operator = (const Vector<2, U> & other)
+    {
+        for(Memsize i = 0; i < 2; i++)
+            m_values[i] = static_cast<Real>(other[i]);
+        return *this;
+    }
 };
 
 /// @brief Двумерный вектор (целочисленный)
@@ -205,6 +219,19 @@ public:
     {
         for(Memsize i = 0; i < 2; i++)
             m_values[i] = static_cast<Integer>(other[i] + static_cast<Real>(0.5f));
+    }
+    Vector & operator = (const Vector<2, Integer> & other)
+    {
+//        for(Memsize i = 0; i < 2; i++)
+//            m_values[i] = other.m_values[i];
+        memcpy(m_values, other.m_values, sizeof(Integer) * 2);
+        return *this;
+    }
+    Vector & operator = (const Vector<2, Real> & other)
+    {
+        for(Memsize i = 0; i < 2; i++)
+            m_values[i] = static_cast<Integer>(other[i] + static_cast<Real>(0.5f));
+        return *this;
     }
 };
 
@@ -229,6 +256,20 @@ public:
     {
         for(Memsize i = 0; i < 3; i++)
             m_values[i] = static_cast<Real>(other[i]);
+    }
+    Vector & operator = (const Vector<3, Real> & other)
+    {
+//        for(Memsize i = 0; i < 3; i++)
+//            m_values[i] = other.m_values[i];
+        memcpy(m_values, other.m_values, sizeof(Real) * 3);
+        return *this;
+    }
+    template<typename U>
+    Vector & operator = (const Vector<3, U> & other)
+    {
+        for(Memsize i = 0; i < 3; i++)
+            m_values[i] = static_cast<Real>(other[i]);
+        return *this;
     }
     Vector<3, Real> & normalize()
     {
@@ -257,6 +298,19 @@ public:
     {
         for(Memsize i = 0; i < 3; i++)
             m_values[i] = static_cast<Integer>(other[i] + static_cast<Real>(0.5f));
+    }
+    Vector & operator = (const Vector<3, Integer> & other)
+    {
+//        for(Memsize i = 0; i < 3; i++)
+//            m_values[i] = other.m_values[i];
+        memcpy(m_values, other.m_values, sizeof(Integer) * 3);
+        return *this;
+    }
+    Vector & operator = (const Vector<3, Real> & other)
+    {
+        for(Memsize i = 0; i < 3; i++)
+            m_values[i] = static_cast<Integer>(other[i] + static_cast<Real>(0.5f));
+        return *this;
     }
     Vector<3, Integer> & normalize()
     {

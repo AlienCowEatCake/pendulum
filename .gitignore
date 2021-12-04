@@ -72,6 +72,11 @@ Makefile*
 # Binaries
 /pendulum
 /pendulum_*.dmg
+/pendulum_*.zip
+/pendulum_*.msi
+/pendulum_*.gz
+/pendulum_*.AppImage
+/pendulum_*.deb
 
 # OS X garbage
 .DS_Store

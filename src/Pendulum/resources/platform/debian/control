@@ -1,0 +1,25 @@
+Source: pendulum
+Section: education
+Priority: optional
+Maintainer: Peter Zhigalov <peter.zhigalov@gmail.com>
+Build-Depends: debhelper (>= 9), sed
+Homepage: https://aliencoweatcake.github.io/pendulum/
+
+Package: pendulum
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: virtual physical laboratory for simulation a free damped oscillations of a spring pendulum
+ This software simulates free damped oscillations of a spring pendulum.
+ .
+ The software allows you to adjust the following parameters of the model:
+  * Mass
+  * Initial displacement
+  * Spring constant
+  * Damping coefficient
+ .
+ The stopwatch, the experiment speed slider and the ruler to measure the displacement were added to improve usability.
+ .
+ The software allows you to plot graphs of the following functions:
+  * Displacement as a function of time
+  * Speed as a function of time
+  * Energy as a function of time

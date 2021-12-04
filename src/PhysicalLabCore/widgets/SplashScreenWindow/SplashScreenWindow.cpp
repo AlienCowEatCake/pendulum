@@ -24,7 +24,11 @@
 
 #include <QtGlobal>
 #include <QApplication>
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#include <QScreen>
+#else
 #include <QDesktopWidget>
+#endif
 #include <QPoint>
 #include <QTimer>
 #include <QPixmap>
@@ -137,8 +141,14 @@ void SplashScreenWindow::tryFirstClose()
 /// @brief moveToCenter - Перемещение окна в центр экрана
 void SplashScreenWindow::moveToCenter()
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    QScreen *screen = qApp->primaryScreen();
+    QPoint center = screen->availableGeometry().center();
+    QPoint corner = screen->availableGeometry().topLeft();
+#else
     QPoint center = QApplication::desktop()->availableGeometry().center();
     QPoint corner = QApplication::desktop()->availableGeometry().topLeft();
+#endif
     center.setX(center.x() - this->width() / 2);
     center.setY(center.y() - this->height() / 2);
     if(center.x() <= corner.x() || center.y() <= corner.y())

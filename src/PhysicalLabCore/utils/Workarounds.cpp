@@ -1,8 +1,5 @@
 /*
-   Copyright (C) 2011-2016,
-        Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
-        Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
-        Peter S. Zhigalov       <peter.zhigalov@gmail.com>
+   Copyright (C) 2011-2021 Peter S. Zhigalov <peter.zhigalov@gmail.com>
 
    This file is part of the `PhysicalLabCore' library.
 
@@ -36,7 +33,7 @@ namespace Workarounds {
 /// @brief Исправить отображение локализованных шрифтов под Windows
 /// @param[in] language - язык, для которого будет проводиться исправление
 /// @note Функцию следует вызывать при смене языка
-void FontsFix(const QString & language)
+void FontsFix(const QString &language)
 {
 #if defined (Q_OS_WIN)
 
@@ -64,12 +61,18 @@ void FontsFix(const QString & language)
     fallbackFont.setFamily(QString::fromLatin1("Tahoma"));
 
     // Проверим, умеет ли стандартный шрифт писать на новом языке
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    const QStringList currentWritingSystemFamilies = QFontDatabase::families(currentWritingSystem);
+#else
     static const QFontDatabase fontDatabase;
-    if(!fontDatabase.families(currentWritingSystem).contains(defaultFont.family(), Qt::CaseInsensitive))
+    const QStringList currentWritingSystemFamilies = fontDatabase.families(currentWritingSystem);
+#endif
+    if(!currentWritingSystemFamilies.contains(defaultFont.family(), Qt::CaseInsensitive))
         qApp->setFont(fallbackFont);   // Если не умеет - заменим на Tahoma
     else
         qApp->setFont(defaultFont);    // Если умеет, то вернем его обратно
 
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     // Для Win98 форсированно заменяем шрифты на Tahoma для всех не-английских локалей
     if(QSysInfo::windowsVersion() <= QSysInfo::WV_Me)
     {
@@ -78,6 +81,7 @@ void FontsFix(const QString & language)
         else
             qApp->setFont(defaultFont);
     }
+#endif
 
 #else
 
@@ -91,16 +95,21 @@ void FontsFix(const QString & language)
 /// @attention Актуально только для Qt 5.4+
 void HighDPIFix()
 {
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+
     if(!IsRemoteSession())
     {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
-        static char newEnv [] = "QT_AUTO_SCREEN_SCALE_FACTOR=1";
+        static char newEnv[] = "QT_AUTO_SCREEN_SCALE_FACTOR=1";
         if(!getenv("QT_AUTO_SCREEN_SCALE_FACTOR") && !getenv("QT_DEVICE_PIXEL_RATIO"))
             putenv(newEnv);
 #elif (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
-        static char newEnv [] = "QT_DEVICE_PIXEL_RATIO=auto";
+        static char newEnv[] = "QT_DEVICE_PIXEL_RATIO=auto";
         if(!getenv("QT_DEVICE_PIXEL_RATIO"))
             putenv(newEnv);
+#endif
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
     }
 
@@ -108,6 +117,8 @@ void HighDPIFix()
     // однако без поддержки HighDPI его применение нецелесообразно
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+
 #endif
 }
 
@@ -129,12 +140,12 @@ void StyleFix()
     // До 5.6 включительно использовался стиль gtk, с 5.7 он называется gtk2
     // Если это статическая сборка, например, с 5.6 и в системе определены
     // QT_QPA_PLATFORMTHEME и/или QT_STYLE_OVERRIDE, то стили не подхватятся.
-    static char newPlatformThemeEnv [] = "QT_QPA_PLATFORMTHEME=gtk";
-    const char * platformThemeEnv = getenv("QT_QPA_PLATFORMTHEME");
+    static char newPlatformThemeEnv[] = "QT_QPA_PLATFORMTHEME=gtk";
+    const char *platformThemeEnv = getenv("QT_QPA_PLATFORMTHEME");
     if(platformThemeEnv && !QString::fromLatin1(platformThemeEnv).compare(QString::fromLatin1("gtk2"), Qt::CaseInsensitive))
         putenv(newPlatformThemeEnv);
-    static char newStyleOverrideEnv [] = "QT_STYLE_OVERRIDE=gtk";
-    const char * styleOverrideEnv = getenv("QT_STYLE_OVERRIDE");
+    static char newStyleOverrideEnv[] = "QT_STYLE_OVERRIDE=gtk";
+    const char *styleOverrideEnv = getenv("QT_STYLE_OVERRIDE");
     if(styleOverrideEnv && !QString::fromLatin1(styleOverrideEnv).compare(QString::fromLatin1("gtk2"), Qt::CaseInsensitive))
         putenv(newStyleOverrideEnv);
 #endif
