@@ -1,6 +1,6 @@
 #!/bin/bash -e
 PROJECT="pendulum"
-IDENTIFIER="ru.codefreak.fami.pendulum"
+IDENTIFIER="com.github.aliencoweatcake.pendulum"
 BUILDDIR="build_linux_qt5.15_clang"
 SUFFIX="_qt5.15_$(gcc -dumpmachine)"
 APP_PATH="."

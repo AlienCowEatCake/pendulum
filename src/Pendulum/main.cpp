@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     Workarounds::StyleFix();
 
     QApplication app(argc, argv);
-    app.setOrganizationDomain(QString::fromLatin1("fami.codefreak.ru"));
+    app.setOrganizationDomain(QString::fromLatin1("aliencoweatcake.github.com"));
     app.setOrganizationName(QString::fromLatin1("FAMI Net Team"));
     app.setApplicationName(QString::fromLatin1("Pendulum"));
     app.setApplicationVersion(QString::fromLatin1("1.0"));

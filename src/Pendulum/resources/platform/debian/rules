@@ -22,9 +22,9 @@ binary-arch: build
 	dh_prep
 	dh_installdirs
 	cp -a usr/* debian/pendulum/opt/Pendulum
-	ln -s /opt/Pendulum/share/applications/ru.codefreak.fami.pendulum.desktop debian/pendulum/usr/share/applications/ru.codefreak.fami.pendulum.desktop
-	sed -i 's|^Exec=pendulum|Exec=/opt/Pendulum/bin/pendulum|' debian/pendulum/opt/Pendulum/share/applications/ru.codefreak.fami.pendulum.desktop
-	find debian/pendulum/opt/Pendulum/share/icons -name 'ru.codefreak.fami.pendulum.*' -print | while read -r ICON_PATH ; do \
+	ln -s /opt/Pendulum/share/applications/com.github.aliencoweatcake.pendulum.desktop debian/pendulum/usr/share/applications/com.github.aliencoweatcake.pendulum.desktop
+	sed -i 's|^Exec=pendulum|Exec=/opt/Pendulum/bin/pendulum|' debian/pendulum/opt/Pendulum/share/applications/com.github.aliencoweatcake.pendulum.desktop
+	find debian/pendulum/opt/Pendulum/share/icons -name 'com.github.aliencoweatcake.pendulum.*' -print | while read -r ICON_PATH ; do \
 		ICON_LINK_TARGET=$$(echo $${ICON_PATH} | sed 's|^debian/pendulum||') ; \
 		ICON_LINK_PATH=$$(echo $${ICON_PATH} | sed 's|/opt/Pendulum/|/usr/|') ; \
 		mkdir -p $$(dirname $${ICON_LINK_PATH}) ; \
