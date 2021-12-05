@@ -1,8 +1,7 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
 Version=1.0
-Name=Mass Spring Damper System
-Name[ru]=Пружинный маятник в среде с сопротивлением
+Name=Pendulum
 Comment=Virtual physical laboratory for simulation a free damped oscillations of a spring pendulum
 Comment[ru]=Виртуальная физическая лаборатория, моделирующая поведение пружинного маятника в среде с сопротивлением
 Exec=pendulum %f
