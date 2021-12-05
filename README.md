@@ -4,7 +4,7 @@
 
 **Язык программирования:** C++
 
-**Фреймворк:** Qt4 / Qt5
+**Фреймворк:** Qt4 / Qt5 / Qt6
 
 **Лицензия:** [GNU GPL v3](http://www.gnu.org/copyleft/gpl.html)
 

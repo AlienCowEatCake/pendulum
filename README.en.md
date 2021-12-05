@@ -4,7 +4,7 @@
 
 **Programming Language:** C++
 
-**Framework:** Qt4 / Qt5
+**Framework:** Qt4 / Qt5 / Qt6
 
 **License:** [GNU GPL v3](http://www.gnu.org/copyleft/gpl.html)
 

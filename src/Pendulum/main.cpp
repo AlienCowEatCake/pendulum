@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain(QString::fromLatin1("aliencoweatcake.github.com"));
     app.setOrganizationName(QString::fromLatin1("FAMI Net Team"));
     app.setApplicationName(QString::fromLatin1("Pendulum"));
-    app.setApplicationVersion(QString::fromLatin1("1.0"));
+    app.setApplicationVersion(QString::fromLatin1("1.1"));
 #if !defined (Q_OS_MAC)
     app.setWindowIcon(QIcon(QString::fromLatin1(":/icon/ball.ico")));
     app.setAttribute(Qt::AA_DontShowIconsInMenus, false);
