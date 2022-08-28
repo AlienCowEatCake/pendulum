@@ -96,5 +96,10 @@ use_swrast {
         $$files($$PWD/widgets/GLWidgetImpl/software/private/*.h)
     SOURCES += \
         $$files($$PWD/widgets/GLWidgetImpl/software/private/*.cpp)
+} else {
+    greaterThan(QT_MAJOR_VERSION, 5) {
+        HEADERS += \
+            $$files($$PWD/widgets/GLWidgetImpl/native/qt6/*.h)
+    }
 }
 
