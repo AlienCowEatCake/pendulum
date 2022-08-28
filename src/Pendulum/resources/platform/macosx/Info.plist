@@ -19,9 +19,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>NSPrincipalClass</key>
@@ -35,7 +35,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>10.7</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>(c) FAMI Net Team, 2011-2021</string>
+	<string>(c) FAMI Net Team, 2011-2022</string>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
