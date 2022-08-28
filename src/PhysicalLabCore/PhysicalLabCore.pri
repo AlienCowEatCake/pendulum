@@ -8,8 +8,7 @@ CONFIG += object_with_source object_parallel_to_source no_batch warn_on
 QT += core gui opengl svg
 
 greaterThan(QT_MAJOR_VERSION, 5) {
-    QT += svgwidgets
-    CONFIG += use_swrast
+    QT += svgwidgets openglwidgets
 }
 
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -90,6 +89,7 @@ macx {
 
 use_swrast {
     QT -= opengl
+    greaterThan(QT_MAJOR_VERSION, 5) : QT -= openglwidgets
     DEFINES += USE_SWRAST
     HEADERS += \
         $$files($$PWD/widgets/GLWidgetImpl/software/*.h) \

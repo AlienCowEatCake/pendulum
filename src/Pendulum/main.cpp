@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2011-2016,
+   Copyright (C) 2011-2022,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
         Peter S. Zhigalov       <peter.zhigalov@gmail.com>
@@ -20,8 +20,13 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QtGlobal>
 #if !defined (USE_SWRAST)
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+#include <QSurfaceFormat>
+#else
 #include <QGLFormat>
+#endif
 #endif
 #include <QApplication>
 #include <QtPlugin>
@@ -43,9 +48,15 @@ int main(int argc, char *argv[])
 {
     Workarounds::HighDPIFix();
 #if !defined (USE_SWRAST)
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
+    fmt.setSamples(2);
+    QSurfaceFormat::setDefaultFormat(fmt);
+#else
     QGLFormat fmt;
     fmt.setSampleBuffers(true);
     QGLFormat::setDefaultFormat(fmt);
+#endif
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 3, 0))
     QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
 #endif

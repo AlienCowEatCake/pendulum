@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2011-2016,
+   Copyright (C) 2011-2022,
         Andrei V. Kurochkin     <kurochkin.andrei.v@yandex.ru>
         Mikhail E. Aleksandrov  <alexandroff.m@gmail.com>
         Peter S. Zhigalov       <peter.zhigalov@gmail.com>
@@ -25,7 +25,44 @@
 
 #if !defined (USE_SWRAST)
 #include <QtOpenGL>
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+#include <QOpenGLWidget>
+#include <QColor>
+#include <QImage>
+class QGLWidget : public QOpenGLWidget
+{
+    Q_OBJECT
+
+public:
+    QGLWidget(QWidget * parent = 0)
+        : QOpenGLWidget(parent)
+    {}
+
+    void qglClearColor(const QColor & c) const
+    {
+        glClearColor(c.redF(), c.greenF(), c.blueF(), c.alphaF());
+    }
+
+    QImage grabFrameBuffer(bool withAlpha = false)
+    {
+        Q_UNUSED(withAlpha);
+        return grabFramebuffer();
+    }
+
+    static QImage convertToGLFormat(const QImage & img)
+    {
+        return img.convertToFormat(QImage::Format_ARGB32).rgbSwapped().mirrored(false, true);
+    }
+
+public slots:
+    void updateGL()
+    {
+        update();
+    }
+};
+#else
 #include <QGLWidget>
+#endif
 #include "native/GLFunctions.h"
 typedef QGLWidget GLWidgetImpl;
 #else
